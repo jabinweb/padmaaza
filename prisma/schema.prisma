@@ -1,0 +1,320 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(CUSTOMER)
+  referralCode  String    @unique @default(cuid())
+  referrerId    String?
+  phone         String?
+  address       String?
+  joinedAt      DateTime  @default(now())
+  isActive      Boolean   @default(true)
+  currentRankId String?
+  
+  accounts      Account[]
+  sessions      Session[]
+  
+  // Referral relationships
+  referrer      User?     @relation("UserReferrals", fields: [referrerId], references: [id])
+  referrals     User[]    @relation("UserReferrals")
+  
+  // Orders and transactions
+  orders        Order[]
+  commissions   Commission[] @relation("UserCommissions")
+  commissionsFrom Commission[] @relation("UserCommissionsFrom")
+  payouts       Payout[]
+  wallet        Wallet?
+  
+  // Address management
+  addresses     Address[]
+  
+  // Rank system
+  currentRank   Rank?     @relation(fields: [currentRankId], references: [id])
+  rankAchievements RankAchievement[]
+  
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  image       String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  products    Product[]
+  
+  @@map("categories")
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  discount    Float     @default(0)
+  images      String[]
+  stock       Int       @default(0)
+  sku         String    @unique
+  slug        String    @unique
+  isActive    Boolean   @default(true)
+  categoryId  String
+  brand       String?
+  origin      String?
+  weight      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  category    Category  @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[]
+  
+  @@map("products")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  total           Float
+  status          OrderStatus @default(PENDING)
+  razorpayOrderId String?
+  razorpayPaymentId String?
+  shippingAddressId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  user            User        @relation(fields: [userId], references: [id])
+  orderItems      OrderItem[]
+  shippingAddress Address?    @relation(fields: [shippingAddressId], references: [id])
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  
+  @@map("order_items")
+}
+
+model Commission {
+  id        String          @id @default(cuid())
+  userId    String
+  fromUserId String
+  orderId   String
+  amount    Float
+  level     Int
+  type      CommissionType  @default(REFERRAL)
+  status    CommissionStatus @default(PENDING)
+  createdAt DateTime        @default(now())
+  
+  user      User            @relation("UserCommissions", fields: [userId], references: [id])
+  fromUser  User            @relation("UserCommissionsFrom", fields: [fromUserId], references: [id])
+  
+  @@map("commissions")
+}
+
+model Wallet {
+  id              String  @id @default(cuid())
+  userId          String  @unique
+  balance         Float   @default(0)
+  totalEarnings   Float   @default(0)
+  totalWithdrawn  Float   @default(0)
+  updatedAt       DateTime @updatedAt
+  
+  user            User    @relation(fields: [userId], references: [id])
+  
+  @@map("wallets")
+}
+
+model Payout {
+  id        String       @id @default(cuid())
+  userId    String
+  amount    Float
+  status    PayoutStatus @default(PENDING)
+  bankDetails String?
+  adminNotes String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  
+  user      User         @relation(fields: [userId], references: [id])
+  
+  @@map("payouts")
+}
+
+model CommissionSettings {
+  id          String  @id @default(cuid())
+  level       Int     @unique
+  percentage  Float
+  isActive    Boolean @default(true)
+  
+  @@map("commission_settings")
+}
+
+model Address {
+  id          String      @id @default(cuid())
+  userId      String
+  firstName   String
+  lastName    String
+  company     String?
+  address1    String
+  address2    String?
+  city        String
+  state       String
+  zipCode     String
+  country     String      @default("India")
+  phone       String?
+  isDefault   Boolean     @default(false)
+  type        AddressType @default(HOME)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders      Order[]
+  
+  @@map("addresses")
+}
+
+model SystemSettings {
+  id                String   @id @default(cuid())
+  siteName          String   @default("Padmaaja Rasool")
+  siteDescription   String   @default("Premium quality rice products and grains. Experience the finest rice sourced directly from local farmers.")
+  supportEmail      String   @default("srajeev7053@gmail.com")
+  minimumPayout     Float    @default(1000)
+  enableReferrals   Boolean  @default(true)
+  enableCommissions Boolean  @default(true)
+  maintenanceMode   Boolean  @default(false)
+  allowRegistration Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("system_settings")
+}
+
+model Rank {
+  id                  String  @id @default(cuid())
+  name                String  @unique
+  description         String?
+  minReferrals        Int     @default(0)
+  minSalesVolume      Float   @default(0)
+  minTeamVolume       Float   @default(0)
+  commissionMultiplier Float  @default(1.0)
+  benefits            String[]
+  color               String  @default("#3B82F6")
+  icon                String  @default("🏆")
+  order               Int     @unique
+  isActive            Boolean @default(true)
+  createdAt           DateTime @default(now())
+  
+  users               User[]
+  achievements        RankAchievement[]
+  
+  @@map("ranks")
+}
+
+model RankAchievement {
+  id        String   @id @default(cuid())
+  userId    String
+  rankId    String
+  achievedAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id])
+  rank      Rank     @relation(fields: [rankId], references: [id])
+  
+  @@unique([userId, rankId])
+  @@map("rank_achievements")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum CommissionType {
+  REFERRAL
+  LEVEL
+  BONUS
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+enum PayoutStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum AddressType {
+  HOME
+  WORK
+  OTHER
+}
