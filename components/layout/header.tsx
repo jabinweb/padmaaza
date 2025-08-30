@@ -4,12 +4,31 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Menu, X, Wheat, Leaf, Package, Building2, Settings, ShoppingBag, LogOut } from 'lucide-react'
+import { ChevronDown, Menu, X, Wheat, Leaf, Package, Building2, Settings, ShoppingBag, LogOut, LucideIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useSession, signOut } from 'next-auth/react'
 import CartSidebar from '@/components/CartSidebar'
+import MegaMenu from '@/components/layout/MegaMenu'
+
+interface MenuItem {
+  name: string
+  href: string
+  description: string
+}
+
+interface MenuCategory {
+  name: string
+  icon: LucideIcon
+  items: MenuItem[]
+}
+
+interface MegaMenuConfig {
+  title: string
+  type: 'categories'
+  categories: MenuCategory[]
+}
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -21,36 +40,15 @@ export function Header() {
     { name: 'Contact', href: '/contact' },
   ]
 
-  const megaMenus = {
+  const megaMenus: Record<string, MegaMenuConfig> = {
     products: {
       title: 'Products',
-      type: 'categories',
-      categories: [
-        {
-          name: 'Rice & Grains',
-          icon: ShoppingBag,
-          items: [
-            { name: 'Premium Basmati Rice', href: '/products/premium-basmati-rice', description: 'Aromatic long-grain rice' },
-            { name: 'Non-Basmati Rice', href: '/products/non-basmati-rice', description: 'Traditional varieties' },
-            { name: 'Multigrain Flour', href: '/products/multigrain-flour', description: 'Nutritious blend' },
-            { name: 'Wheat Flour', href: '/products/wheat-flour', description: 'Premium quality flour' },
-          ]
-        },
-        {
-          name: 'Spices & Pulses',
-          icon: Leaf,
-          items: [
-            { name: 'Turmeric Powder', href: '/products/turmeric-powder', description: 'Pure and aromatic' },
-            { name: 'Red Chili Powder', href: '/products/red-chili-powder', description: 'Spicy and flavorful' },
-            { name: 'Toor Dal', href: '/products/toor-dal', description: 'Yellow lentils' },
-            { name: 'All Spices', href: '/products/spices', description: 'View all spices' },
-          ]
-        }
-      ]
+      type: 'categories' as const,
+      categories: [] // Will be populated dynamically by MegaMenu component
     },
     company: {
       title: 'Company',
-      type: 'categories',
+      type: 'categories' as const,
       categories: [
         {
           name: 'About Us',
@@ -170,61 +168,12 @@ export function Header() {
                 </button>
 
                 {/* Mega Menu Dropdown */}
-                <AnimatePresence>
-                  {activeDropdown === key && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className={`absolute top-full mt-2 bg-white rounded-xl shadow-2xl border border-slate-200/50 backdrop-blur-lg overflow-hidden z-50 ${
-                        // Smart positioning - always open from right for Company menu to prevent overflow
-                        key === 'company' 
-                          ? 'right-0' 
-                          : 'left-1/2 transform -translate-x-1/2'
-                      }`}
-                      style={{ 
-                        width: menu.type === 'categories' ? '600px' : '400px',
-                        maxWidth: '90vw'
-                      }}
-                    >
-                      <div className="p-6">
-                        {menu.type === 'categories' ? (
-                          // Products Mega Menu with Categories
-                          <div className="grid grid-cols-3 gap-8">
-                            {menu.categories?.map((category, idx) => {
-                              const IconComponent = category.icon
-                              return (
-                                <div key={idx} className="space-y-4">
-                                  <div className="flex items-center space-x-2 pb-2 border-b border-slate-100">
-                                    <IconComponent className="w-5 h-5 text-emerald-600" />
-                                    <h3 className="font-semibold text-slate-800">{category.name}</h3>
-                                  </div>
-                                  <div className="space-y-2">
-                                    {category.items.map((item, itemIdx) => (
-                                      <Link
-                                        key={itemIdx}
-                                        href={item.href}
-                                        className="block p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200 group"
-                                      >
-                                        <div className="font-medium text-slate-800 group-hover:text-emerald-600 transition-colors duration-200">
-                                          {item.name}
-                                        </div>
-                                        <div className="text-sm text-slate-500">
-                                          {item.description}
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        ) : null}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <MegaMenu
+                  menuKey={key}
+                  menu={menu}
+                  isActive={activeDropdown === key}
+                  onClose={() => setActiveDropdown(null)}
+                />
               </div>
             ))}
 
@@ -331,28 +280,29 @@ export function Header() {
               {/* Mobile Mega Menu Items */}
               {Object.entries(megaMenus).map(([key, menu]) => (
                 <div key={key} className="space-y-3">
-                  <h3 className="font-semibold text-slate-800 text-lg">{menu.title}</h3>
+                  <h3 className="font-semibold text-slate-800 text-base sm:text-lg">{menu.title}</h3>
                   
                   {menu.type === 'categories' ? (
-                    // Products with Categories
+                    // Products with Categories - Mobile Responsive
                     <div className="space-y-4">
-                      {menu.categories?.map((category, idx) => {
+                      {menu.categories?.map((category: MenuCategory, idx: number) => {
                         const IconComponent = category.icon
                         return (
                           <div key={idx} className="space-y-2">
-                            <div className="flex items-center space-x-2 text-emerald-600 font-medium">
-                              <IconComponent className="w-4 h-4" />
+                            <div className="flex items-center space-x-2 text-emerald-600 font-medium text-sm sm:text-base">
+                              <IconComponent className="w-4 h-4 flex-shrink-0" />
                               <span>{category.name}</span>
                             </div>
                             <div className="pl-6 space-y-1">
-                              {category.items.map((item, itemIdx) => (
+                              {category.items.map((item: MenuItem, itemIdx: number) => (
                                 <Link
                                   key={itemIdx}
                                   href={item.href}
-                                  className="block text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-200"
+                                  className="block text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-200 py-1"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
-                                  {item.name}
+                                  <div className="font-medium">{item.name}</div>
+                                  <div className="text-xs text-slate-500">{item.description}</div>
                                 </Link>
                               ))}
                             </div>

@@ -5,6 +5,7 @@ import { Crown, Award, Star, Users, TrendingUp, ShoppingBag, ArrowRight, CheckCi
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import PageHero from '@/components/PageHero'
 
 export default function PartnerPage() {
   const partnershipTiers = [
@@ -85,40 +86,24 @@ export default function PartnerPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-20">
-        {/* Background */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-emerald-900/80 to-slate-800/85 z-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 to-orange-500/20" style={{background: 'linear-gradient(to right, rgba(16, 185, 129, 0.2), rgba(245, 135, 59, 0.2))'}}></div>
-        </div>
-        
-        <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Badge className="mb-6 text-lg px-6 py-2" style={{backgroundColor: '#F5873B', color: 'white'}}>
-              Partnership Opportunity
-            </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Be Our 
-              <span className="block" style={{color: '#F5873B'}}>Marketing Partner</span>
-            </h1>
-            <p className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed text-slate-200 mb-8">
-              Join Padmaaja Rasooi&apos;s exclusive marketing partnership program and help us bring 
-              authentic Indian flavors to kitchens across the nation.
-            </p>
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-4"
-              style={{backgroundColor: '#F5873B', color: 'white'}}
-            >
-              Join Us Today <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Marketing Partner"
+        subtitle="Be Our"
+        description="Join Padmaaja Rasooi's exclusive marketing partnership program and help us bring authentic Indian flavors to kitchens across the nation."
+        badge={{
+          text: "Partnership Opportunity"
+        }}
+        actions={[
+          {
+            label: "Join Us Today",
+            icon: ArrowRight,
+            variant: "primary"
+          }
+        ]}
+        backgroundGradient="from-slate-900/90 via-emerald-900/80 to-slate-800/85"
+        titleGradient="from-orange-500 to-orange-400"
+        className="bg-gradient-to-r from-emerald-600/20 to-orange-500/20"
+      />
 
       {/* Partnership Tiers */}
       <section className="py-20 bg-gradient-to-br from-slate-50 to-emerald-50">

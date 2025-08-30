@@ -74,60 +74,60 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             alt={product.name}
             width={400}
             height={300}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
             priority={index < 4} // Prioritize first 4 products
             quality={85}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
           {product.discount > 0 && (
-            <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600 text-white font-semibold shadow-lg">
+            <Badge className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-red-500 hover:bg-red-600 text-white font-semibold shadow-lg text-xs">
               {product.discount}% OFF
             </Badge>
           )}
-          <div className="absolute top-3 right-3 flex items-center bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
+          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
             <Star className="h-3 w-3 text-yellow-400 fill-current" />
             <span className="text-xs ml-1 font-medium">4.5</span>
           </div>
           {product.stock === 0 && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-              <Badge variant="destructive" className="text-sm">Out of Stock</Badge>
+              <Badge variant="destructive" className="text-xs sm:text-sm">Out of Stock</Badge>
             </div>
           )}
-          <Badge className="absolute bottom-3 right-3 bg-white/90 text-slate-700 border border-slate-200 text-xs font-medium shadow-lg backdrop-blur-sm">
+          <Badge className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-white/90 text-slate-700 border border-slate-200 text-xs font-medium shadow-lg backdrop-blur-sm">
               {product.category.name}
           </Badge>
         </div>
         
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-2 p-3 sm:p-6 sm:pb-2">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <CardTitle className="text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight">
+            <CardTitle className="text-base sm:text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight">
               {product.name}
             </CardTitle>
           </div>
-          <CardDescription className="line-clamp-2 text-sm text-gray-600">
+          <CardDescription className="line-clamp-2 md:text-xs text-sm text-gray-600 leading-relaxed">
             {product.description || 'Premium quality product from Padmaaja Rasool Pvt. Ltd.'}
           </CardDescription>
         </CardHeader>
         
-        <CardContent className="pt-0 space-y-4">
+        <CardContent className="pt-0 p-3 sm:p-6 sm:pt-0 space-y-3 sm:space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               {product.discount > 0 ? (
                 <>
-                  <span className="text-lg font-bold text-green-600">
+                  <span className="text-base sm:text-lg font-bold text-green-600">
                     ₹{getDiscountedPrice(product.price, product.discount).toFixed(2)}
                   </span>
-                  <span className="text-sm text-gray-500 line-through">
+                  <span className="text-xs sm:text-sm text-gray-500 line-through">
                     ₹{product.price.toFixed(2)}
                   </span>
                 </>
               ) : (
-                <span className="text-lg font-bold text-gray-900">
+                <span className="text-base sm:text-lg font-bold text-gray-900">
                   ₹{product.price.toFixed(2)}
                 </span>
               )}
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="text-xs sm:text-sm text-gray-500">
               Stock: <span className={product.stock > 0 ? 'text-green-600' : 'text-red-600'}>{product.stock}</span>
             </span>
           </div>
@@ -137,18 +137,19 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               size="sm" 
               onClick={handleAddToCart}
               disabled={product.stock === 0}
-              className="flex-1"
+              className="flex-1 text-xs sm:text-sm h-8 sm:h-9"
             >
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+              <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+              <span className="sm:hidden">{product.stock === 0 ? 'Out' : 'Add'}</span>
             </Button>
             <Button 
               size="sm" 
               variant="outline"
               onClick={handleViewDetails}
-              className="px-3"
+              className="px-2 sm:px-3 h-8 sm:h-9"
             >
-              <Eye className="h-4 w-4" />
+              <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </CardContent>

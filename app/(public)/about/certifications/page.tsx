@@ -6,6 +6,7 @@ import { Shield, Award, CheckCircle, FileText, Globe, Factory, Leaf, Users, Cale
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import PageHero from '@/components/PageHero'
 
 export default function CertificationsPage() {
   const certifications = [
@@ -134,53 +135,25 @@ export default function CertificationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-blue-600/10" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <div className="flex justify-center items-center space-x-3 mb-6">
-              <div className="p-3 bg-emerald-600 rounded-2xl">
-                <Shield className="w-8 h-8 text-white" />
-              </div>
-              <Badge variant="outline" className="text-emerald-700 border-emerald-200">
-                Certified Excellence
-              </Badge>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6">
-              Our{' '}
-              <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-                Certifications
-              </span>
-            </h1>
-            
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Committed to the highest standards of food safety, quality, and excellence. 
-              Our certifications demonstrate our dedication to delivering safe, premium food products.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium text-slate-700">6+ Active Certifications</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <Award className="w-5 h-5 text-blue-500" />
-                <span className="text-sm font-medium text-slate-700">International Standards</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <Globe className="w-5 h-5 text-purple-500" />
-                <span className="text-sm font-medium text-slate-700">Export Authorized</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Certifications"
+        subtitle="Our"
+        description="Committed to the highest standards of food safety, quality, and excellence. Our certifications demonstrate our dedication to delivering safe, premium food products."
+        badge={{
+          text: "Certified Excellence"
+        }}
+        icon={{
+          component: Shield,
+          bgColor: "bg-emerald-600"
+        }}
+        features={[
+          { icon: CheckCircle, label: "6+ Active Certifications", color: "green" },
+          { icon: Award, label: "International Standards", color: "blue" },
+          { icon: Globe, label: "Export Authorized", color: "purple" }
+        ]}
+        backgroundGradient="from-emerald-600/10 to-blue-600/10"
+        titleGradient="from-emerald-600 to-blue-600"
+      />
 
       {/* Certifications Grid */}
       <section className="py-20">

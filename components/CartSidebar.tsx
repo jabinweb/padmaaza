@@ -19,7 +19,11 @@ interface CartItem {
   image: string | null
 }
 
-export default function CartSidebar() {
+interface CartSidebarProps {
+  children?: React.ReactNode
+}
+
+export default function CartSidebar({ children }: CartSidebarProps) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
@@ -56,16 +60,18 @@ export default function CartSidebar() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="relative">
-          <ShoppingCart className="h-5 w-5" />
-          {itemCount > 0 && (
-            <Badge 
-              className="absolute -top-[5px] -right-[5px] h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white !text-xs"
-            >
-              {itemCount > 99 ? '99+' : itemCount}
-            </Badge>
-          )}
-        </Button>
+        {children || (
+          <Button variant="ghost" size="sm" className="relative">
+            <ShoppingCart className="h-5 w-5" />
+            {itemCount > 0 && (
+              <Badge 
+                className="absolute -top-[5px] -right-[5px] h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white !text-xs"
+              >
+                {itemCount > 99 ? '99+' : itemCount}
+              </Badge>
+            )}
+          </Button>
+        )}
       </SheetTrigger>
       
       <SheetContent className="w-full sm:max-w-lg">

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import PageHero from '@/components/PageHero'
 
 export default function BulkSupplyPage() {
   const bulkProducts = [
@@ -171,64 +172,37 @@ export default function BulkSupplyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-emerald-600/10" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <div className="flex justify-center items-center space-x-3 mb-6">
-              <div className="p-3 bg-blue-600 rounded-2xl">
-                <Warehouse className="w-8 h-8 text-white" />
-              </div>
-              <Badge variant="outline" className="text-blue-700 border-blue-200">
-                Wholesale Solutions
-              </Badge>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6">
-              Bulk{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                Supply Solutions
-              </span>
-            </h1>
-            
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Premium quality food products in bulk quantities for distributors, retailers, 
-              and food manufacturers. Direct from source with competitive pricing and reliable supply chain.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <Package className="w-5 h-5 text-blue-500" />
-                <span className="text-sm font-medium text-slate-700">3+ MT Minimum Orders</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <Globe className="w-5 h-5 text-green-500" />
-                <span className="text-sm font-medium text-slate-700">Global Shipping</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
-                <Shield className="w-5 h-5 text-purple-500" />
-                <span className="text-sm font-medium text-slate-700">Quality Certified</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">
-                <Calculator className="w-5 h-5 mr-2" />
-                Get Quote
-              </Button>
-              <Button size="lg" variant="outline" className="border-slate-300">
-                <Download className="w-5 h-5 mr-2" />
-                Download Catalog
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Supply Solutions"
+        subtitle="Bulk"
+        description="Premium quality food products in bulk quantities for distributors, retailers, and food manufacturers. Direct from source with competitive pricing and reliable supply chain."
+        badge={{
+          text: "Wholesale Solutions"
+        }}
+        icon={{
+          component: Warehouse,
+          bgColor: "bg-blue-600"
+        }}
+        features={[
+          { icon: Package, label: "3+ MT Minimum Orders", color: "blue" },
+          { icon: Globe, label: "Global Shipping", color: "green" },
+          { icon: Shield, label: "Quality Certified", color: "purple" }
+        ]}
+        actions={[
+          {
+            label: "Get Quote",
+            icon: Calculator,
+            variant: "primary"
+          },
+          {
+            label: "Download Catalog",
+            icon: Download,
+            variant: "secondary"
+          }
+        ]}
+        backgroundGradient="from-blue-600/10 to-emerald-600/10"
+        titleGradient="from-blue-600 to-emerald-600"
+      />
 
       {/* Bulk Products Grid */}
       <section className="py-20">

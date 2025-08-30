@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard'
 import StructuredData from '@/components/StructuredData'
 import { generateProductListJsonLd, generateBreadcrumbJsonLd } from '@/lib/structured-data'
 import { Product, Category } from '@/types'
+import PageHero from '@/components/PageHero'
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -62,17 +63,23 @@ export default function ProductsPage() {
   ], baseUrl)
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="min-h-screen bg-gray-50">
       {/* Structured Data */}
       <StructuredData data={productListData} id="product-list-data" />
       <StructuredData data={breadcrumbData} id="breadcrumb-data" />
       
+      {/* Hero Section */}
+      <PageHero
+        title="Products"
+        subtitle="Our"
+        description="Discover our premium collection of authentic food products, carefully crafted to bring traditional flavors to your kitchen."
+        badge={{
+          text: "Premium • Authentic • Quality"
+        }}
+        alignment="left"
+      />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Our Products</h1>
-          <p className="text-gray-600">Discover our premium collection of health and wellness products</p>
-        </div>
 
         {/* Filters */}
         <div className="mb-8 flex flex-col sm:flex-row gap-4">
