@@ -67,7 +67,7 @@ export function Header() {
             { name: 'Partnership', href: '/partnership', description: 'Join our network' },
             { name: 'Private Label', href: '/private-label', description: 'Custom solutions' },
             { name: 'Bulk Supply', href: '/bulk-supply', description: 'Wholesale distribution' },
-            { name: 'Export Services', href: '/export', description: 'International trade' },
+            { name: 'Wholesaler', href: '/wholesaler', description: 'Wholesaler program' },
           ]
         }
       ]
