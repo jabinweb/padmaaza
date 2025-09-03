@@ -98,10 +98,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-lg text-gray-600 leading-relaxed text-center">
-                    To preserve and share the authentic flavors of traditional Indian cuisine by creating 
-                    premium food products that bring families together around the dining table. We are 
-                    committed to maintaining the highest quality standards while making traditional 
-                    recipes accessible to modern kitchens across India and beyond.
+                    Our mission is very simple we know that if we will provide the best, you will collaborate with us as best. We think and working on that to prevail in all over India, our mission to provide the best for everyone with low cost.
                   </p>
                 </CardContent>
               </Card>
@@ -122,10 +119,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-lg text-gray-600 leading-relaxed text-center">
-                    To become India&apos;s most trusted name in traditional food products, establishing 
-                    Padmaaja Rasooi as the go-to brand for authentic flavors. We envision a future where 
-                    every household can enjoy the rich heritage of Indian cuisine through our carefully 
-                    crafted products, while supporting sustainable farming practices and local communities.
+                    We know that we are processing, you don&apos;t see, but you eat. Here our responsibility goes to fix. Our vision is to be best in your eye and your budget.
                   </p>
                 </CardContent>
               </Card>

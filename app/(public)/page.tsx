@@ -1,16 +1,6 @@
 import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection } from '@/components/LazyComponents'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { 
-  Wheat, 
-  Shield, 
-  Award, 
-  ArrowRight,
-  Star,
-  Leaf
-} from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import ClientPageWrapper from '@/components/ClientPageWrapper'
 
