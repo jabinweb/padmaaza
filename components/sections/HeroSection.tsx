@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, ShoppingBag, Award, Truck, Shield } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -41,16 +41,6 @@ export default function HeroSection() {
       ctaLink: "/products?category=rice",
       bgColor: "from-emerald-600 via-emerald-700 to-emerald-900"
     },
-    // {
-    //   id: 2,
-    //   title: "Organic Spices & Pulses",
-    //   subtitle: "Fresh from farms",
-    //   description: "Pure organic spices and premium quality pulses sourced directly from farmers",
-    //   image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&h=400&fit=crop&crop=center",
-    //   cta: "Explore Spices",
-    //   ctaLink: "/products?category=spices",
-    //   bgColor: "from-orange-500 via-red-600 to-red-800"
-    // },
     {
       id: 3,
       title: "Multigrain Flour Range",

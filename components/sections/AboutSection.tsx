@@ -67,7 +67,7 @@ export default function AboutSection() {
                         <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video lg:aspect-auto">
                             <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-transparent to-orange-600/20 z-10"></div>
                             <Image
-                                src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=600&h=500&fit=crop&crop=center"
+                                src="/farmer.png"
                                 alt="Premium food processing facility"
                                 width={600}
                                 height={500}
