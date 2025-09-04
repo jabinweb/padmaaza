@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -30,13 +30,13 @@ interface FeatureCard {
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  const banners: Banner[] = [
+  const banners: Banner[] = useMemo(() => [
     {
       id: 1,
       title: "Premium Basmati Rice Collection",
       subtitle: "Up to 25% off",
       description: "Authentic aged basmati rice varieties with extra-long grains and distinctive aroma",
-      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=1200&h=400&fit=crop&crop=center",
+      image: "/images/rice-hero-slider.jpg",
       cta: "Shop Rice",
       ctaLink: "/products?category=rice",
       bgColor: "from-emerald-600 via-emerald-700 to-emerald-900"
@@ -46,12 +46,17 @@ export default function HeroSection() {
       title: "Multigrain Flour Range",
       subtitle: "Healthy nutrition",
       description: "Nutritious multigrain flour blends for wholesome family meals and baking",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=1200&h=400&fit=crop&crop=center",
+      image: "/images/multigrain-flour.jpg",
       cta: "Shop Flour",
       ctaLink: "/products?category=flour",
       bgColor: "from-amber-500 via-yellow-600 to-orange-700"
     }
-  ]
+  ], [])
+
+  // Debug: Log current slide image
+  useEffect(() => {
+    console.log('Current slide image:', banners[currentSlide]?.image);
+  }, [currentSlide, banners]);
 
   const featuredCategories = [
     {
@@ -78,7 +83,7 @@ export default function HeroSection() {
     {
       title: "Premium Products",
       subtitle: "Best sellers",
-      image: "https://images.unsplash.com/photo-1633636146152-62c47d194ed3?w=400&h=200&fit=crop",
+      image: "/images/multigrain-flour.jpg",
       link: "/products",
       bgColor: "from-blue-50 to-blue-100"
     },
@@ -135,44 +140,57 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute inset-0"
               >
-                {/* Subtle Extended Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${banners[currentSlide].bgColor} opacity-88 z-10`}></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-transparent z-15"></div>
+                {/* Enhanced Gradient Overlay for better text visibility */}
+                {/* <div className={`absolute inset-0 bg-gradient-to-br ${banners[currentSlide].bgColor} opacity-60 z-10`}></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-15"></div> */}
                 
                 <Image
                   src={banners[currentSlide].image}
                   alt={banners[currentSlide].title}
                   fill
-                  className="object-cover"
+                  className="object-cover z-0"
                   priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 75vw"
+                  onError={(e) => {
+                    console.error('Image failed to load:', banners[currentSlide].image);
+                    // Fallback to a working background image
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/hero-bg.jpg';
+                  }}
+                  onLoad={() => {
+                    console.log('Image loaded successfully:', banners[currentSlide].image);
+                  }}
                 />
                 
-                {/* Content positioned in center-left */}
+                {/* Content positioned in center-left with enhanced visibility */}
                 <div className="absolute inset-0 z-20 flex items-center">
                   <div className="max-w-lg px-4 sm:px-6 md:px-8 lg:px-12">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                      className="space-y-2 sm:space-y-3 md:space-y-4"
-                    >
-                      <p className="text-yellow-300 font-medium text-xs sm:text-sm md:text-base">
-                        {banners[currentSlide].subtitle}
-                      </p>
-                      <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-white leading-tight">
-                        {banners[currentSlide].title}
-                      </h1>
-                      <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-xs sm:max-w-sm md:max-w-md">
-                        {banners[currentSlide].description}
-                      </p>
-                      <div className="pt-1 sm:pt-2">
-                        <Button asChild size="sm" className="bg-white text-gray-900 hover:bg-gray-100 text-xs sm:text-sm font-medium px-3 sm:px-4 md:px-6 rounded-md">
-                          <Link href={banners[currentSlide].ctaLink}>
-                            {banners[currentSlide].cta}
-                          </Link>
-                        </Button>
-                      </div>
-                    </motion.div>
+                    {/* Semi-transparent background for text */}
+                    <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="space-y-2 sm:space-y-3 md:space-y-4"
+                      >
+                        <p className="text-yellow-300 font-semibold text-xs sm:text-sm md:text-base drop-shadow-lg">
+                          {banners[currentSlide].subtitle}
+                        </p>
+                        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-white leading-tight drop-shadow-2xl">
+                          {banners[currentSlide].title}
+                        </h1>
+                        <p className="text-white text-xs sm:text-sm md:text-base leading-relaxed max-w-xs sm:max-w-sm md:max-w-md drop-shadow-lg">
+                          {banners[currentSlide].description}
+                        </p>
+                        <div className="pt-1 sm:pt-2">
+                          <Button asChild size="sm" className="bg-white text-gray-900 hover:bg-gray-100 text-xs sm:text-sm font-medium px-3 sm:px-4 md:px-6 rounded-md shadow-lg">
+                            <Link href={banners[currentSlide].ctaLink}>
+                              {banners[currentSlide].cta}
+                            </Link>
+                          </Button>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
