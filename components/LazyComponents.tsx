@@ -9,6 +9,7 @@ const OurValues = lazy(() => import('@/components/sections/OurValues'))
 const AboutSection = lazy(() => import('@/components/sections/AboutSection'))
 const HeroSection = lazy(() => import('@/components/sections/HeroSection'))
 const CertificationsSection = lazy(() => import('@/components/sections/CertificationsSection'))
+const KashminaSection = lazy(() => import('@/components/sections/KashminaSection'))
 
 // Lazy Product Grid with skeleton
 export function LazyProductGrid(props: any) {
@@ -137,6 +138,59 @@ export function LazyCertificationsSection() {
   return (
     <Suspense fallback={fallback}>
       <CertificationsSection />
+    </Suspense>
+  )
+}
+
+// Lazy Kashmina Section with skeleton
+export function LazyKashminaSection() {
+  const fallback = (
+    <div className="py-16 md:py-24 bg-gradient-to-br from-amber-50 to-red-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-12 md:mb-16">
+          <div className="h-6 w-32 bg-gray-200 rounded-full mx-auto animate-pulse"></div>
+          <div className="h-12 w-48 bg-gray-200 rounded mx-auto animate-pulse"></div>
+          <div className="h-5 w-96 bg-gray-200 rounded mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+          <div className="space-y-6">
+            <div className="h-8 w-64 bg-gray-200 rounded animate-pulse"></div>
+            <div className="space-y-3">
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-4 w-3/4 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="w-5 h-5 bg-gray-200 rounded-full animate-pulse"></div>
+                  <div className="h-4 w-48 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-4">
+              <div className="h-12 w-40 bg-gray-200 rounded-xl animate-pulse"></div>
+              <div className="h-12 w-32 bg-gray-200 rounded-xl animate-pulse"></div>
+            </div>
+          </div>
+          <div className="h-96 bg-gray-200 rounded-3xl animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-lg shadow-lg p-6 animate-pulse">
+              <div className="w-12 h-12 bg-gray-200 rounded-xl mb-4"></div>
+              <div className="h-5 w-32 bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 w-full bg-gray-200 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <Suspense fallback={fallback}>
+      <KashminaSection />
     </Suspense>
   )
 }

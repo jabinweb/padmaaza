@@ -41,7 +41,7 @@ export default function PageLoader({ onLoadingComplete, duration = 1500 }: PageL
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center"
       style={{
-        backgroundImage: "url('https://images.pexels.com/photos/2154216/pexels-photo-2154216.jpeg')",
+        backgroundImage: "url('/main-loading.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"

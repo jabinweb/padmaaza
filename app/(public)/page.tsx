@@ -1,4 +1,4 @@
-import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection, LazyCertificationsSection } from '@/components/LazyComponents'
+import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection, LazyCertificationsSection, LazyKashminaSection } from '@/components/LazyComponents'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { prisma } from '@/lib/prisma'
@@ -40,6 +40,9 @@ export default async function Home() {
         {/* About Section */}
         <LazyAboutSection />
 
+        {/* Kashmina Brand Section */}
+        <LazyKashminaSection />
+
         {/* Our Products Section */}
         <section className="py-8 py-10 lg:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +54,7 @@ export default async function Home() {
                 all processed with the highest quality standards.
               </p>
             </div>
-              <LazyProductGrid products={products} />
+              <LazyProductGrid products={products} initialLoadCount={4} loadMoreCount={4} />
           </div>
         </section>
 
