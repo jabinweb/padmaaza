@@ -21,7 +21,7 @@ export default function ClientPageWrapper({ children }: ClientPageWrapperProps) 
         {isLoading && (
           <PageLoader
             onLoadingComplete={handleLoadingComplete}
-            duration={8000}
+            duration={3000}
           />
         )}
       </AnimatePresence>

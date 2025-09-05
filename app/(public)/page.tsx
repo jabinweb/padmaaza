@@ -1,6 +1,5 @@
 import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection, LazyCertificationsSection, LazyKashminaSection } from '@/components/LazyComponents'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { prisma } from '@/lib/prisma'
 import ClientPageWrapper from '@/components/ClientPageWrapper'
 import Image from 'next/image'
