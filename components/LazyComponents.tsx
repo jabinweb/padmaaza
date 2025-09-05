@@ -10,6 +10,10 @@ const AboutSection = lazy(() => import('@/components/sections/AboutSection'))
 const HeroSection = lazy(() => import('@/components/sections/HeroSection'))
 const CertificationsSection = lazy(() => import('@/components/sections/CertificationsSection'))
 const KashminaSection = lazy(() => import('@/components/sections/KashminaSection'))
+const ManufacturingSection = lazy(() => import('@/components/sections/ManufacturingSection'))
+const StatsSection = lazy(() => import('@/components/sections/StatsSection'))
+const SustainabilitySection = lazy(() => import('@/components/sections/SustainabilitySection'))
+const NewsSection = lazy(() => import('@/components/sections/NewsSection'))
 
 // Lazy Product Grid with skeleton
 export function LazyProductGrid(props: any) {
@@ -191,6 +195,149 @@ export function LazyKashminaSection() {
   return (
     <Suspense fallback={fallback}>
       <KashminaSection />
+    </Suspense>
+  )
+}
+
+// Lazy Manufacturing Section with skeleton
+export function LazyManufacturingSection() {
+  const fallback = (
+    <div className="py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-emerald-50/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-16">
+          <div className="h-6 w-32 bg-gray-200 rounded-full mx-auto animate-pulse"></div>
+          <div className="h-12 w-96 bg-gray-200 rounded mx-auto animate-pulse"></div>
+          <div className="h-5 w-[600px] bg-gray-200 rounded mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl p-6 shadow-lg animate-pulse">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-gray-200 rounded-xl"></div>
+                <div className="text-right">
+                  <div className="h-6 w-16 bg-gray-200 rounded"></div>
+                  <div className="h-3 w-20 bg-gray-200 rounded mt-1"></div>
+                </div>
+              </div>
+              <div className="h-5 w-32 bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 w-full bg-gray-200 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <Suspense fallback={fallback}>
+      <ManufacturingSection />
+    </Suspense>
+  )
+}
+
+// Lazy Stats Section with skeleton
+export function LazyStatsSection() {
+  const fallback = (
+    <div className="py-16 lg:py-24 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-16">
+          <div className="h-6 w-24 bg-gray-700 rounded-full mx-auto animate-pulse"></div>
+          <div className="h-12 w-96 bg-gray-700 rounded mx-auto animate-pulse"></div>
+          <div className="h-5 w-[600px] bg-gray-700 rounded mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-white/5 rounded-2xl p-8 border border-white/10 animate-pulse">
+              <div className="w-16 h-16 bg-gray-700 rounded-2xl mb-6"></div>
+              <div className="h-12 w-20 bg-gray-700 rounded mb-2"></div>
+              <div className="h-5 w-32 bg-gray-700 rounded mb-3"></div>
+              <div className="h-4 w-full bg-gray-700 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <Suspense fallback={fallback}>
+      <StatsSection />
+    </Suspense>
+  )
+}
+
+
+// Lazy Sustainability Section with skeleton
+export function LazySustainabilitySection() {
+  const fallback = (
+    <div className="py-16 lg:py-24 bg-gradient-to-br from-green-50 via-emerald-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-16">
+          <div className="h-6 w-32 bg-gray-200 rounded-full mx-auto animate-pulse"></div>
+          <div className="h-12 w-96 bg-gray-200 rounded mx-auto animate-pulse"></div>
+          <div className="h-5 w-[600px] bg-gray-200 rounded mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 animate-pulse">
+              <div className="w-16 h-16 bg-gray-200 rounded-2xl mb-6"></div>
+              <div className="h-5 w-32 bg-gray-200 rounded mb-3"></div>
+              <div className="h-4 w-full bg-gray-200 rounded mb-4"></div>
+              <div className="h-6 w-24 bg-gray-200 rounded-full"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <Suspense fallback={fallback}>
+      <SustainabilitySection />
+    </Suspense>
+  )
+}
+
+// Lazy News Section with skeleton
+export function LazyNewsSection() {
+  const fallback = (
+    <div className="py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4 mb-16">
+          <div className="h-6 w-32 bg-gray-200 rounded-full mx-auto animate-pulse"></div>
+          <div className="h-12 w-64 bg-gray-200 rounded mx-auto animate-pulse"></div>
+          <div className="h-5 w-[500px] bg-gray-200 rounded mx-auto animate-pulse"></div>
+        </div>
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 mb-16 animate-pulse">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="h-64 lg:h-80 bg-gray-200"></div>
+            <div className="p-8 lg:p-12 space-y-4">
+              <div className="h-4 w-32 bg-gray-200 rounded"></div>
+              <div className="h-8 w-full bg-gray-200 rounded"></div>
+              <div className="h-4 w-full bg-gray-200 rounded"></div>
+              <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
+              <div className="h-48 bg-gray-200"></div>
+              <div className="p-6 space-y-3">
+                <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                <div className="h-5 w-full bg-gray-200 rounded"></div>
+                <div className="h-4 w-full bg-gray-200 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <Suspense fallback={fallback}>
+      <NewsSection />
     </Suspense>
   )
 }

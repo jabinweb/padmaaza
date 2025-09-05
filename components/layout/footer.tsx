@@ -46,46 +46,48 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Mobile: 2-column layout for menu sections */}
-          <div className="lg:col-span-3 grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Quick Links</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li><Link href="/about" className="text-gray-400 hover:text-orange-400 transition-colors">About Us</Link></li>
-                <li><Link href="/products" className="text-gray-400 hover:text-orange-400 transition-colors">Our Products</Link></li>
-                <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Partnership</Link></li>
-                <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Become Wholesaler</Link></li>
-                <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Supply</Link></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Contact Us</Link></li>
-              </ul>
-            </div>
+          {/* Menu sections - Responsive layout */}
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Quick Links</h4>
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+                  <li><Link href="/about" className="text-gray-400 hover:text-orange-400 transition-colors">About Us</Link></li>
+                  <li><Link href="/products" className="text-gray-400 hover:text-orange-400 transition-colors">Our Products</Link></li>
+                  <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Partnership</Link></li>
+                  <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Become Wholesaler</Link></li>
+                  <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Supply</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Contact Us</Link></li>
+                </ul>
+              </div>
 
-            {/* Business Solutions */}
-            <div>
-              <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Business</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Distributor Program</Link></li>
-                <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Orders</Link></li>
-                <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Business Partnership</Link></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Private Label</Link></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Export Inquiry</Link></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Franchise</Link></li>
-              </ul>
-            </div>
+              {/* Business Solutions */}
+              <div>
+                <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Business</h4>
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+                  <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Distributor Program</Link></li>
+                  <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Orders</Link></li>
+                  <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Business Partnership</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Private Label</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Export Inquiry</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Franchise</Link></li>
+                </ul>
+              </div>
 
-            {/* Legal & Support - Full width on mobile in 2-column setup */}
-            <div className="col-span-2 lg:col-span-1">
-              <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Support</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm grid grid-cols-2 lg:grid-cols-1 gap-x-4 lg:gap-x-0">
-                <li><Link href="/orders" className="text-gray-400 hover:text-orange-400 transition-colors">Track Order</Link></li>
-                <li><Link href="/profile" className="text-gray-400 hover:text-orange-400 transition-colors">My Account</Link></li>
-                <li><Link href="/terms-of-service" className="text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</Link></li>
-                <li><Link href="/privacy-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/refund-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Refund Policy</Link></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Help Center</Link></li>
-              </ul>
+              {/* Legal & Support - Responsive column spanning */}
+              <div className="col-span-2 lg:col-span-1">
+                <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Support</h4>
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm grid grid-cols-2 lg:grid-cols-1 gap-x-4 lg:gap-x-0">
+                  <li><Link href="/orders" className="text-gray-400 hover:text-orange-400 transition-colors">Track Order</Link></li>
+                  <li><Link href="/profile" className="text-gray-400 hover:text-orange-400 transition-colors">My Account</Link></li>
+                  <li><Link href="/terms-of-service" className="text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</Link></li>
+                  <li><Link href="/privacy-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/refund-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Refund Policy</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Help Center</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

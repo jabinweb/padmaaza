@@ -61,7 +61,7 @@ export default function HeroSection() {
 
   const featuredCategories = [
     {
-      title: "Premium Basmati 1121",
+      title: "Premium Basmati",
       subtitle: "Extra long grain",
       image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=400&fit=crop&q=80",
       link: "/products?brand=basmati-1121",
@@ -229,16 +229,16 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Modern Category Cards - Right Side (1/4 width) - Mobile-first layout */}
-          <div className="lg:col-span-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
+          {/* Modern Category Cards - Right Side (1/4 width) - Match slider height exactly */}
+          <div className="lg:col-span-1 aspect-[3/2] sm:aspect-[16/10] md:aspect-video lg:aspect-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4 h-full">
               {featuredCategories.slice(0, 4).map((category, index) => (
                 <motion.div
                   key={category.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="min-h-[100px] sm:min-h-[110px] lg:min-h-[120px]"
+                  className="min-h-[100px] sm:min-h-[110px] lg:h-full lg:min-h-0"
                 >
                   <Link href={category.link}>
                     <div className="group h-full relative bg-white rounded-lg border border-gray-200 hover:border-emerald-300 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden">
@@ -246,7 +246,7 @@ export default function HeroSection() {
                       <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${category.bgColor}`}></div>
                       
                       {/* Content - Mobile-optimized Layout */}
-                      <div className="relative p-4 sm:p-5 h-full flex items-center gap-3 sm:gap-4">
+                      <div className="relative px-3 !py-0 sm:p-5 h-full flex items-center gap-3 sm:gap-4">
                         {/* Icon Container */}
                         <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-10 lg:h-10 rounded-lg bg-gradient-to-br ${category.bgColor} flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-lg flex-shrink-0`}>
                           <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-5 lg:h-5 bg-white/20 rounded backdrop-blur-sm"></div>
@@ -254,10 +254,10 @@ export default function HeroSection() {
                         
                         {/* Typography */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-sm sm:text-base lg:text-sm text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight mb-1">
+                          <h3 className="font-semibold text-base sm:text-lg lg:text-base text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight mb-1">
                             {category.title}
                           </h3>
-                          <p className="text-xs sm:text-sm lg:text-xs text-gray-600 group-hover:text-gray-700 transition-colors">
+                          <p className="text-sm sm:text-base lg:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
                             {category.subtitle}
                           </p>
                         </div>

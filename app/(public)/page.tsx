@@ -1,4 +1,4 @@
-import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection, LazyCertificationsSection, LazyKashminaSection } from '@/components/LazyComponents'
+import { LazyHeroSection, LazyOurValues, LazyAboutSection, LazyCertificationsSection, LazyKashminaSection, LazyManufacturingSection, LazyStatsSection, LazySustainabilitySection, LazyNewsSection } from '@/components/LazyComponents'
 import { Badge } from '@/components/ui/badge'
 import { prisma } from '@/lib/prisma'
 import ClientPageWrapper from '@/components/ClientPageWrapper'
@@ -43,67 +43,73 @@ export default async function Home() {
         {/* Kashmina Brand Section */}
         <LazyKashminaSection />
 
+        {/* Manufacturing Excellence Section */}
+        <LazyManufacturingSection />
+
+        {/* Statistics & Achievements Section */}
+        <LazyStatsSection />
+
         {/* Our Reach Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-slate-50 to-emerald-50">
+        <section className="py-12 lg:py-16 bg-gradient-to-br from-gray-50 to-blue-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-3 py-1 text-sm font-medium mb-4">Our Reach</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-10">
+              <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-4 py-2 text-sm font-medium mb-4">Our Reach</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                 Available on Leading Platforms
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Experience the convenience of ordering premium Kashmina Basmati Rice from your favorite platforms
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Premium Kashmina Rice on your favorite platforms
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {/* Amazon */}
               <div className="group">
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 group-hover:border-orange-200">
-                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 border border-gray-100 group-hover:scale-105 transition-all duration-300">
+                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-orange-200 group-hover:-translate-y-1">
+                  <div className="w-24 h-24 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
                     <Image
                       src="https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo-768x432.png"
                       alt="Amazon"
-                      width={60}
-                      height={20}
+                      width={80}
+                      height={30}
                       className="object-contain"
                     />
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Shop our premium rice collection with fast delivery and trusted Amazon service
+                  <p className="text-gray-600 text-sm mb-3">
+                    Fast delivery with trusted Amazon service
                   </p>
-                  <div className="inline-block bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">
-                    Nationwide Delivery
+                  <div className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    Nationwide
                   </div>
                 </div>
               </div>
 
               {/* Zepto */}
               <div className="group">
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 group-hover:border-purple-200">
-                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 border border-gray-100 group-hover:scale-105 transition-all duration-300">
+                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-purple-200 group-hover:-translate-y-1">
+                  <div className="w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
                     <Image
                       src="https://cdn.brandfetch.io/idmjhO-S03/w/820/h/273/theme/dark/logo.png"
                       alt="Zepto"
-                      width={60}
-                      height={20}
+                      width={80}
+                      height={30}
                       className="object-contain"
                     />
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Get your favorite Kashmina rice delivered in minutes with Zepto's quick commerce
+                  <p className="text-gray-600 text-sm mb-3">
+                    Quick delivery in minutes
                   </p>
-                  <div className="inline-block bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
-                    10-Minute Delivery
+                  <div className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    10-Min Delivery
                   </div>
                 </div>
               </div>
 
               {/* Blinkit */}
               <div className="group">
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 group-hover:border-emerald-200">
-                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 border border-gray-100 group-hover:scale-105 transition-all duration-300">
-                    <svg width="60" height="14" viewBox="0 0 114 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-emerald-200 group-hover:-translate-y-1">
+                  <div className="w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
+                    <svg width="80" height="20" viewBox="0 0 114 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M14.3342 7.186C16.2619 7.186 17.9832 7.66644 19.4978 8.62732C21.0262 9.57447 22.2242 10.9197 23.0917 12.663C23.9316 14.3377 24.3516 16.3075 24.3516 18.5724C24.3516 20.7687 23.9316 22.7316 23.0917 24.4612C22.2517 26.1908 21.0675 27.5429 19.5391 28.5175C17.9969 29.5058 16.2619 30 14.3342 30C12.9297 30 11.6078 29.7117 10.3685 29.1352C9.12927 28.5587 8.06901 27.7488 7.18775 26.7056V29.4852H0V0H7.18775V10.4598C8.06901 9.41661 9.12927 8.61359 10.3685 8.05079C11.6078 7.47426 12.9297 7.186 14.3342 7.186ZM12.1861 24.0494C13.2051 24.0494 14.1139 23.8161 14.9125 23.3493C15.7112 22.8826 16.3377 22.2306 16.7921 21.3933C17.2465 20.5697 17.4737 19.6294 17.4737 18.5724C17.4737 17.5429 17.2465 16.6095 16.7921 15.7721C16.3377 14.9348 15.7112 14.2828 14.9125 13.8161C14.1139 13.3493 13.2051 13.116 12.1861 13.116C11.2223 13.116 10.3617 13.3493 9.60432 13.8161C8.84699 14.269 8.2549 14.9073 7.82804 15.731C7.40118 16.5683 7.18775 17.5154 7.18775 18.5724C7.18775 19.6294 7.40118 20.5765 7.82804 21.4139C8.2549 22.2375 8.84699 22.8826 9.60432 23.3493C10.3617 23.8161 11.2223 24.0494 12.1861 24.0494Z" fill="#F8CB46"/>
                       <path d="M25.3356 29.4852V0H32.5233V29.4852H25.3356Z" fill="#F8CB46"/>
                       <path d="M34.5607 29.4852V7.68016H41.7071V29.4852H34.5607Z" fill="#F8CB46"/>
@@ -115,10 +121,10 @@ export default async function Home() {
                       <path d="M90.2609 0.00241089H97.4307V5.59215H90.2609V0.00241089Z" fill="#54B226"/>
                     </svg>
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Order premium quality rice instantly through Blinkit's super-fast grocery delivery
+                  <p className="text-gray-600 text-sm mb-3">
+                    Super-fast grocery delivery
                   </p>
-                  <div className="inline-block bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold">
                     Instant Delivery
                   </div>
                 </div>
@@ -144,6 +150,12 @@ export default async function Home() {
 
         {/* Certifications Section */}
         <LazyCertificationsSection />
+
+        {/* Sustainability Section */}
+        <LazySustainabilitySection />
+
+        {/* News & Updates Section */}
+        {/* <LazyNewsSection /> */}
 
         {/* Our Values Section */}
         <LazyOurValues />
