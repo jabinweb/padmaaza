@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,6 +20,10 @@ export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
+  const searchParams = useSearchParams()
+  
+  // Get the callback URL from search params, default to /dashboard
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
   const {
     register,
@@ -43,7 +47,7 @@ export default function SignInPage() {
       if (result?.error) {
         setError('Invalid email or password')
       } else {
-        router.push('/dashboard')
+        router.push(callbackUrl)
       }
     } catch (error) {
       setError('Something went wrong. Please try again.')
@@ -54,7 +58,7 @@ export default function SignInPage() {
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
-    await signIn('google', { callbackUrl: '/dashboard' })
+    await signIn('google', { callbackUrl })
   }
 
   return (
