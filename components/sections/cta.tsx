@@ -47,9 +47,14 @@ export default function CTA() {
               </div>
             </div>
             
-            <Button size="lg" className="bg-white text-slate-900 hover:bg-emerald-50 px-8 py-3 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-              <Link href="/contact">Get in Touch</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" className="bg-white text-slate-900 hover:bg-emerald-50 px-8 py-3 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <Link href="/contact">Get in Touch</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-white bg-transparent hover:bg-white hover:text-slate-900 px-8 py-3 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <Link href="/partners">Part time Job</Link>
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>

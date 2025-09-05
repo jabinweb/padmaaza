@@ -63,7 +63,7 @@ export default async function Home() {
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 group-hover:border-orange-200">
                   <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 border border-gray-100 group-hover:scale-105 transition-all duration-300">
                     <Image
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/905px-Amazon_logo.svg.png"
+                      src="https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo-768x432.png"
                       alt="Amazon"
                       width={60}
                       height={20}

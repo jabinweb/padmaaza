@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { Truck, Package, Users, Factory, Globe, Shield, Clock, CheckCircle, Calculator, Phone, Mail, Download, ArrowRight, Warehouse, Scale, Target } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -37,28 +36,6 @@ export default function BulkSupplyPage() {
       features: ['Non-Sticky', 'Longer Shelf Life', 'Uniform Color']
     },
     {
-      id: 3,
-      name: 'Turmeric Powder',
-      category: 'Spices',
-      minOrder: '5 MT',
-      pricing: '₹180-220/kg',
-      packaging: '25kg Cartons/PP Bags',
-      specifications: 'Curcumin 3-5%, Moisture <10%',
-      image: '/api/placeholder/300/200',
-      features: ['Single Polished', 'Chemical Free', 'High Curcumin']
-    },
-    {
-      id: 4,
-      name: 'Red Chili Powder',
-      category: 'Spices',
-      minOrder: '3 MT',
-      pricing: '₹250-300/kg',
-      packaging: '25kg Cartons/PP Bags',
-      specifications: 'ASTA 120-140, Moisture <11%',
-      image: '/api/placeholder/300/200',
-      features: ['High Color Value', 'Steam Sterilized', 'Aflatoxin Free']
-    },
-    {
       id: 5,
       name: 'Wheat Flour',
       category: 'Flour & Grains',
@@ -69,17 +46,6 @@ export default function BulkSupplyPage() {
       image: '/api/placeholder/300/200',
       features: ['Fortified', 'Pest Free', 'Uniform Texture']
     },
-    {
-      id: 6,
-      name: 'Toor Dal (Arhar)',
-      category: 'Pulses',
-      minOrder: '10 MT',
-      pricing: '₹120-140/kg',
-      packaging: '25kg, 50kg PP Bags',
-      specifications: 'Split & Polished, Protein 22%+',
-      image: '/api/placeholder/300/200',
-      features: ['Machine Cleaned', 'Double Polished', 'Stone Free']
-    }
   ]
 
   const services = [

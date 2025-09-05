@@ -32,83 +32,48 @@ interface MegaMenuProps {
 }
 
 export default function MegaMenu({ menuKey, menu, isActive, onClose }: MegaMenuProps) {
-  const [dynamicCategories, setDynamicCategories] = useState<MegaMenuCategory[]>([])
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [latestProducts, setLatestProducts] = useState<MegaMenuItem[]>([])
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
 
-  // Fetch latest categories and products for Products menu on component mount
+  // Fetch 4 latest products for Products menu on component mount
   useEffect(() => {
     if (menuKey === 'products') {
-      const fetchLatestCategoriesAndProducts = async () => {
+      const fetchLatestProducts = async () => {
         try {
-          setIsLoadingCategories(true)
+          setIsLoadingProducts(true)
           
-          // Fetch all categories first
-          const categoriesResponse = await fetch('/api/categories')
-          const categoriesData = await categoriesResponse.json()
+          // Fetch latest 4 products directly
+          const productsResponse = await fetch('/api/products?limit=4&sort=latest')
+          const productsData = await productsResponse.json()
           
-          if (categoriesData && categoriesData.length > 0) {
-            // Take the first 2 categories
-            const latestCategories = categoriesData.slice(0, 2)
+          if (productsData && productsData.products) {
+            const products = productsData.products.map((product: any) => ({
+              name: product.name,
+              href: `/products/${product.slug}`,
+              description: product.description?.substring(0, 50) + '...' || 'Premium quality product'
+            }))
             
-            // Fetch latest products for each category
-            const categoriesWithProducts = await Promise.all(
-              latestCategories.map(async (category: any) => {
-                const productsResponse = await fetch(`/api/products?categoryId=${category.id}&limit=4`)
-                const productsData = await productsResponse.json()
-                
-                return {
-                  name: category.name,
-                  id: category.id,
-                  icon: category.name.toLowerCase().includes('spice') || category.name.toLowerCase().includes('pulse') ? Leaf : 
-                        category.name.toLowerCase().includes('rice') || category.name.toLowerCase().includes('grain') ? Wheat : ShoppingBag,
-                  items: productsData.products?.slice(0, 4).map((product: any) => ({
-                    name: product.name,
-                    href: `/products/${product.slug}`,
-                    description: product.description?.substring(0, 50) + '...' || 'Premium quality product'
-                  })) || []
-                }
-              })
-            )
-            
-            setDynamicCategories(categoriesWithProducts)
+            setLatestProducts(products)
           }
         } catch (error) {
-          console.error('Error fetching categories and products:', error)
+          console.error('Error fetching latest products:', error)
           // Fallback to static data if API fails
-          setDynamicCategories([
-            {
-              name: 'Rice & Grains',
-              icon: Wheat,
-              items: [
-                { name: 'Premium Basmati Rice', href: '/products', description: 'Aromatic long-grain rice' },
-                { name: 'Non-Basmati Rice', href: '/products', description: 'Traditional varieties' },
-                { name: 'Multigrain Flour', href: '/products', description: 'Nutritious blend' },
-                { name: 'Wheat Flour', href: '/products', description: 'Premium quality flour' },
-              ]
-            },
-            {
-              name: 'Spices & Pulses',
-              icon: Leaf,
-              items: [
-                { name: 'Turmeric Powder', href: '/products', description: 'Pure and aromatic' },
-                { name: 'Red Chili Powder', href: '/products', description: 'Spicy and flavorful' },
-                { name: 'Toor Dal', href: '/products', description: 'Yellow lentils' },
-                { name: 'All Spices', href: '/products', description: 'View all spices' },
-              ]
-            }
+          setLatestProducts([
+            { name: 'Premium Basmati Rice', href: '/products', description: 'Aromatic long-grain rice' },
+            { name: 'Kashmina Rice', href: '/products', description: 'Premium quality rice' },
+            { name: 'Non-Basmati Rice', href: '/products', description: 'Traditional varieties' },
+            { name: 'Multigrain Flour', href: '/products', description: 'Nutritious blend' },
           ])
         } finally {
-          setIsLoadingCategories(false)
+          setIsLoadingProducts(false)
         }
       }
 
-      fetchLatestCategoriesAndProducts()
+      fetchLatestProducts()
     } else {
-      setIsLoadingCategories(false)
+      setIsLoadingProducts(false)
     }
   }, [menuKey]) // Only depend on menuKey, not isActive
-
-  const categoriesToShow = menuKey === 'products' ? dynamicCategories : menu.categories
 
   return (
     <AnimatePresence>
@@ -121,36 +86,58 @@ export default function MegaMenu({ menuKey, menu, isActive, onClose }: MegaMenuP
           className="absolute top-full mt-2 bg-white rounded-xl shadow-2xl border border-slate-200/50 backdrop-blur-lg overflow-hidden z-50 right-0"
           style={{ 
             width: 'auto',
-            minWidth: menu.type === 'categories' ? '320px' : '280px',
+            minWidth: menuKey === 'products' ? '320px' : '280px',
             maxWidth: '90vw'
           }}
         >
           <div className="p-3 sm:p-4">
-            {menu.type === 'categories' ? (
-              // Categories Mega Menu - Compact Responsive Grid
-              isLoadingCategories && menuKey === 'products' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  {/* Loading skeleton */}
-                  {[1, 2].map((skeleton) => (
-                    <div key={skeleton} className="space-y-2 animate-pulse">
-                      <div className="flex items-center space-x-2 pb-1.5 border-b border-slate-100">
-                        <div className="w-4 h-4 bg-slate-200 rounded"></div>
-                        <div className="h-4 bg-slate-200 rounded w-20"></div>
+            {menuKey === 'products' ? (
+              // Latest Products - Simple List
+              isLoadingProducts ? (
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 pb-1.5 border-b border-slate-100">
+                    <div className="w-4 h-4 bg-slate-200 rounded animate-pulse"></div>
+                    <div className="h-4 bg-slate-200 rounded w-32 animate-pulse"></div>
+                  </div>
+                  <div className="space-y-1">
+                    {[1, 2, 3, 4].map((item) => (
+                      <div key={item} className="p-2">
+                        <div className="h-3 bg-slate-200 rounded w-full mb-1 animate-pulse"></div>
+                        <div className="h-2 bg-slate-100 rounded w-3/4 animate-pulse"></div>
                       </div>
-                      <div className="space-y-1">
-                        {[1, 2, 3].map((item) => (
-                          <div key={item} className="p-2">
-                            <div className="h-3 bg-slate-200 rounded w-full mb-1"></div>
-                            <div className="h-2 bg-slate-100 rounded w-3/4"></div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               ) : (
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 pb-1.5 border-b border-slate-100">
+                    <ShoppingBag className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <h3 className="font-semibold text-slate-800 text-sm">Latest Products</h3>
+                  </div>
+                  <div className="space-y-1">
+                    {latestProducts.map((product, idx) => (
+                      <Link
+                        key={idx}
+                        href={product.href}
+                        className="block p-2 rounded-lg hover:bg-slate-50 transition-colors duration-200 group"
+                        onClick={onClose}
+                      >
+                        <div className="font-medium text-slate-800 group-hover:text-emerald-600 transition-colors duration-200 text-sm truncate">
+                          {product.name}
+                        </div>
+                        <div className="text-xs text-slate-500 truncate">
+                          {product.description}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )
+            ) : (
+              // Other menu types - Categories
+              menu.type === 'categories' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  {categoriesToShow?.map((category, idx) => {
+                  {menu.categories?.map((category, idx) => {
                     const IconComponent = category.icon
                     return (
                       <div key={idx} className="space-y-2 sm:space-y-3">
@@ -180,10 +167,10 @@ export default function MegaMenu({ menuKey, menu, isActive, onClose }: MegaMenuP
                   })}
                 </div>
               )
-            ) : null}
+            )}
             
             {/* View All Products Button - Only for Products Menu */}
-            {menuKey === 'products' && !isLoadingCategories && (
+            {menuKey === 'products' && !isLoadingProducts && (
               <div className="mt-4 pt-3 border-t border-slate-100">
                 <Link
                   href="/products"

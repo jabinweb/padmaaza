@@ -56,8 +56,8 @@ export function Header() {
           items: [
             { name: 'Our Story', href: '/about', description: 'Company history and mission' },
             { name: 'Our Founder', href: '/about/founder', description: 'Meet our visionary leader' },
-            { name: 'Quality Standards', href: '/about/quality', description: 'Excellence commitment' },
-            // { name: 'Certifications', href: '/about/certifications', description: 'Industry recognition' },
+            // { name: 'Quality Standards', href: '/about/quality', description: 'Excellence commitment' },
+            { name: 'Certifications', href: '/about/certifications', description: 'Industry recognition' },
           ]
         },
         {

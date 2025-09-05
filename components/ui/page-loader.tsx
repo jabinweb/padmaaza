@@ -8,18 +8,18 @@ interface PageLoaderProps {
   duration?: number
 }
 
-export default function PageLoader({ onLoadingComplete, duration = 1500 }: PageLoaderProps) {
+export default function PageLoader({ onLoadingComplete, duration = 800 }: PageLoaderProps) {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    // Progress bar animation
+    // Progress bar animation - faster completion
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval)
           return 100
         }
-        return prev + 6.67 // Will complete in 1.5 seconds
+        return prev + 12.5 // Will complete in 0.8 seconds (100/12.5 * 100ms)
       })
     }, 100)
 
@@ -55,7 +55,7 @@ export default function PageLoader({ onLoadingComplete, duration = 1500 }: PageL
         <motion.h1
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg"
         >
           Welcome Padmaaja Rasooi
@@ -65,7 +65,7 @@ export default function PageLoader({ onLoadingComplete, duration = 1500 }: PageL
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
           className="w-full max-w-md mx-auto space-y-3"
         >
           <div className="w-full bg-white/30 backdrop-blur-sm rounded-full h-2 overflow-hidden border border-white/20">
