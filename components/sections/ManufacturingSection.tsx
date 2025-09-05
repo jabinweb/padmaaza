@@ -11,57 +11,57 @@ export default function ManufacturingSection() {
     const facilities = [
         {
             icon: Factory,
-            title: "State-of-the-Art Processing",
-            description: "Modern milling facility with advanced technology for premium quality rice processing",
+            title: "Advanced Rice Milling",
+            description: "Modern rice milling facility with precision technology for perfect grain separation and quality",
             value: "200+ MT/Day",
-            label: "Processing Capacity"
+            label: "Rice Processing"
         },
         {
             icon: CheckCircle,
-            title: "Quality Assurance",
-            description: "Multi-stage quality checks ensuring every grain meets international standards",
+            title: "Rice Quality Assurance",
+            description: "Multi-stage quality checks ensuring every rice grain meets export quality standards",
             value: "99.9%",
-            label: "Quality Consistency"
+            label: "Pure Rice Quality"
         },
         {
             icon: Globe,
-            title: "Export Infrastructure",
-            description: "Dedicated export facility with proper storage and packaging capabilities",
+            title: "Basmati Export Hub",
+            description: "Specialized facility for Basmati rice aging, processing and international export",
             value: "25+",
-            label: "Countries Served"
+            label: "Countries Export"
         },
         {
             icon: Users,
-            title: "Skilled Workforce",
-            description: "Expert team with decades of experience in rice processing and quality control",
+            title: "Rice Processing Experts",
+            description: "Skilled team with traditional knowledge and modern techniques in rice processing",
             value: "100+",
-            label: "Expert Team"
+            label: "Rice Specialists"
         }
     ]
 
     const processSteps = [
         {
             step: "01",
-            title: "Premium Sourcing",
-            description: "Direct procurement from select farmers ensuring the finest quality paddy",
+            title: "Premium Paddy Sourcing",
+            description: "Direct procurement from Punjab & Haryana's best rice growing regions",
             image: "/farmer.png"
         },
         {
             step: "02", 
-            title: "Advanced Milling",
-            description: "State-of-the-art milling process preserving natural aroma and nutrition",
+            title: "Traditional Rice Aging",
+            description: "Natural aging process for Basmati rice to develop characteristic aroma and length",
             image: "/factory.png"
         },
         {
             step: "03",
-            title: "Quality Testing",
-            description: "Rigorous multi-stage quality testing in our certified laboratory",
+            title: "Rice Quality Laboratory",
+            description: "Comprehensive testing for grain length, aroma, moisture and purity standards",
             image: "/lab.png"
         },
         {
             step: "04",
-            title: "Premium Packaging",
-            description: "Hygienic packaging with nitrogen flushing for extended freshness",
+            title: "Premium Rice Packaging",
+            description: "Food-grade packaging with moisture control for long-lasting rice freshness",
             image: "/rice_bags.png"
         }
     ]
@@ -69,9 +69,9 @@ export default function ManufacturingSection() {
     return (
         <section className="relative py-16 lg:py-24 overflow-hidden">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-emerald-50/30"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(16,185,129,0.05),transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50/30"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(245,158,11,0.05),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(251,191,36,0.05),transparent_50%)]"></div>
             
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
@@ -82,16 +82,16 @@ export default function ManufacturingSection() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 bg-emerald-100/50 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                        <Factory className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700 font-medium text-sm">Our Manufacturing</span>
+                    <div className="inline-flex items-center gap-2 bg-amber-100/50 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+                        <Factory className="w-4 h-4 text-amber-600" />
+                        <span className="text-amber-700 font-medium text-sm">Rice Processing Excellence</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-                        From Farms to 
-                        <span className="text-transparent bg-gradient-to-r from-emerald-600 via-emerald-500 to-blue-500 bg-clip-text"> Premium Quality</span>
+                        From Paddy Fields to 
+                        <span className="text-transparent bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 bg-clip-text"> Premium Rice</span>
                     </h2>
                     <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                        Advanced processing facilities ensuring every grain meets the highest standards of quality and purity
+                        State-of-the-art rice processing facilities ensuring every grain of Basmati and Sella rice meets international quality standards
                     </p>
                 </motion.div>
 
@@ -104,14 +104,14 @@ export default function ManufacturingSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:border-emerald-200"
+                            className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:border-amber-200"
                         >
                             <div className="flex items-center justify-between mb-4">
-                                <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <facility.icon className="w-6 h-6 text-emerald-600" />
+                                <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <facility.icon className="w-6 h-6 text-amber-600" />
                                 </div>
                                 <div className="text-right">
-                                    <div className="text-2xl font-bold text-emerald-600">{facility.value}</div>
+                                    <div className="text-2xl font-bold text-amber-600">{facility.value}</div>
                                     <div className="text-xs text-slate-500 font-medium">{facility.label}</div>
                                 </div>
                             </div>

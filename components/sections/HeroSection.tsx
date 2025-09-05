@@ -4,9 +4,8 @@ import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Wheat } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface Banner {
   id: number
@@ -34,23 +33,33 @@ export default function HeroSection() {
   const banners: Banner[] = useMemo(() => [
     {
       id: 1,
-      title: "Premium Basmati Rice Collection",
-      subtitle: "Up to 25% off",
-      description: "Authentic aged basmati rice varieties with extra-long grains and distinctive aroma",
+      title: "Premium Aged Basmati 1121",
+      subtitle: "Extra Long Grain • 2+ Years Aged",
+      description: "Authentic Basmati rice with exceptional length, distinctive aroma, and fluffy texture from the foothills of Himalayas",
       image: "/images/rice-hero-slider.jpg",
-      cta: "Shop Rice",
+      cta: "Shop Premium Rice",
       ctaLink: "/products?category=rice",
-      bgColor: "from-emerald-600 via-emerald-700 to-emerald-900"
+      bgColor: "from-amber-600 via-yellow-600 to-orange-700"
     },
+    // {
+    //   id: 2,
+    //   title: "Golden Sella Rice Collection",
+    //   subtitle: "Steam Processed • Premium Quality",
+    //   description: "Traditional parboiled rice with golden color, enhanced nutrition, and perfect grain separation for authentic dishes",
+    //   image: "/rice_bags.png",
+    //   cta: "Shop Sella Rice",
+    //   ctaLink: "/products?category=sella",
+    //   bgColor: "from-yellow-500 via-amber-600 to-orange-600"
+    // },
     {
       id: 3,
-      title: "Multigrain Flour Range",
-      subtitle: "Healthy nutrition",
-      description: "Nutritious multigrain flour blends for wholesome family meals and baking",
-      image: "/images/multigrain-flour.jpg",
-      cta: "Shop Flour",
-      ctaLink: "/products?category=flour",
-      bgColor: "from-amber-500 via-yellow-600 to-orange-700"
+      title: "Kashmina Brand Collection",
+      subtitle: "Farm Fresh • Direct from Fields",
+      description: "Premium rice varieties sourced directly from trusted farmers, processed with care for exceptional quality",
+      image: "/images/kashmina_banner.png",
+      cta: "Shop Kashmina",
+      ctaLink: "/products?brand=kashmina",
+      bgColor: "from-emerald-600 via-green-600 to-yellow-600"
     }
   ], [])
 
@@ -61,32 +70,32 @@ export default function HeroSection() {
 
   const featuredCategories = [
     {
-      title: "Premium Basmati",
+      title: "Basmati 1121",
       subtitle: "Extra long grain",
       image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=400&fit=crop&q=80",
       link: "/products?brand=basmati-1121",
-      bgColor: "from-emerald-500 to-emerald-600"
+      bgColor: "from-amber-500 to-yellow-600"
     },
     {
-      title: "Sella Rice",
-      subtitle: "Golden & White",
+      title: "Golden Sella",
+      subtitle: "Steam processed",
       image: "https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?w=600&h=400&fit=crop&q=80",
       link: "/products?category=sella",
-      bgColor: "from-amber-500 to-amber-600"
+      bgColor: "from-yellow-500 to-amber-600"
     },
     {
-      title: "Kashmina Brand",
-      subtitle: "Premium quality",
+      title: "White Sella",
+      subtitle: "Traditional quality",
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=400&fit=crop&q=80",
       link: "/products?brand=kashmina",
-      bgColor: "from-blue-500 to-blue-600"
+      bgColor: "from-emerald-500 to-green-600"
     },
     {
       title: "Bulk Orders",
       subtitle: "Wholesale rates",
       image: "https://images.unsplash.com/photo-1594736797933-d0d6483cae4d?w=600&h=400&fit=crop&q=80",
       link: "/bulk-supply",
-      bgColor: "from-purple-500 to-purple-600"
+      bgColor: "from-orange-500 to-red-600"
     }
   ]
 
@@ -116,9 +125,10 @@ export default function HeroSection() {
   }
 
   return (
-    <div className="relative bg-gray-50 mt-4 sm:mt-6 md:mt-8">
+    <div className="relative bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/20">
+
       {/* Amazon-style Hero Layout */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 lg:py-10">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-8 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-4 md:gap-5 lg:gap-6">
           
           {/* Main Banner Slider - Left Side (3/4 width) - Better mobile aspect ratio */}
@@ -249,7 +259,7 @@ export default function HeroSection() {
                       <div className="relative px-3 !py-0 sm:p-5 h-full flex items-center gap-3 sm:gap-4">
                         {/* Icon Container */}
                         <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-10 lg:h-10 rounded-lg bg-gradient-to-br ${category.bgColor} flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-lg flex-shrink-0`}>
-                          <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-5 lg:h-5 bg-white/20 rounded backdrop-blur-sm"></div>
+                          <Wheat className="w-5 h-5 sm:w-6 sm:h-6 lg:w-5 lg:h-5 text-white" />
                         </div>
                         
                         {/* Typography */}
@@ -277,15 +287,15 @@ export default function HeroSection() {
       </div>
 
       {/* Secondary Strip - Improved mobile layout */}
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-5 sm:py-6">
+      <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 text-white py-5 sm:py-6">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4 sm:gap-6">
             <div className="flex-1">
-              <h3 className="text-base sm:text-lg font-semibold mb-2">Free Shipping on Orders Above ₹500</h3>
-              <p className="text-emerald-100 text-sm sm:text-base">Premium quality products delivered to your doorstep</p>
+              <h3 className="text-base sm:text-lg font-semibold mb-2">🌾 Premium Rice • Direct from Farms • Free Shipping ₹500+</h3>
+              <p className="text-yellow-100 text-sm sm:text-base">Aged Basmati & Golden Sella rice delivered fresh to your kitchen</p>
             </div>
-            <Button variant="outline" size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50 border-white text-sm sm:text-base font-medium px-6 py-3 rounded-lg">
-              Shop Now
+            <Button variant="outline" size="lg" className="bg-white text-amber-700 hover:bg-yellow-50 border-white text-sm sm:text-base font-medium px-6 py-3 rounded-lg">
+              Explore Rice Varieties
             </Button>
           </div>
         </div>

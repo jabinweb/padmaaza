@@ -9,25 +9,25 @@ import { motion } from 'framer-motion'
 
 export default function AboutSection() {
     const stats = [
-        { number: "20+", label: "Years of Excellence", icon: Award, color: "from-emerald-500 to-emerald-600" },
-        { number: "10K+", label: "Happy Families", icon: Users, color: "from-blue-500 to-blue-600" },
-        { number: "50+", label: "Premium Products", icon: Star, color: "from-orange-500 to-orange-600" },
-        { number: "99%", label: "Customer Satisfaction", icon: TrendingUp, color: "from-purple-500 to-purple-600" }
+        { number: "20+", label: "Years in Rice Business", icon: Award, color: "from-amber-500 to-yellow-600" },
+        { number: "10K+", label: "Rice Loving Families", icon: Users, color: "from-emerald-500 to-green-600" },
+        { number: "50+", label: "Rice Varieties", icon: Star, color: "from-orange-500 to-red-600" },
+        { number: "99%", label: "Pure & Natural Rice", icon: TrendingUp, color: "from-yellow-500 to-amber-600" }
     ]
 
     const features = [
-        "Direct sourcing from certified farmers",
-        "State-of-the-art processing facilities", 
-        "Rigorous quality control standards",
-        "Sustainable and eco-friendly practices"
+        "Direct sourcing from Punjab & Haryana rice belt",
+        "Traditional aging process for Basmati rice", 
+        "Steam processing for premium Sella varieties",
+        "Farm-to-table traceability and quality assurance"
     ]
 
     return (
         <section className="relative py-12 md:py-32 overflow-hidden">
-            {/* Modern gradient background with subtle pattern */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-emerald-50/30"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.03),transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(245,158,11,0.03),transparent_50%)]"></div>
+            {/* Modern gradient background with rice-inspired colors */}
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50/30"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(245,158,11,0.05),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.05),transparent_50%)]"></div>
             
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section header with modern typography */}
@@ -38,18 +38,18 @@ export default function AboutSection() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-8 md:mb-20"
                 >
-                    <div className="inline-flex items-center gap-2 bg-emerald-100/50 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                        <Wheat className="w-4 h-4 text-emerald-600" />
-                        <span className="text-emerald-700 font-medium text-sm">About Our Legacy</span>
+                    <div className="inline-flex items-center gap-2 bg-amber-100/50 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+                        <Wheat className="w-4 h-4 text-amber-600" />
+                        <span className="text-amber-700 font-medium text-sm">Our Rice Heritage</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                        Crafting Premium {''}
-                        <span className="text-transparent bg-gradient-to-r from-emerald-600 via-emerald-500 to-orange-500 bg-clip-text">
-                            Food Excellence
+                        From Golden Fields to {''}
+                        <span className="text-transparent bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 bg-clip-text">
+                            Your Kitchen
                         </span>
                     </h2>
                     <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                        The careful choice for premium quality food products crafted with tradition and innovation
+                        Bringing you the finest rice varieties from the fertile plains of Northern India, aged to perfection and processed with traditional care
                     </p>
                 </motion.div>
 

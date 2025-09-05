@@ -11,31 +11,31 @@ export default function KashminaSection() {
     return (
         <section className="relative py-16 lg:py-24 overflow-hidden">
             {/* Enhanced Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-blue-50"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.08),transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.08),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(245,158,11,0.08),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.08),transparent_50%)]"></div>
             
             {/* Animated Background Elements */}
-            <div className="absolute top-20 left-10 w-32 h-32 bg-emerald-200/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-40 h-40 bg-blue-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <div className="absolute top-20 left-10 w-32 h-32 bg-amber-200/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-10 w-40 h-40 bg-yellow-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
             
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Enhanced Section Header */}
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-100 to-blue-100 backdrop-blur-sm px-6 py-3 rounded-full mb-6 border border-emerald-200/50 shadow-lg">
-                        <Sparkles className="w-5 h-5 text-emerald-600 animate-pulse" />
-                        <span className="text-emerald-700 font-semibold text-sm tracking-wide">EXPLORE RICE</span>
-                        <Sparkles className="w-5 h-5 text-blue-600 animate-pulse delay-500" />
+                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 backdrop-blur-sm px-6 py-3 rounded-full mb-6 border border-amber-200/50 shadow-lg">
+                        <Sparkles className="w-5 h-5 text-amber-600 animate-pulse" />
+                        <span className="text-amber-700 font-semibold text-sm tracking-wide">PREMIUM RICE BRAND</span>
+                        <Sparkles className="w-5 h-5 text-orange-600 animate-pulse delay-500" />
                     </div>
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                        <span className="text-transparent bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 bg-clip-text bg-300% animate-gradient">
+                        <span className="text-transparent bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 bg-clip-text bg-300% animate-gradient">
                             Kashmina
                         </span>
                         <br />
-                        <span className="text-gray-800 text-3xl md:text-4xl lg:text-5xl font-medium">Brings You Authentic Quality Basmati Rice</span>
+                        <span className="text-gray-800 text-3xl md:text-4xl lg:text-5xl font-medium">Premium Aged Basmati Rice</span>
                     </h2>
                     <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
-                        Authentic quality basmati rice that is rich in <span className="text-emerald-600 font-medium">aroma, texture, and taste</span>
+                        Authentic aged Basmati rice with <span className="text-amber-600 font-medium">extraordinary length, exquisite aroma, and royal taste</span>
                     </p>
                 </div>
 

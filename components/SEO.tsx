@@ -15,9 +15,9 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
-  description = 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
-  keywords = ['padmaaja rasooi', 'premium rice', 'quality rice', 'organic rice', 'basmati rice', 'rice products', 'quality grains'],
+  title = 'Padmaaja Rasooi - Premium Basmati & Sella Rice | Aged Quality Rice',
+  description = 'Experience authentic aged Basmati 1121 and premium Sella rice from Padmaaja Rasooi. Direct from Punjab & Haryana rice belt with traditional aging process.',
+  keywords = ['padmaaja rasooi', 'basmati rice', 'aged basmati', 'sella rice', 'premium rice', 'rice export', 'kashmina rice', '1121 basmati'],
   image = '/images/og-image.png',
   url = '',
   type = 'website',
@@ -93,9 +93,9 @@ export default function SEO({
 // Pre-defined SEO configurations for common pages
 export const SEOConfigs = {
   home: {
-    title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
-    description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
-    keywords: ['padmaaja rasooi', 'premium rice', 'quality rice', 'organic rice', 'basmati rice', 'rice products', 'quality grains', 'agriculture'],
+    title: 'Padmaaja Rasooi - Premium Basmati & Sella Rice | Aged Quality Rice',
+    description: 'Experience authentic aged Basmati 1121 and premium Sella rice from Padmaaja Rasooi. Direct from Punjab & Haryana rice belt with traditional aging process.',
+    keywords: ['padmaaja rasooi', 'basmati rice', 'aged basmati', 'sella rice', 'premium rice', 'rice export', 'kashmina rice', '1121 basmati', 'rice trade'],
     url: '/'
   },
   products: {

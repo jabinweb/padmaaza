@@ -12,30 +12,30 @@ import {
 
 const values = [
   {
-    title: "Quality Assurance",
-    description: "Every grain is carefully selected and tested to ensure premium quality.",
+    title: "Rice Purity",
+    description: "Every grain of Basmati and Sella rice is carefully selected and tested for maximum purity.",
     icon: Shield
   },
   {
-    title: "Farm Fresh",
-    description: "Direct sourcing from trusted farmers ensures freshness and authenticity.",
+    title: "Farm Fresh Rice",
+    description: "Direct sourcing from Punjab & Haryana's finest rice farms ensures authentic quality.",
     icon: Wheat
   },
   {
-    title: "Excellence",
-    description: "Committed to delivering excellence in every product we offer.",
+    title: "Rice Excellence",
+    description: "Committed to delivering the finest aged Basmati and premium Sella rice varieties.",
     icon: Award
   },
   {
-    title: "Sustainable Farming",
-    description: "Supporting eco-friendly farming practices for a healthier planet and future generations.",
+    title: "Sustainable Rice Farming",
+    description: "Supporting eco-friendly rice cultivation practices for healthier communities and environment.",
     icon: Leaf
   }
 ]
 
 export default function OurValues() {
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+    <section className="py-20 bg-gradient-to-br from-amber-50 to-yellow-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
@@ -45,15 +45,14 @@ export default function OurValues() {
           viewport={{ once: true }}
           className="text-center space-y-4 mb-16"
         >
-          <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 px-3 py-1 text-sm font-medium">
-            Our Values
+          <Badge variant="secondary" className="bg-amber-100 text-amber-800 px-3 py-1 text-sm font-medium">
+            Our Rice Values
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-            What Drives Us Forward
+            The Padmaaja Rice Promise
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-            Our commitment to excellence is built on four core values that guide everything we do, 
-            from sourcing to delivery of premium rice products.
+            Our dedication to rice excellence is built on four core principles that ensure every grain of Basmati and Sella rice meets the highest standards.
           </p>
         </motion.div>
 
@@ -77,7 +76,7 @@ export default function OurValues() {
                 <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:bg-white">
                   <CardContent className="p-8 text-center">
                     {/* Icon */}
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                       <IconComponent className="h-8 w-8 text-white" />
                     </div>
                     

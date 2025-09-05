@@ -10,54 +10,54 @@ export default function StatsSection() {
             icon: Globe,
             value: "25+",
             label: "Countries Served",
-            description: "Exporting premium quality rice across continents",
-            color: "from-blue-500 to-blue-600"
+            description: "Exporting premium Basmati rice across continents",
+            color: "from-amber-500 to-yellow-600"
         },
         {
             icon: Wheat,
             value: "200+",
-            label: "MT Daily Capacity", 
-            description: "State-of-the-art processing facility",
-            color: "from-emerald-500 to-emerald-600"
+            label: "MT Rice Daily", 
+            description: "Processing capacity for premium rice varieties",
+            color: "from-yellow-500 to-orange-600"
         },
         {
             icon: Users,
             value: "5000+",
-            label: "Farmers Network",
-            description: "Direct partnerships with quality farmers",
-            color: "from-orange-500 to-orange-600"
+            label: "Rice Farmers",
+            description: "Direct partnerships across Punjab & Haryana rice belt",
+            color: "from-emerald-500 to-green-600"
         },
         {
             icon: Award,
             value: "20+",
-            label: "Years Experience",
-            description: "Legacy of trust and quality excellence",
-            color: "from-purple-500 to-purple-600"
+            label: "Years in Rice Trade",
+            description: "Two decades of rice expertise and quality",
+            color: "from-orange-500 to-red-600"
         },
         {
             icon: Factory,
             value: "99.9%",
-            label: "Quality Assurance",
-            description: "Consistent premium quality standards",
-            color: "from-rose-500 to-rose-600"
+            label: "Pure Rice Quality",
+            description: "Consistent premium rice standards",
+            color: "from-red-500 to-pink-600"
         },
         {
             icon: Star,
             value: "10K+",
-            label: "Happy Customers",
-            description: "Trusted by households worldwide",
-            color: "from-yellow-500 to-yellow-600"
+            label: "Rice Loving Families",
+            description: "Households enjoying our premium rice daily",
+            color: "from-yellow-500 to-amber-600"
         }
     ]
 
     const achievements = [
         {
-            title: "Industry Leadership",
-            description: "Leading exporter of premium basmati rice from Northern India",
+            title: "Basmati Rice Leadership",
+            description: "Leading exporter of aged Basmati 1121 rice from Northern India",
             icon: Target
         },
         {
-            title: "Quality Certifications",
+            title: "Rice Quality Certifications",
             description: "ISO, HACCP, FSSAI certified processing facility",
             icon: Award
         },
@@ -77,12 +77,12 @@ export default function StatsSection() {
         <section className="relative py-16 lg:py-24 overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(16,185,129,0.1),transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(245,158,11,0.1),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(251,191,36,0.1),transparent_50%)]"></div>
             
             {/* Animated background elements */}
-            <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <div className="absolute top-20 left-20 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-20 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
             
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
@@ -94,15 +94,15 @@ export default function StatsSection() {
                     className="text-center mb-16"
                 >
                     <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                        <TrendingUp className="w-4 h-4 text-emerald-400" />
-                        <span className="text-emerald-300 font-medium text-sm">Our Impact</span>
+                        <TrendingUp className="w-4 h-4 text-amber-400" />
+                        <span className="text-amber-300 font-medium text-sm">Rice Excellence</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                        Building Excellence
-                        <span className="text-transparent bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400 bg-clip-text"> Across Continents</span>
+                        From Fields to
+                        <span className="text-transparent bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text"> Global Tables</span>
                     </h2>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                        Two decades of commitment to quality, innovation, and customer satisfaction driving our global success
+                        Two decades of rice expertise, bringing premium Basmati and Sella varieties from Northern India's fertile plains to kitchens worldwide
                     </p>
                 </motion.div>
 

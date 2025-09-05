@@ -50,15 +50,15 @@ export default async function Home() {
         <LazyStatsSection />
 
         {/* Our Reach Section */}
-        <section className="py-12 lg:py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <section className="py-12 lg:py-16 bg-gradient-to-br from-amber-50 to-yellow-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-4 py-2 text-sm font-medium mb-4">Our Reach</Badge>
+              <Badge variant="secondary" className="bg-amber-100 text-amber-800 px-4 py-2 text-sm font-medium mb-4">Our Reach</Badge>
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                Available on Leading Platforms
+                Premium Rice Delivered Everywhere
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Premium Kashmina Rice on your favorite platforms
+                Fresh Basmati & Sella rice varieties available on your favorite platforms
               </p>
             </div>
 
@@ -76,7 +76,7 @@ export default async function Home() {
                     />
                   </div>
                   <p className="text-gray-600 text-sm mb-3">
-                    Fast delivery with trusted Amazon service
+                    Premium Basmati & Sella rice with fast delivery
                   </p>
                   <div className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
                     Nationwide
@@ -97,7 +97,7 @@ export default async function Home() {
                     />
                   </div>
                   <p className="text-gray-600 text-sm mb-3">
-                    Quick delivery in minutes
+                    Fresh rice delivered in minutes
                   </p>
                   <div className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
                     10-Min Delivery
@@ -122,7 +122,7 @@ export default async function Home() {
                     </svg>
                   </div>
                   <p className="text-gray-600 text-sm mb-3">
-                    Super-fast grocery delivery
+                    Quality rice for instant cooking needs
                   </p>
                   <div className="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold">
                     Instant Delivery
