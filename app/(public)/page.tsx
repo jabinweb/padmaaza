@@ -1,4 +1,4 @@
-import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection } from '@/components/LazyComponents'
+import { LazyHeroSection, LazyProductGrid, LazyOurValues, LazyAboutSection, LazyCertificationsSection } from '@/components/LazyComponents'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { prisma } from '@/lib/prisma'
@@ -54,6 +54,9 @@ export default async function Home() {
               <LazyProductGrid products={products} />
           </div>
         </section>
+
+        {/* Certifications Section */}
+        <LazyCertificationsSection />
 
         {/* Our Values Section */}
         <LazyOurValues />
