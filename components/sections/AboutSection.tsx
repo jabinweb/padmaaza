@@ -104,7 +104,7 @@ export default function AboutSection() {
                             </h3>
                             <div className="space-y-3 sm:space-y-4 text-base sm:text-lg leading-relaxed text-slate-600">
                                 <p>
-                                    Padmaaja Rasool has revolutionized food processing with unwavering commitment to quality and authenticity.
+                                    Padmaaja Rasooi has revolutionized food processing with unwavering commitment to quality and authenticity.
                                 </p>
                                 <p>
                                     We&apos;ve built lasting relationships with farmers, ensuring every product reflects our dedication to 

@@ -152,7 +152,7 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">M</span>
                 </div>
-                <span className="font-bold text-gray-900">Padmaaja Rasool</span>
+                <span className="font-bold text-gray-900">Padmaaja Rasooi</span>
               </motion.div>
             )}
           </AnimatePresence>

@@ -105,13 +105,13 @@ export default function TeamPage() {
   }
 
   const shareViaWhatsApp = () => {
-    const message = `Hey! Join Padmaaja Rasool premium rice business using my referral link and start earning: ${getReferralLink()}`
+    const message = `Hey! Join Padmaaja Rasooi premium rice business using my referral link and start earning: ${getReferralLink()}`
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
   }
 
   const shareViaEmail = () => {
-    const subject = 'Join Padmaaja Rasool Rice Business Partnership!'
-    const body = `Hi there!\n\nI'd like to invite you to join Padmaaja Rasool, a premium rice products business where you can earn through our partnership program.\n\nClick here to join: ${getReferralLink()}\n\nBest regards!`
+    const subject = 'Join Padmaaja Rasooi Rice Business Partnership!'
+    const body = `Hi there!\n\nI'd like to invite you to join Padmaaja Rasooi, a premium rice products business where you can earn through our partnership program.\n\nClick here to join: ${getReferralLink()}\n\nBest regards!`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 

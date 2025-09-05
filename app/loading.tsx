@@ -163,7 +163,7 @@ export default function Loading() {
         >
           <div className="flex items-center justify-center space-x-2 text-slate-500 text-sm">
             <Wheat className="w-4 h-4" />
-            <span>Padmaaja Rasool Pvt. Ltd.</span>
+            <span>Padmaaja Rasooi Pvt. Ltd.</span>
             <span>•</span>
             <span>&quot;The careful choice&quot;</span>
           </div>

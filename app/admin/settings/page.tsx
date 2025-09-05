@@ -58,7 +58,7 @@ export default function AdminSettingsPage() {
   const [commissionSettings, setCommissionSettings] = useState<CommissionSetting[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [systemSettings, setSystemSettings] = useState<SystemSettings>({
-    siteName: 'Padmaaja Rasool',
+    siteName: 'Padmaaja Rasooi',
     siteDescription: 'Premium quality rice products and grains. Experience the finest rice sourced directly from local farmers.',
     supportEmail: 'srajeev7053@gmail.com',
     minimumPayout: 1000,

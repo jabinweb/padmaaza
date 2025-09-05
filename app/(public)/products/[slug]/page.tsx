@@ -175,7 +175,7 @@ export default function ProductDetailPage() {
           'Carefully processed to retain nutrients',
           'Free from artificial preservatives',
           'Supports healthy lifestyle and balanced diet',
-          'Trusted quality from Padmaaja Rasool'
+          'Trusted quality from Padmaaja Rasooi'
         ],
         cookingInstructions: [
           'Follow traditional cooking methods for best results',
@@ -225,8 +225,8 @@ export default function ProductDetailPage() {
 
   const handleShare = async () => {
     const url = window.location.href
-    const title = `${product?.name} - Padmaaja Rasool`
-    const text = `Check out this premium ${product?.name} from Padmaaja Rasool!`
+    const title = `${product?.name} - Padmaaja Rasooi`
+    const text = `Check out this premium ${product?.name} from Padmaaja Rasooi!`
 
     if (navigator.share) {
       try {

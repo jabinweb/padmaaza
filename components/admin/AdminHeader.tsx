@@ -31,7 +31,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">M</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">Padmaaja Rasool Admin</span>
+            <span className="text-xl font-bold text-gray-900">Padmaaja Rasooi Admin</span>
           </Link>
         </div>
 

@@ -55,7 +55,7 @@ export default function ProductsPage() {
   }
 
   // Generate structured data
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://padmaajarasool.com'
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://padmaajarasooi.com'
   const productListData = generateProductListJsonLd(products, baseUrl)
   const breadcrumbData = generateBreadcrumbJsonLd([
     { name: 'Home', url: '/' },

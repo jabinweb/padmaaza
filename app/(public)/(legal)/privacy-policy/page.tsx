@@ -5,11 +5,11 @@ import { Separator } from '@/components/ui/separator'
 import { Shield, Eye, Lock, Users, Mail, Phone } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Padmaaja Rasool - Your Data Protection Rights',
-  description: 'Learn how Padmaaja Rasool protects your personal information, handles data collection, and ensures your privacy rights are respected.',
-  keywords: 'privacy policy, data protection, personal information, GDPR compliance, data security, Padmaaja Rasool',
+  title: 'Privacy Policy | Padmaaja Rasooi - Your Data Protection Rights',
+  description: 'Learn how Padmaaja Rasooi protects your personal information, handles data collection, and ensures your privacy rights are respected.',
+  keywords: 'privacy policy, data protection, personal information, GDPR compliance, data security, Padmaaja Rasooi',
   openGraph: {
-    title: 'Privacy Policy | Padmaaja Rasool',
+    title: 'Privacy Policy | Padmaaja Rasooi',
     description: 'Comprehensive privacy policy outlining how we protect your personal data and respect your privacy rights.',
     type: 'website',
   },
@@ -26,7 +26,7 @@ export default function PrivacyPolicyPage() {
             <h1 className="text-4xl font-bold text-gray-900">Privacy Policy</h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            At Padmaaja Rasool, we are committed to protecting your privacy and ensuring 
+            At Padmaaja Rasooi, we are committed to protecting your privacy and ensuring 
             the security of your personal information. This policy explains how we collect, 
             use, and safeguard your data.
           </p>
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-700 leading-relaxed">
-              Padmaaja Rasool (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) respects your privacy and is committed to protecting 
+              Padmaaja Rasooi (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) respects your privacy and is committed to protecting 
               your personal data. This privacy policy will inform you about how we look after your 
               personal data when you visit our website, purchase our premium rice products, or engage 
               with our business partnership program.
@@ -288,7 +288,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-gray-50 border rounded-lg p-4 space-y-2">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 text-gray-600 mr-2" />
-                <span className="text-sm">Email: privacy@padmaajarasool.com</span>
+                <span className="text-sm">Email: privacy@padmaajarasooi.com</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 text-gray-600 mr-2" />
@@ -297,7 +297,7 @@ export default function PrivacyPolicyPage() {
               <div className="flex items-start">
                 <div className="h-4 w-4 text-gray-600 mr-2 mt-0.5">📍</div>
                 <span className="text-sm">
-                  Address: Padmaaja Rasool Headquarters<br />
+                  Address: Padmaaja Rasooi Headquarters<br />
                   [Complete Address]<br />
                   India
                 </span>

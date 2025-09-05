@@ -43,11 +43,11 @@ export function generateProductJsonLd(product: Product, baseUrl: string = '') {
     "@type": "Product",
     "@id": `${baseUrl}/products/${product.slug || product.id}`,
     "name": product.name,
-    "description": product.description || `Premium quality ${product.category.name} rice from Padmaaja Rasool`,
+    "description": product.description || `Premium quality ${product.category.name} rice from Padmaaja Rasooi`,
     "image": product.images.map(img => `${baseUrl}${img}`),
     "brand": {
       "@type": "Brand",
-      "name": product.brand || "Padmaaja Rasool"
+      "name": product.brand || "Padmaaja Rasooi"
     },
     "category": product.category.name,
     "sku": product.sku || product.id,
@@ -62,7 +62,7 @@ export function generateProductJsonLd(product: Product, baseUrl: string = '') {
         : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Padmaaja Rasool",
+        "name": "Padmaaja Rasooi",
         "url": baseUrl
       },
     },
@@ -123,7 +123,7 @@ export function generateProductListJsonLd(products: Product[], baseUrl: string =
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Padmaaja Rasool Premium Rice Products",
+    "name": "Padmaaja Rasooi Premium Rice Products",
     "description": "Complete collection of premium quality rice products",
     "numberOfItems": products.length,
     "itemListElement": products.map((product, index) => ({
@@ -150,14 +150,14 @@ export function generateOrganizationJsonLd(baseUrl: string = ''): Organization &
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Padmaaja Rasool",
+    "name": "Padmaaja Rasooi",
     "url": baseUrl,
     "logo": `${baseUrl}/images/logo.png`,
     "description": "Premium rice products and quality grains offering the finest quality rice sourced directly from certified farms.",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91-9876543210",
-      "email": "contact@padmaajarasool.com",
+      "email": "contact@padmaajarasooi.com",
       "contactType": "Customer Service"
     },
     "address": {
@@ -169,9 +169,9 @@ export function generateOrganizationJsonLd(baseUrl: string = ''): Organization &
       "addressCountry": "IN"
     },
     "sameAs": [
-      "https://www.facebook.com/padmaajarasool",
-      "https://www.instagram.com/padmaajarasool",
-      "https://www.linkedin.com/company/padmaajarasool"
+      "https://www.facebook.com/padmaajarasooi",
+      "https://www.instagram.com/padmaajarasooi",
+      "https://www.linkedin.com/company/padmaajarasooi"
     ],
     "foundingDate": "2020",
     "numberOfEmployees": "25-50",
@@ -215,12 +215,12 @@ export function generateLocalBusinessJsonLd(baseUrl: string = '') {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Padmaaja Rasool",
+    "name": "Padmaaja Rasooi",
     "image": `${baseUrl}/images/business-photo.jpg`,
     "description": "Premium rice products and quality grains",
     "url": baseUrl,
     "telephone": "+91-9876543210",
-    "email": "contact@padmaajarasool.com",
+    "email": "contact@padmaajarasooi.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "123 Rice Market Street",

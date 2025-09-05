@@ -25,12 +25,12 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Padmaaja Rasool - Premium Rice Products & Quality Grains',
-  description: 'Experience the finest quality rice with Padmaaja Rasool. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
-  keywords: ['padmaaja rasool', 'premium rice', 'quality rice', 'organic rice', 'basmati rice', 'rice products', 'agriculture', 'quality grains', 'healthy food'],
-  authors: [{ name: 'Padmaaja Rasool Team' }],
-  creator: 'Padmaaja Rasool',
-  publisher: 'Padmaaja Rasool',
+  title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
+  description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
+  keywords: ['padmaaja rasooi', 'premium rice', 'quality rice', 'organic rice', 'basmati rice', 'rice products', 'agriculture', 'quality grains', 'healthy food'],
+  authors: [{ name: 'Padmaaja Rasooi Team' }],
+  creator: 'Padmaaja Rasooi',
+  publisher: 'Padmaaja Rasooi',
   formatDetection: {
     email: false,
     address: false,
@@ -41,10 +41,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Padmaaja Rasool - Premium Rice Products & Quality Grains',
-    description: 'Experience the finest quality rice with Padmaaja Rasool. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
+    title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
+    description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
     url: '/',
-    siteName: 'Padmaaja Rasool',
+    siteName: 'Padmaaja Rasooi',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -52,14 +52,14 @@ export const metadata: Metadata = {
         url: '/images/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Padmaaja Rasool - Premium Rice Products'
+        alt: 'Padmaaja Rasooi - Premium Rice Products'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Padmaaja Rasool - Premium Rice Products & Quality Grains',
-    description: 'Experience the finest quality rice with Padmaaja Rasool. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
+    title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
+    description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
     images: ['/images/twitter-image.png']
   },
   robots: {
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Padmaaja Rasool',
+    title: 'Padmaaja Rasooi',
     startupImage: [
       {
         url: '/images/apple-splash-2048-2732.png',
@@ -127,7 +127,7 @@ export default async function PublicRootLayout({
   const session = await auth();
 
   // Generate base URL for structured data
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://padmaajarasool.com'
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://padmaajarasooi.com'
   const organizationData = generateOrganizationJsonLd(baseUrl)
 
   return (

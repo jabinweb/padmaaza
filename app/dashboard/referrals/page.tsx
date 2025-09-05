@@ -97,8 +97,8 @@ export default function ReferralsPage() {
     const referralLink = `${window.location.origin}/auth/signup?ref=${referralCode}`
     if (navigator.share) {
       navigator.share({
-        title: 'Join Padmaaja Rasool',
-        text: 'Join my team at Padmaaja Rasool and start your rice business!',
+        title: 'Join Padmaaja Rasooi',
+        text: 'Join my team at Padmaaja Rasooi and start your rice business!',
         url: referralLink
       })
     } else {
@@ -108,8 +108,8 @@ export default function ReferralsPage() {
 
   const inviteViaEmail = () => {
     const referralLink = `${window.location.origin}/auth/signup?ref=${referralCode}`
-    const subject = 'Join Padmaaja Rasool Rice Business Partnership!'
-    const body = `Hi there!\n\nI'd like to invite you to join Padmaaja Rasool, a premium rice products business where you can earn through our partnership program.\n\nClick here to join: ${referralLink}\n\nBest regards!`
+    const subject = 'Join Padmaaja Rasooi Rice Business Partnership!'
+    const body = `Hi there!\n\nI'd like to invite you to join Padmaaja Rasooi, a premium rice products business where you can earn through our partnership program.\n\nClick here to join: ${referralLink}\n\nBest regards!`
     
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }

@@ -105,7 +105,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             </CardTitle>
           </div>
           <CardDescription className="line-clamp-2 md:text-xs text-sm text-gray-600 leading-relaxed">
-            {product.description || 'Premium quality product from Padmaaja Rasool Pvt. Ltd.'}
+            {product.description || 'Premium quality product from Padmaaja Rasooi Pvt. Ltd.'}
           </CardDescription>
         </CardHeader>
         

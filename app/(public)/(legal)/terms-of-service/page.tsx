@@ -6,11 +6,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { FileText, Scale, AlertTriangle, Users, ShoppingCart, Gavel } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Padmaaja Rasool - Business Agreement & Policies',
-  description: 'Read our comprehensive terms of service covering business partnership, product purchases, and business conduct for Padmaaja Rasool premium rice products.',
-  keywords: 'terms of service, business partnership, business agreement, legal terms, conditions, Padmaaja Rasool, rice products',
+  title: 'Terms of Service | Padmaaja Rasooi - Business Agreement & Policies',
+  description: 'Read our comprehensive terms of service covering business partnership, product purchases, and business conduct for Padmaaja Rasooi premium rice products.',
+  keywords: 'terms of service, business partnership, business agreement, legal terms, conditions, Padmaaja Rasooi, rice products',
   openGraph: {
-    title: 'Terms of Service | Padmaaja Rasool',
+    title: 'Terms of Service | Padmaaja Rasooi',
     description: 'Legal terms and conditions for participating in our business network and purchasing our premium rice products.',
     type: 'website',
   },
@@ -28,7 +28,7 @@ export default function TermsOfServicePage() {
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             These terms govern your use of our website, purchase of products, and participation 
-            in the Padmaaja Rasool business partnership program.
+            in the Padmaaja Rasooi business partnership program.
           </p>
           <Badge variant="outline" className="mt-4">
             Last Updated: August 30, 2025
@@ -55,7 +55,7 @@ export default function TermsOfServicePage() {
           <CardContent className="space-y-4">
             <p className="text-gray-700 leading-relaxed">
               These Terms of Service (&quot;Terms&quot;) constitute a legally binding agreement between you 
-              and Padmaaja Rasool (&quot;Company,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms apply to:
+              and Padmaaja Rasooi (&quot;Company,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms apply to:
             </p>
             
             <div className="grid md:grid-cols-3 gap-4">
@@ -162,7 +162,7 @@ export default function TermsOfServicePage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Product Quality & Authenticity</h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                All Padmaaja Rasool rice products are sourced from certified farms and undergo 
+                All Padmaaja Rasooi rice products are sourced from certified farms and undergo 
                 rigorous quality control processes. We guarantee the authenticity and quality 
                 of our products when purchased through authorized channels.
               </p>
@@ -301,7 +301,7 @@ export default function TermsOfServicePage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-700 leading-relaxed">
-              To the maximum extent permitted by law, Padmaaja Rasool shall not be liable 
+              To the maximum extent permitted by law, Padmaaja Rasooi shall not be liable 
               for any indirect, incidental, special, consequential, or punitive damages, 
               including but not limited to:
             </p>
@@ -407,7 +407,7 @@ export default function TermsOfServicePage() {
             
             <div className="bg-gray-50 border rounded-lg p-4 space-y-2">
               <div className="flex items-center">
-                <span className="text-sm"><strong>Email:</strong> legal@padmaajarasool.com</span>
+                <span className="text-sm"><strong>Email:</strong> legal@padmaajarasooi.com</span>
               </div>
               <div className="flex items-center">
                 <span className="text-sm"><strong>Phone:</strong> +91 [Legal Department]</span>
@@ -415,7 +415,7 @@ export default function TermsOfServicePage() {
               <div className="flex items-start">
                 <span className="text-sm">
                   <strong>Address:</strong> Legal Department<br />
-                  Padmaaja Rasool Headquarters<br />
+                  Padmaaja Rasooi Headquarters<br />
                   [Complete Address], India
                 </span>
               </div>
@@ -428,7 +428,7 @@ export default function TermsOfServicePage() {
           <CardContent className="pt-6">
             <div className="text-center">
               <p className="text-sm text-gray-600 mb-4">
-                These Terms of Service constitute the entire agreement between you and Padmaaja Rasool. 
+                These Terms of Service constitute the entire agreement between you and Padmaaja Rasooi. 
                 If any provision is found to be unenforceable, the remaining provisions will remain in full effect.
               </p>
               <Badge variant="secondary">

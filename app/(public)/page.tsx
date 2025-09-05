@@ -51,31 +51,7 @@ export default async function Home() {
                 all processed with the highest quality standards.
               </p>
             </div>
-            
-            <Tabs defaultValue="all" className="w-full mb-12">
-              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8 sm:mb-12 bg-slate-100 p-1 rounded-xl gap-1 sm:gap-0">
-                <TabsTrigger value="all" className="rounded-lg py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm">All Products</TabsTrigger>
-                <TabsTrigger value="flour" className="rounded-lg py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm">Flour</TabsTrigger>
-                <TabsTrigger value="basmati" className="rounded-lg py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm">Basmati Rice</TabsTrigger>
-                <TabsTrigger value="nonbasmati" className="rounded-lg py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm">Non-Basmati Rice</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="all" className="space-y-6 sm:space-y-8">
-                <LazyProductGrid products={products} />
-              </TabsContent>
-              
-              <TabsContent value="flour" className="space-y-6 sm:space-y-8">
-                <LazyProductGrid products={products} categoryFilter="flour" />
-              </TabsContent>
-              
-              <TabsContent value="basmati" className="space-y-6 sm:space-y-8">
-                <LazyProductGrid products={products} categoryFilter="basmati" />
-              </TabsContent>
-              
-              <TabsContent value="nonbasmati" className="space-y-6 sm:space-y-8">
-                <LazyProductGrid products={products} categoryFilter="rice" />
-              </TabsContent>
-            </Tabs>
+              <LazyProductGrid products={products} />
           </div>
         </section>
 

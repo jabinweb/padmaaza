@@ -231,7 +231,7 @@ model Address {
 
 model SystemSettings {
   id                String   @id @default(cuid())
-  siteName          String   @default("Padmaaja Rasool")
+  siteName          String   @default("Padmaaja Rasooi")
   siteDescription   String   @default("Premium quality rice products and grains. Experience the finest rice sourced directly from local farmers.")
   supportEmail      String   @default("srajeev7053@gmail.com")
   minimumPayout     Float    @default(1000)

@@ -232,7 +232,7 @@ export default function Error({
           className="mt-8 text-center"
         >
           <p className="text-sm text-slate-500">
-            © 2024 Padmaaja Rasool Pvt. Ltd. • &quot;The careful choice&quot;
+            © 2024 Padmaaja Rasooi Pvt. Ltd. • &quot;The careful choice&quot;
           </p>
         </motion.div>
       </div>

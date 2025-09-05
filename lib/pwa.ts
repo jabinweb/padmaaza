@@ -83,7 +83,7 @@ export const registerBackgroundSync = (tag: string): void => {
 // Store data for offline use
 export const storeOfflineData = async (key: string, data: any): Promise<void> => {
   if ('caches' in window) {
-    const cache = await caches.open('padmaaja-rasool-dynamic-v1')
+    const cache = await caches.open('padmaaja-rasooi-dynamic-v1')
     const response = new Response(JSON.stringify(data), {
       headers: { 'Content-Type': 'application/json' }
     })
@@ -94,7 +94,7 @@ export const storeOfflineData = async (key: string, data: any): Promise<void> =>
 // Get stored offline data
 export const getOfflineData = async (key: string): Promise<any> => {
   if ('caches' in window) {
-    const cache = await caches.open('padmaaja-rasool-dynamic-v1')
+    const cache = await caches.open('padmaaja-rasooi-dynamic-v1')
     const response = await cache.match(`/offline-data/${key}`)
     return response ? response.json() : null
   }

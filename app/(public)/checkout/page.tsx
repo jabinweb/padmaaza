@@ -315,7 +315,7 @@ export default function CheckoutPage() {
       key: order.razorpayKeyId,
       amount: Math.round(order.total * 100), // Convert to paise
       currency: 'INR',
-      name: 'Padmaaja Rasool',
+      name: 'Padmaaja Rasooi',
       description: `Order Payment ${order.isProduction ? '' : '(Test Mode)'}`,
       order_id: order.razorpayOrderId,
       handler: async function (response: any) {

@@ -108,7 +108,7 @@ export default function PWAInstallPrompt() {
               
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-white mb-1">
-                  Install Padmaaja Rasool App
+                  Install Padmaaja Rasooi App
                 </h3>
                 <p className="text-xs text-green-100 mb-3">
                   Get the full experience with offline access, faster loading, and push notifications.

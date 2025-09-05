@@ -18,9 +18,9 @@ export async function GET() {
       // Create default settings if none exist
       settings = await prisma.systemSettings.create({
         data: {
-          siteName: 'Padmaaja Rasool',
+          siteName: 'Padmaaja Rasooi',
           siteDescription: 'Premium Rice Products & Quality Grains',
-          supportEmail: 'support@padmaajarasool.com',
+          supportEmail: 'support@padmaajarasooi.com',
           minimumPayout: 100,
           enableReferrals: true,
           enableCommissions: true,

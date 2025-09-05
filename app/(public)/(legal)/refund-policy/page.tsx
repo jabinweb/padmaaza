@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button'
 import { RotateCcw, Clock, CheckCircle, XCircle, AlertCircle, Mail, Phone } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Refund Policy | Padmaaja Rasool - Returns & Refund Guidelines',
-  description: 'Comprehensive refund and return policy for Padmaaja Rasool rice products. Learn about eligibility, process, and timelines for returns.',
-  keywords: 'refund policy, return policy, money back guarantee, product returns, refund process, Padmaaja Rasool',
+  title: 'Refund Policy | Padmaaja Rasooi - Returns & Refund Guidelines',
+  description: 'Comprehensive refund and return policy for Padmaaja Rasooi rice products. Learn about eligibility, process, and timelines for returns.',
+  keywords: 'refund policy, return policy, money back guarantee, product returns, refund process, Padmaaja Rasooi',
   openGraph: {
-    title: 'Refund Policy | Padmaaja Rasool',
+    title: 'Refund Policy | Padmaaja Rasooi',
     description: 'Clear guidelines for product returns and refunds to ensure customer satisfaction.',
     type: 'website',
   },
@@ -420,7 +420,7 @@ export default function RefundPolicyPage() {
                 <div className="space-y-2">
                   <div className="flex items-center">
                     <Mail className="h-4 w-4 text-gray-600 mr-2" />
-                    <span className="text-sm">returns@padmaajarasool.com</span>
+                    <span className="text-sm">returns@padmaajarasooi.com</span>
                   </div>
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 text-gray-600 mr-2" />
@@ -435,7 +435,7 @@ export default function RefundPolicyPage() {
               <div className="bg-gray-50 border rounded-lg p-4 space-y-3">
                 <h4 className="font-semibold text-gray-900">Return Address</h4>
                 <div className="text-sm text-gray-700">
-                  <strong>Padmaaja Rasool Returns Center</strong><br />
+                  <strong>Padmaaja Rasooi Returns Center</strong><br />
                   [Return Processing Facility Address]<br />
                   [City, State, PIN Code]<br />
                   India
@@ -466,7 +466,7 @@ export default function RefundPolicyPage() {
               <h3 className="text-lg font-semibold text-gray-900">Important Notes</h3>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <ul className="text-sm text-yellow-800 space-y-2">
-                  <li>• This policy applies to purchases made directly from Padmaaja Rasool</li>
+                  <li>• This policy applies to purchases made directly from Padmaaja Rasooi</li>
                   <li>• Third-party retailer purchases may have different return policies</li>
                   <li>• We reserve the right to refuse returns that don&apos;t meet our conditions</li>
                   <li>• Fraudulent return attempts will result in account suspension</li>
