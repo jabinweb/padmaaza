@@ -74,9 +74,9 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             alt={product.name}
             width={400}
             height={300}
-            className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             priority={index < 4} // Prioritize first 4 products
-            quality={85}
+            quality={50}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
           {product.discount > 0 && (

@@ -45,7 +45,9 @@ interface ProductFormProps {
 export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
+  const [imageUrl, setImageUrl] = useState('')
   const [formData, setFormData] = useState<Product>({
     name: '',
     description: '',
@@ -77,16 +79,69 @@ export function ProductForm({ product }: ProductFormProps) {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
-    if (!files) return
+    if (!files || files.length === 0) return
 
-    // Mock image upload - replace with actual upload logic
-    const newImages = Array.from(files).map(file => URL.createObjectURL(file))
-    setFormData(prev => ({ 
-      ...prev, 
-      images: [...prev.images, ...newImages] 
+    setUploading(true)
+    
+    try {
+      const formData = new FormData()
+      Array.from(files).forEach(file => {
+        formData.append('files', file)
+      })
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const result = await response.json()
+      
+      if (result.success) {
+        setFormData(prev => ({ 
+          ...prev, 
+          images: [...prev.images, ...result.urls] 
+        }))
+        toast.success(result.message)
+      } else {
+        throw new Error(result.error || 'Upload failed')
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Failed to upload images')
+    } finally {
+      setUploading(false)
+      // Reset file input
+      e.target.value = ''
+    }
+  }
+
+  const handleAddImageUrl = () => {
+    if (!imageUrl.trim()) {
+      toast.error('Please enter a valid image URL')
+      return
+    }
+
+    // Basic URL validation
+    try {
+      new URL(imageUrl)
+    } catch {
+      toast.error('Please enter a valid URL')
+      return
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, imageUrl.trim()]
     }))
+    
+    setImageUrl('')
+    toast.success('Image URL added')
   }
 
   const removeImage = (index: number) => {
@@ -200,46 +255,97 @@ export function ProductForm({ product }: ProductFormProps) {
               <CardTitle>Product Images</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Label htmlFor="images" className="cursor-pointer">
-                    <div className="flex items-center space-x-2 px-4 py-2 border border-dashed border-gray-300 rounded-lg hover:border-gray-400">
-                      <Upload className="h-4 w-4" />
-                      <span>Upload Images</span>
-                    </div>
-                  </Label>
-                  <Input
-                    id="images"
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
+              <div className="space-y-6">
+                {/* File Upload Section */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Upload from Computer</Label>
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="images" className="cursor-pointer">
+                      <div className="flex items-center space-x-2 px-4 py-2 border border-dashed border-gray-300 rounded-lg hover:border-gray-400">
+                        <Upload className="h-4 w-4" />
+                        <span>{uploading ? 'Uploading...' : 'Upload Images'}</span>
+                      </div>
+                    </Label>
+                    <Input
+                      id="images"
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                      className="hidden"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Upload images from your computer. Supports JPG, PNG, WebP formats.
+                  </p>
                 </div>
 
+                {/* URL Input Section */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Add Image URL</Label>
+                  <div className="flex space-x-2">
+                    <Input
+                      placeholder="https://example.com/image.jpg"
+                      value={imageUrl}
+                      onChange={(e) => setImageUrl(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleAddImageUrl()}
+                    />
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={handleAddImageUrl}
+                      disabled={!imageUrl.trim()}
+                    >
+                      Add URL
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Add images from external URLs (e.g., Unsplash, your CDN, etc.)
+                  </p>
+                </div>
+
+                {/* Image Preview Grid */}
                 {formData.images.length > 0 && (
-                  <div className="grid grid-cols-3 gap-4">
-                    {formData.images.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <Image
-                          src={image}
-                          alt={`Product image ${index + 1}`}
-                          width={150}
-                          height={150}
-                          className="rounded-lg object-cover w-full h-32"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="sm"
-                          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeImage(index)}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    ))}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Image Preview</Label>
+                    <div className="grid grid-cols-3 gap-4">
+                      {formData.images.map((image, index) => (
+                        <div key={index} className="relative group">
+                          <Image
+                            src={image}
+                            alt={`Product image ${index + 1}`}
+                            width={150}
+                            height={150}
+                            className="rounded-lg object-cover w-full h-32 border"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = '/placeholder-image.jpg'; // fallback image
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 p-0"
+                            onClick={() => removeImage(index)}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs p-1 rounded-b-lg truncate">
+                            {image.startsWith('/products/') ? 'Uploaded' : 'External URL'}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {formData.images.length === 0 && (
+                  <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
+                    <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-500">No images added yet</p>
+                    <p className="text-xs text-gray-400">Upload files or add URLs to get started</p>
                   </div>
                 )}
               </div>

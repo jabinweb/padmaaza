@@ -129,7 +129,7 @@ export default async function Home() {
         </section>
 
         {/* Our Products Section */}
-        <section className="py-8 py-10 lg:py-20 bg-white">
+        {/* <section className="py-8 py-10 lg:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-3 sm:space-y-4 mb-8 sm:mb-12">
               <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 px-3 py-1 text-sm font-medium">Our Products</Badge>
@@ -141,7 +141,7 @@ export default async function Home() {
             </div>
               <LazyProductGrid products={products} initialLoadCount={4} loadMoreCount={4} />
           </div>
-        </section>
+        </section> */}
 
         {/* Certifications Section */}
         <LazyCertificationsSection />
