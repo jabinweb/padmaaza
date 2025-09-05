@@ -71,7 +71,7 @@ export default function AboutPage() {
       name: 'Rajeev Singh',
       role: 'Founder & Director',
       image: '/Rajeev Singh.jpg',
-      description: 'Ex-army professional who founded Padmaaza with extensive experience in real estate since 2018 and now leading FMCG operations.',
+      description: 'Ex-army professional who founded Padmaaja with extensive experience in real estate since 2018 and now leading FMCG operations.',
       background: 'Ex-Army • Real Estate Expert • Visionary Leader'
     },
     {
@@ -493,7 +493,7 @@ export default function AboutPage() {
                 role: "Account",
                 department: "Finance & Accounts",
                 description: "Manages financial operations, accounting, and ensures fiscal responsibility across the organization.",
-                icon: "�",
+                icon: "💼",
                 color: "from-emerald-500 to-emerald-600",
                 bgColor: "bg-emerald-50",
                 borderColor: "border-emerald-200"

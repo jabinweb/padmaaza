@@ -24,14 +24,14 @@ export function Footer() {
                 <MapPin className="h-5 w-5 text-orange-400 mt-1 flex-shrink-0" />
                 <div className="text-sm">
                   <p className="font-medium">Corporate Office</p>
-                  <p className="text-gray-400">11-B/79, Brij Vihar, Sector 11,<br />Vrindavan Colony, Lucknow - 226029</p>
+                  <p className="text-gray-400">11B/79, Vrindavan Colony, Lucknow - 226029</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-orange-400" />
                 <div className="text-sm">
-                  <a href="tel:+91-9454906009" className="hover:text-orange-400 transition-colors">
-                    +91-9454906009
+                  <a href="tel:+91-9475758817" className="hover:text-orange-400 transition-colors">
+                    +91-9475758817
                   </a>
                 </div>
               </div>

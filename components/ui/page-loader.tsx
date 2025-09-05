@@ -58,7 +58,7 @@ export default function PageLoader({ onLoadingComplete, duration = 1500 }: PageL
           transition={{ duration: 1, delay: 0.3 }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg"
         >
-          Welcome Padmaaza Rasooi
+          Welcome Padmaaja Rasooi
         </motion.h1>
 
         {/* Progress Bar */}
