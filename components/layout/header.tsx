@@ -119,14 +119,14 @@ export function Header() {
             <div className="flex items-center space-x-3">
               <Image
                 src="/logo.png"
-                alt="PADMAAJA RASOOL PVT. LTD."
+                alt="PADMAAJA RASOOI PVT. LTD."
                 width={50}
                 height={50}
                 className="object-contain"
               />
               <div className="flex flex-col">
                 <span className="text-lg font-bold text-slate-800 transition-colors duration-300 leading-tight">
-                  PADMAAJA RASOOL
+                  PADMAAJA RASOOI
                 </span>
                 <span className="text-xs uppercase text-slate-600 transition-colors duration-300 leading-tight">
                   &quot;The careful choice&quot;
