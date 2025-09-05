@@ -27,6 +27,23 @@ export default function ContactPage() {
 
   const contactInfo = [
     {
+      icon: MapPin,
+      title: 'Manufacturing Unit',
+      details: 'Morabba No. 03, Firozpur Road',
+      subtitle: 'Kaithal Siwan, Haryana',
+      highlight: 'Production Facility'
+    },
+    {
+      icon: MapPin,
+      title: 'Corporate Office',
+      details: '11B/79 Vrindavan Yojna',
+      subtitle: 'Raibareli Road, Lucknow, India',
+      highlight: 'Business Operations'
+    }
+  ]
+
+  const businessInfo = [
+    {
       icon: Phone,
       title: 'Business Phone',
       details: '+91 94757 58817',
@@ -39,13 +56,6 @@ export default function ContactPage() {
       details: 'srajeev7053@gmail.com',
       subtitle: 'For inquiries and partnerships',
       highlight: '24-hour response guarantee'
-    },
-    {
-      icon: MapPin,
-      title: 'Corporate Office',
-      details: '11-B/79, Brij Vihar, Sector 11',
-      subtitle: 'Vrindavan Colony, Lucknow - 226029',
-      highlight: 'Uttar Pradesh, India'
     },
     {
       icon: Clock,
@@ -119,14 +129,15 @@ export default function ContactPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-20"
         >
+          {/* Addresses Section */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Contact Information</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Locations</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Connect with our professional team for business inquiries, partnerships, and premium rice solutions.
+              Visit our manufacturing facility and corporate office for business partnerships and quality assurance.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
@@ -136,10 +147,10 @@ export default function ContactPage() {
                 whileHover={{ y: -8 }}
                 className="group"
               >
-                <Card className="h-full hover:shadow-2xl transition-all duration-300 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50 group-hover:from-orange-50 group-hover:to-white">
+                <Card className="h-full hover:shadow-2xl transition-all duration-300 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50 group-hover:from-blue-50 group-hover:to-white">
                   <CardContent className="p-8 text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:from-orange-500 group-hover:to-orange-600 transition-all duration-300">
-                      <info.icon className="h-10 w-10 text-orange-600 group-hover:text-white transition-colors duration-300" />
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:from-blue-500 group-hover:to-blue-600 transition-all duration-300">
+                      <info.icon className="h-10 w-10 text-blue-600 group-hover:text-white transition-colors duration-300" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">
                       {info.title}
@@ -151,7 +162,50 @@ export default function ContactPage() {
                       {info.subtitle}
                     </p>
                     <div className="mt-3 pt-3 border-t border-gray-200">
-                      <Badge variant="outline" className="text-xs font-medium bg-orange-50 text-orange-700 border-orange-200">
+                      <Badge variant="outline" className="text-xs font-medium bg-blue-50 text-blue-700 border-blue-200">
+                        {info.highlight}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Business Contact Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Business Contact</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Get in touch with our professional team for business inquiries and partnerships.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {businessInfo.map((info, index) => (
+              <motion.div
+                key={info.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group"
+              >
+                <Card className="h-full hover:shadow-2xl transition-all duration-300 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50 group-hover:from-emerald-50 group-hover:to-white">
+                  <CardContent className="p-8 text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:from-emerald-500 group-hover:to-emerald-600 transition-all duration-300">
+                      <info.icon className="h-10 w-10 text-emerald-600 group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {info.title}
+                    </h3>
+                    <p className="text-gray-900 font-semibold mb-2 text-lg">
+                      {info.details}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {info.subtitle}
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <Badge variant="outline" className="text-xs font-medium bg-emerald-50 text-emerald-700 border-emerald-200">
                         {info.highlight}
                       </Badge>
                     </div>
@@ -369,8 +423,8 @@ export default function ContactPage() {
                   ></iframe>
                 </div>
                 <div className="p-4 bg-gray-50">
-                  <p className="text-sm font-medium text-gray-900">11-B/79, Brij Vihar, Sector 11</p>
-                  <p className="text-sm text-gray-600">Vrindavan Colony, Lucknow - 226029</p>
+                  <p className="text-sm font-medium text-gray-900">11B/79</p>
+                  <p className="text-sm text-gray-600">Vrindavan Yojna, Lucknow - 226029</p>
                 </div>
               </div>
 

@@ -60,46 +60,32 @@ export default function HeroSection() {
 
   const featuredCategories = [
     {
-      title: "Rice & Grains",
-      subtitle: "Premium varieties",
-      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=200&fit=crop",
-      link: "/products?category=rice",
-      bgColor: "from-emerald-50 to-emerald-100"
+      title: "Premium Basmati 1121",
+      subtitle: "Extra long grain",
+      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=400&fit=crop&q=80",
+      link: "/products?brand=basmati-1121",
+      bgColor: "from-emerald-500 to-emerald-600"
     },
     {
-      title: "Spices & Masalas",
-      subtitle: "Authentic flavors",
-      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=200&fit=crop",
-      link: "/products?category=spices",
-      bgColor: "from-orange-50 to-orange-100"
+      title: "Sella Rice",
+      subtitle: "Golden & White",
+      image: "https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?w=600&h=400&fit=crop&q=80",
+      link: "/products?category=sella",
+      bgColor: "from-amber-500 to-amber-600"
     },
     {
-      title: "Flour & Grains",
-      subtitle: "Nutritious blends",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=200&fit=crop",
-      link: "/products?category=flour",
-      bgColor: "from-amber-50 to-amber-100"
-    },
-    {
-      title: "Premium Products",
-      subtitle: "Best sellers",
-      image: "/images/multigrain-flour.jpg",
-      link: "/products",
-      bgColor: "from-blue-50 to-blue-100"
-    },
-    {
-      title: "Organic Range",
-      subtitle: "Natural & pure",
-      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop",
-      link: "/products?category=organic",
-      bgColor: "from-green-50 to-green-100"
+      title: "Kashmina Brand",
+      subtitle: "Premium quality",
+      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=400&fit=crop&q=80",
+      link: "/products?brand=kashmina",
+      bgColor: "from-blue-500 to-blue-600"
     },
     {
       title: "Bulk Orders",
-      subtitle: "Wholesale deals",
-      image: "https://images.unsplash.com/photo-1594736797933-d0d6483cae4d?w=400&h=200&fit=crop",
-      link: "/wholesale",
-      bgColor: "from-purple-50 to-purple-100"
+      subtitle: "Wholesale rates",
+      image: "https://images.unsplash.com/photo-1594736797933-d0d6483cae4d?w=600&h=400&fit=crop&q=80",
+      link: "/bulk-supply",
+      bgColor: "from-purple-500 to-purple-600"
     }
   ]
 
@@ -224,41 +210,53 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Category Grid - Right Side (1/4 width) - Match slider height */}
+          {/* Modern Category Cards - Right Side (1/4 width) - Match slider height */}
           <div className="lg:col-span-1 aspect-video lg:aspect-auto">
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 h-full">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 h-full">
               {featuredCategories.slice(0, 4).map((category, index) => (
                 <motion.div
                   key={category.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="h-full"
+                  className="h-full min-h-0"
                 >
                   <Link href={category.link}>
-                    <Card className="h-full hover:shadow-lg transition-all duration-300 cursor-pointer border-0 overflow-hidden group hover:scale-105">
-                      <div className="relative h-full min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px]">
-                        {/* Strong dark overlay for better text visibility */}
-                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors z-10"></div>
-                        <div className={`absolute inset-0 bg-gradient-to-r ${category.bgColor} opacity-30 group-hover:opacity-40 transition-opacity z-5`}></div>
-                        <Image
-                          src={category.image}
-                          alt={category.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center text-center z-20 p-2 sm:p-3 md:p-4">
-                          <div>
-                            <h3 className="font-bold text-xs sm:text-sm md:text-sm lg:text-base text-white drop-shadow-2xl leading-tight group-hover:text-yellow-100 transition-colors">
-                              {category.title}
-                            </h3>
-                            <p className="text-xs sm:text-xs md:text-xs lg:text-sm text-white/95 drop-shadow-xl mt-0.5 sm:mt-1 group-hover:text-yellow-50 transition-colors font-medium">
-                              {category.subtitle}
-                            </p>
+                    <div className="group h-full relative bg-white rounded-xl border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden">
+                      {/* Gradient Background Accent */}
+                      <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${category.bgColor}`}></div>
+                      
+                      {/* Subtle Pattern Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-transparent opacity-60"></div>
+                      
+                      {/* Content - Horizontal Layout */}
+                      <div className="relative p-3 h-full flex items-center gap-3">
+                        {/* Modern Icon Container - Left Side */}
+                        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.bgColor} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg flex-shrink-0`}>
+                          <div className="w-5 h-5 bg-white/20 rounded-sm backdrop-blur-sm"></div>
+                        </div>
+                        
+                        {/* Typography - Right Side */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-sm md:text-base text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight tracking-tight mb-1">
+                            {category.title}
+                          </h3>
+                          <p className="text-xs md:text-sm text-gray-500 group-hover:text-gray-700 transition-colors leading-relaxed font-medium">
+                            {category.subtitle}
+                          </p>
+                        </div>
+                        
+                        {/* Modern Hover Indicator */}
+                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 flex-shrink-0">
+                          <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${category.bgColor} flex items-center justify-center shadow-lg`}>
+                            <ChevronRight className="w-3 h-3 text-white" />
                           </div>
                         </div>
+                        
+                        {/* Subtle Glow Effect */}
+                        <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${category.bgColor} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
                       </div>
-                    </Card>
+                    </div>
                   </Link>
                 </motion.div>
               ))}
