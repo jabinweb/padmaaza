@@ -1,6 +1,19 @@
 import { prisma } from '@/lib/prisma'
 
-export async function calculateCommissions(orderId: string) {
+interface CommissionResult {
+  success: boolean
+  message: string
+  commissions?: Array<{
+    referrerId: string
+    referrerName: string | null
+    amount: number
+    level: number
+    type: string
+  }>
+  error?: string
+}
+
+export async function calculateCommissions(orderId: string): Promise<CommissionResult> {
   try {
     // Get the order with user and referrer information
     const order = await prisma.order.findUnique({
@@ -69,7 +82,7 @@ export async function calculateCommissions(orderId: string) {
       }
 
       // Create commission record
-      const commission = await prisma.commission.create({
+      await prisma.commission.create({
         data: {
           userId: referrer.id,
           fromUserId: order.userId,
@@ -126,7 +139,10 @@ export async function calculateCommissions(orderId: string) {
   }
 }
 
-export async function getCommissionSettings() {
+export async function getCommissionSettings(): Promise<{
+  success: boolean
+  settings: any[]
+}> {
   try {
     const settings = await prisma.commissionSettings.findMany({
       where: { isActive: true },
@@ -150,11 +166,14 @@ export function calculateCommissionAmount(
 }
 
 export class CommissionService {
-  static async calculateCommissions(orderId: string) {
+  static async calculateCommissions(orderId: string): Promise<CommissionResult> {
     return calculateCommissions(orderId)
   }
 
-  static async getCommissionSettings() {
+  static async getCommissionSettings(): Promise<{
+    success: boolean
+    settings: any[]
+  }> {
     return getCommissionSettings()
   }
 
@@ -166,7 +185,10 @@ export class CommissionService {
     return calculateCommissionAmount(orderTotal, percentage, rankMultiplier)
   }
 
-  static async getUserCommissions(userId: string, limit: number = 10) {
+  static async getUserCommissions(userId: string, limit: number = 10): Promise<{
+    success: boolean
+    commissions: any[]
+  }> {
     try {
       const commissions = await prisma.commission.findMany({
         where: { userId },
@@ -189,7 +211,15 @@ export class CommissionService {
     }
   }
 
-  static async getCommissionStats(userId: string) {
+  static async getCommissionStats(userId: string): Promise<{
+    success: boolean
+    stats?: {
+      totalEarnings: number
+      pendingCommissions: number
+      thisMonthEarnings: number
+    }
+    error?: string
+  }> {
     try {
       const [totalEarnings, pendingCommissions, thisMonthEarnings] = await Promise.all([
         prisma.commission.aggregate({
@@ -230,16 +260,21 @@ export class CommissionService {
       console.error('Error fetching commission stats:', error)
       return {
         success: false,
-        stats: {
-          totalEarnings: 0,
-          pendingCommissions: 0,
-          thisMonthEarnings: 0
-        }
+        error: error instanceof Error ? error.message : 'Unknown error'
       }
     }
   }
 
-  static async getTeamStats(userId: string) {
+  static async getTeamStats(userId: string): Promise<{
+    success: boolean
+    stats?: {
+      directReferrals: number
+      totalTeamSize: number
+      teamSalesVolume: number
+      activeMembers: number
+    }
+    error?: string
+  }> {
     try {
       // Get direct referrals count
       const directReferrals = await prisma.user.count({
@@ -289,12 +324,7 @@ export class CommissionService {
       console.error('Error fetching team stats:', error)
       return {
         success: false,
-        stats: {
-          directReferrals: 0,
-          totalTeamSize: 0,
-          activeMembers: 0,
-          teamSalesVolume: 0
-        }
+        error: error instanceof Error ? error.message : 'Unknown error'
       }
     }
   }
@@ -321,7 +351,7 @@ export class CommissionService {
 }
 
 // Initialize default commission settings for partners
-export async function initializeCommissionSettings() {
+export async function initializeCommissionSettings(): Promise<void> {
   try {
     const existingSettings = await prisma.commissionSettings.findMany()
     

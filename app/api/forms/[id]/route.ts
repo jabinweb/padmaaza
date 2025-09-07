@@ -8,11 +8,12 @@ const UpdateFormSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const formResponse = await prisma.formResponse.findUnique({
-      where: { id: params.id }
+      where: { id }
     })
 
     if (!formResponse) {
@@ -38,14 +39,15 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const validatedData = UpdateFormSchema.parse(body)
 
     const formResponse = await prisma.formResponse.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         status: validatedData.status,
         updatedAt: new Date()
@@ -80,11 +82,12 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     await prisma.formResponse.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({

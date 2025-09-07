@@ -13,6 +13,7 @@ interface Product {
   discount: number
   images: string[]
   stock: number
+  manageStock: boolean
   sku: string
   isActive: boolean
   categoryId: string

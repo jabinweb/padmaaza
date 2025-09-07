@@ -44,16 +44,7 @@ import { toast } from 'sonner'
 interface FormResponse {
   id: string
   formId: string
-  data: {
-    name: string
-    email: string
-    phone?: string
-    subject?: string
-    message: string
-    inquiryType?: string
-    company?: string
-    formSource?: string
-  }
+  data: any // Changed from specific interface to any to handle different form types
   metadata?: {
     ipAddress?: string
     userAgent?: string
@@ -184,12 +175,27 @@ export default function AdminFormsPage() {
   const filteredForms = forms.filter(form => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase()
-      return (
-        form.data.name.toLowerCase().includes(query) ||
-        form.data.email.toLowerCase().includes(query) ||
-        form.data.message.toLowerCase().includes(query) ||
-        (form.data.subject && form.data.subject.toLowerCase().includes(query))
-      )
+      const data = form.data
+      
+      // Handle different form types
+      if (form.formId === 'partnership_application') {
+        return (
+          data.firstName?.toLowerCase().includes(query) ||
+          data.lastName?.toLowerCase().includes(query) ||
+          data.email?.toLowerCase().includes(query) ||
+          data.businessName?.toLowerCase().includes(query) ||
+          data.partnershipTier?.toLowerCase().includes(query) ||
+          data.motivation?.toLowerCase().includes(query)
+        )
+      } else {
+        // Contact forms and other types
+        return (
+          data.name?.toLowerCase().includes(query) ||
+          data.email?.toLowerCase().includes(query) ||
+          data.message?.toLowerCase().includes(query) ||
+          data.subject?.toLowerCase().includes(query)
+        )
+      }
     }
     return true
   })
@@ -285,32 +291,46 @@ export default function AdminFormsPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredForms.map((form) => (
-                    <TableRow key={form.id} className="cursor-pointer hover:bg-muted/50">
-                      <TableCell className="font-medium">{form.data.name}</TableCell>
-                      <TableCell>{form.data.email}</TableCell>
-                      <TableCell>{getFormTypeBadge(form.formId)}</TableCell>
-                      <TableCell>{getStatusBadge(form.status)}</TableCell>
-                      <TableCell className="max-w-xs truncate">
-                        {form.data.subject || 'No subject'}
-                      </TableCell>
-                      <TableCell>
-                        {new Date(form.createdAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            setSelectedForm(form)
-                            setShowDetails(true)
-                          }}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {filteredForms.map((form) => {
+                    // Handle different form types for display
+                    const displayName = form.formId === 'partnership_application' 
+                      ? `${form.data.firstName || ''} ${form.data.lastName || ''}`.trim()
+                      : form.data.name || 'Unknown'
+                    
+                    const displayEmail = form.data.email || 'No email'
+                    
+                    const displaySubject = form.formId === 'partnership_application'
+                      ? `${form.data.partnershipTier || 'Unknown'} Partnership Application`
+                      : form.data.subject || form.data.inquiryType || 'No subject'
+                    
+                    return (
+                      <TableRow key={form.id} className="cursor-pointer hover:bg-muted/50">
+                        <TableCell className="font-medium">{displayName}</TableCell>
+                        <TableCell>{displayEmail}</TableCell>
+                        <TableCell>{getFormTypeBadge(form.formId)}</TableCell>
+                        <TableCell>{getStatusBadge(form.status)}</TableCell>
+                        <TableCell className="max-w-xs truncate">
+                          {displaySubject}
+                        </TableCell>
+                        <TableCell>
+                          {new Date(form.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setSelectedForm(form)
+                              setShowDetails(true)
+                            }}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+
                 </TableBody>
               </Table>
 
@@ -403,7 +423,12 @@ export default function AdminFormsPage() {
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-muted-foreground" />
                     <span className="font-medium">Name:</span>
-                    <span>{selectedForm.data.name}</span>
+                    <span>
+                      {selectedForm.formId === 'partnership_application' 
+                        ? `${selectedForm.data.firstName || ''} ${selectedForm.data.lastName || ''}`.trim()
+                        : selectedForm.data.name || 'Unknown'
+                      }
+                    </span>
                   </div>
                   
                   <div className="flex items-center gap-2">
@@ -431,7 +456,17 @@ export default function AdminFormsPage() {
                     </div>
                   )}
                   
-                  {selectedForm.data.company && (
+                  {/* Show business info for partnership applications */}
+                  {selectedForm.formId === 'partnership_application' && selectedForm.data.businessName && (
+                    <div className="flex items-center gap-2">
+                      <Building className="h-4 w-4 text-muted-foreground" />
+                      <span className="font-medium">Business:</span>
+                      <span>{selectedForm.data.businessName}</span>
+                    </div>
+                  )}
+                  
+                  {/* Show company info for other forms */}
+                  {selectedForm.formId !== 'partnership_application' && selectedForm.data.company && (
                     <div className="flex items-center gap-2">
                       <Building className="h-4 w-4 text-muted-foreground" />
                       <span className="font-medium">Company:</span>
@@ -441,22 +476,93 @@ export default function AdminFormsPage() {
                 </CardContent>
               </Card>
 
-              {/* Message Content */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Message</CardTitle>
-                  {selectedForm.data.subject && (
-                    <CardDescription className="font-medium">
-                      Subject: {selectedForm.data.subject}
-                    </CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-muted/50 p-4 rounded-lg">
-                    <p className="whitespace-pre-wrap">{selectedForm.data.message}</p>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Message/Details Content */}
+              {selectedForm.formId === 'partnership_application' ? (
+                // Partnership Application Details
+                <>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Partnership Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <span className="font-medium">Partnership Tier:</span>
+                          <Badge variant="outline" className="ml-2">{selectedForm.data.partnershipTier}</Badge>
+                        </div>
+                        <div>
+                          <span className="font-medium">Expected Customers:</span>
+                          <span className="ml-2">{selectedForm.data.expectedCustomers || 'Not specified'}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <span className="font-medium">Business Type:</span>
+                          <span className="ml-2">{selectedForm.data.businessType || 'Not specified'}</span>
+                        </div>
+                        <div>
+                          <span className="font-medium">Experience:</span>
+                          <span className="ml-2">{selectedForm.data.experience || 'Not specified'}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Address Information</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        <div><span className="font-medium">Address:</span> {selectedForm.data.address || 'Not provided'}</div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div><span className="font-medium">City:</span> {selectedForm.data.city || 'Not provided'}</div>
+                          <div><span className="font-medium">State:</span> {selectedForm.data.state || 'Not provided'}</div>
+                          <div><span className="font-medium">Zip Code:</span> {selectedForm.data.zipCode || 'Not provided'}</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Motivation & Plans</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <span className="font-medium">Motivation:</span>
+                        <div className="bg-muted/50 p-3 rounded-lg mt-2">
+                          <p className="whitespace-pre-wrap">{selectedForm.data.motivation || 'Not provided'}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Marketing Plan:</span>
+                        <div className="bg-muted/50 p-3 rounded-lg mt-2">
+                          <p className="whitespace-pre-wrap">{selectedForm.data.marketingPlan || 'Not provided'}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </>
+              ) : (
+                // Regular Contact Form Message
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Message</CardTitle>
+                    {selectedForm.data.subject && (
+                      <CardDescription className="font-medium">
+                        Subject: {selectedForm.data.subject}
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-muted/50 p-4 rounded-lg">
+                      <p className="whitespace-pre-wrap">{selectedForm.data.message}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Additional Information */}
               {(selectedForm.data.inquiryType || selectedForm.data.formSource) && (

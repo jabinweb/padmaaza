@@ -26,7 +26,7 @@ interface User {
   id: string
   name: string
   email: string
-  role: 'ADMIN' | 'MEMBER' | 'CUSTOMER'
+  role: 'ADMIN' | 'MEMBER' | 'CUSTOMER' | 'WHOLESALER' | 'PART_TIME'
   isActive: boolean
   joinedAt: string
   referralCode: string
@@ -117,6 +117,8 @@ export default function AdminUsersPage() {
                   <SelectItem value="ADMIN">Admin</SelectItem>
                   <SelectItem value="MEMBER">Member</SelectItem>
                   <SelectItem value="CUSTOMER">Customer</SelectItem>
+                  <SelectItem value="WHOLESALER">Wholesaler</SelectItem>
+                  <SelectItem value="PART_TIME">Part Time</SelectItem>
                 </SelectContent>
               </Select>
               <Button variant="outline" size="sm">
