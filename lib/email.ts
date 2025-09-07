@@ -413,6 +413,146 @@ class EmailServiceClass {
       html
     })
   }
+
+  // Wholesaler welcome email
+  async sendWholesalerWelcomeEmail(wholesalerData: {
+    to: string
+    name: string
+    email: string
+    password: string
+    businessName: string
+  }) {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px;">
+        <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <h1 style="color: #2563eb; text-align: center; margin-bottom: 30px;">Welcome to Padmaaja Rasooi Wholesaler Network! 🏪</h1>
+          
+          <p>Dear ${wholesalerData.name},</p>
+          
+          <p>Congratulations! Your wholesaler registration has been approved. You are now part of our exclusive wholesaler network.</p>
+          
+          <div style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 25px; border-radius: 10px; text-align: center; margin: 20px 0;">
+            <h2 style="margin: 0;">🎉 Welcome ${wholesalerData.businessName}! 🎉</h2>
+            <p style="margin: 10px 0 0 0; font-size: 16px;">You now have access to wholesale benefits</p>
+          </div>
+          
+          <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Your Login Credentials</h3>
+            <p><strong>Email:</strong> ${wholesalerData.email}</p>
+            <p><strong>Temporary Password:</strong> ${wholesalerData.password}</p>
+            <p style="color: #dc2626; font-size: 14px;"><strong>Important:</strong> Please change your password after first login.</p>
+          </div>
+          
+          <div style="background-color: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>🎁 Your Wholesale Benefits</h3>
+            <ul>
+              <li><strong>25% Discount</strong> on all bulk orders</li>
+              <li>Dedicated account manager</li>
+              <li>Priority customer support</li>
+              <li>Flexible payment terms</li>
+              <li>Quality guarantee on all products</li>
+              <li>Fast order processing</li>
+            </ul>
+          </div>
+          
+          <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Next Steps</h3>
+            <ol>
+              <li>Login to your account using the credentials above</li>
+              <li>Complete your profile information</li>
+              <li>Browse our wholesale catalog</li>
+              <li>Place your first bulk order to enjoy 25% discount</li>
+              <li>Contact your account manager for assistance</li>
+            </ol>
+          </div>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/signin" 
+               style="background-color: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold;">
+              Login to Your Wholesaler Account
+            </a>
+          </div>
+          
+          <p>Our team will contact you within 24 hours to assist with your first order and answer any questions.</p>
+          <p>For immediate assistance, contact us at ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'} or call our wholesaler hotline.</p>
+          
+          <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
+            <p>Best regards,<br>The Padmaaja Rasooi Wholesale Team</p>
+          </div>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: wholesalerData.to,
+      subject: 'Welcome to Padmaaja Rasooi Wholesale Network!',
+      html
+    })
+  }
+
+  // Admin notification for new wholesaler registration
+  async sendWholesalerAdminNotification(wholesalerData: {
+    wholesalerName: string
+    wholesalerEmail: string
+    businessName: string
+    businessType: string
+    phone: string
+    expectedVolume: string
+    registrationDate: string
+  }) {
+    const settings = await getSystemSettings()
+    
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px;">
+        <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <h1 style="color: #dc2626; text-align: center; margin-bottom: 30px;">🏪 New Wholesaler Registration</h1>
+          
+          <p>A new wholesaler has registered on the platform.</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Wholesaler Details</h3>
+            <p><strong>Name:</strong> ${wholesalerData.wholesalerName}</p>
+            <p><strong>Email:</strong> ${wholesalerData.wholesalerEmail}</p>
+            <p><strong>Business Name:</strong> ${wholesalerData.businessName}</p>
+            <p><strong>Business Type:</strong> ${wholesalerData.businessType}</p>
+            <p><strong>Phone:</strong> ${wholesalerData.phone}</p>
+            <p><strong>Expected Volume:</strong> ${wholesalerData.expectedVolume}</p>
+            <p><strong>Registration Date:</strong> ${wholesalerData.registrationDate}</p>
+          </div>
+          
+          <div style="background-color: #dbeafe; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Required Actions</h3>
+            <ul>
+              <li>Review the wholesaler's application</li>
+              <li>Contact the wholesaler within 24 hours</li>
+              <li>Assign an account manager</li>
+              <li>Set up wholesale pricing if needed</li>
+              <li>Provide product catalogs and information</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin/users" 
+               style="background-color: #dc2626; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold;">
+              View in Admin Panel
+            </a>
+          </div>
+          
+          <p>The wholesaler has been automatically approved and given access to 25% wholesale discounts on bulk orders.</p>
+          
+          <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
+            <p>This is an automated notification from Padmaaja Rasooi</p>
+          </div>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: settings.supportEmail,
+      subject: `New Wholesaler Registration - ${wholesalerData.businessName}`,
+      html
+    })
+  }
 }
 
 export const emailService = new EmailServiceClass()

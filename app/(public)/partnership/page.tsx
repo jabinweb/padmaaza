@@ -127,13 +127,6 @@ export default function PartnerPage() {
         badge={{
           text: "Partnership Opportunity"
         }}
-        actions={[
-          {
-            label: "Join Us Today",
-            icon: ArrowRight,
-            variant: "primary"
-          }
-        ]}
         backgroundGradient="from-slate-900/90 via-emerald-900/80 to-slate-800/85"
         titleGradient="from-orange-500 to-orange-400"
         className="bg-gradient-to-r from-emerald-600/20 to-orange-500/20"

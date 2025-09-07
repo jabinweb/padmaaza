@@ -57,7 +57,6 @@ export function Header() {
             { name: 'Our Story', href: '/about', description: 'Company history and mission' },
             { name: 'Our Founder', href: '/about/founder', description: 'Meet our visionary leader' },
             { name: 'Certifications', href: '/about/certifications', description: 'Industry recognition' },
-            { name: 'Sustainability', href: '/sustainability', description: 'Environmental commitment' },
           ]
         },
         {
@@ -65,8 +64,8 @@ export function Header() {
           icon: Settings,
           items: [
             { name: 'Partnership', href: '/partnership', description: 'Join our network' },
-            { name: 'Bulk Supply', href: '/bulk-supply', description: 'Wholesale distribution' },
             { name: 'Wholesaler', href: '/wholesaler', description: 'Wholesaler program' },
+            { name: 'Sustainability', href: '/sustainability', description: 'Environmental commitment' },
           ]
         },
       ]

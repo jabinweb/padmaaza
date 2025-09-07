@@ -1,9 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { 
   Users, 
   Package, 
@@ -24,8 +24,11 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import PageHero from '@/components/PageHero'
+import WholesalerRegistrationForm from '@/components/WholesalerRegistrationForm'
 
 export default function WholesalerPage() {
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false)
+
   const wholesalerProcess = [
     {
       id: 1,
@@ -160,14 +163,9 @@ export default function WholesalerPage() {
         }}
         actions={[
           {
-            label: "Start Partnership",
-            href: "/contact",
+            label: "Register Now",
+            onClick: () => setShowRegistrationModal(true),
             variant: "primary"
-          },
-          {
-            label: "Call Now: +91-9454906009",
-            href: "tel:+91-9454906009",
-            variant: "secondary"
           }
         ]}
       />
@@ -371,6 +369,12 @@ export default function WholesalerPage() {
           </div>
         </div>
       </section>
+
+      {/* Wholesaler Registration Modal */}
+      <WholesalerRegistrationForm 
+        isOpen={showRegistrationModal}
+        onClose={() => setShowRegistrationModal(false)}
+      />
     </div>
   )
 }
