@@ -98,8 +98,11 @@ export interface CartItem {
 
 // Enums
 export enum UserRole {
-  USER = 'USER',
-  ADMIN = 'ADMIN'
+  ADMIN = 'ADMIN',
+  MEMBER = 'MEMBER',          // For Partners
+  WHOLESALER = 'WHOLESALER',  // For Wholesale customers
+  PART_TIME = 'PART_TIME',    // For those who want part-time job opportunities
+  CUSTOMER = 'CUSTOMER'       // Regular customers
 }
 
 export enum OrderStatus {

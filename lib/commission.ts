@@ -30,16 +30,18 @@ export async function calculateCommissions(orderId: string) {
     })
 
     if (commissionSettings.length === 0) {
-      return { success: false, message: 'No commission settings configured' }
+      // Initialize default settings if none exist
+      await initializeCommissionSettings()
+      return await calculateCommissions(orderId) // Retry after initialization
     }
 
     const commissions = []
     let currentUser: any = order.user
     let level = 1
 
-    // Calculate commissions for each level
+    // Calculate commissions for each level (up to 3 levels for partners)
     for (const setting of commissionSettings) {
-      if (!currentUser.referrerId || level > setting.level) break
+      if (!currentUser.referrerId || level > 3) break // Limit to 3 levels
 
       // Get referrer with rank information
       const referrer = await prisma.user.findUnique({
@@ -51,6 +53,12 @@ export async function calculateCommissions(orderId: string) {
       })
 
       if (!referrer) break
+
+      // Only calculate commissions for MEMBER (partners) referrers
+      if (referrer.role !== 'MEMBER') {
+        currentUser = referrer
+        continue
+      }
 
       // Calculate base commission amount
       let commissionAmount = (order.total * setting.percentage) / 100
@@ -67,9 +75,9 @@ export async function calculateCommissions(orderId: string) {
           fromUserId: order.userId,
           orderId: order.id,
           amount: commissionAmount,
-          level: setting.level,
-          type: 'REFERRAL',
-          status: 'APPROVED'
+          level: level,
+          type: level === 1 ? 'REFERRAL' : 'LEVEL',
+          status: 'APPROVED' // Auto-approve for partners
         }
       })
 
@@ -90,9 +98,13 @@ export async function calculateCommissions(orderId: string) {
 
       commissions.push({
         referrerId: referrer.id,
+        referrerName: referrer.name,
         amount: commissionAmount,
-        level: setting.level
+        level: level,
+        type: level === 1 ? 'REFERRAL' : 'LEVEL'
       })
+
+      console.log(`Level ${level} commission: ₹${commissionAmount} for partner ${referrer.name} (${referrer.email})`)
 
       // Update currentUser to the referrer for next iteration
       currentUser = referrer
@@ -305,5 +317,25 @@ export class CommissionService {
     }
 
     return allReferrals
+  }
+}
+
+// Initialize default commission settings for partners
+export async function initializeCommissionSettings() {
+  try {
+    const existingSettings = await prisma.commissionSettings.findMany()
+    
+    if (existingSettings.length === 0) {
+      await prisma.commissionSettings.createMany({
+        data: [
+          { level: 1, percentage: 5.0, isActive: true }, // 5% for direct referrer (partner)
+          { level: 2, percentage: 2.0, isActive: true }, // 2% for level 2 partner
+          { level: 3, percentage: 1.0, isActive: true }, // 1% for level 3 partner
+        ]
+      })
+      console.log('Commission settings initialized for partner system')
+    }
+  } catch (error) {
+    console.error('Failed to initialize commission settings:', error)
   }
 }

@@ -1,13 +1,47 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Crown, Award, Star, Users, TrendingUp, ShoppingBag, ArrowRight, CheckCircle } from 'lucide-react'
+import { Crown, Award, Star, Users, TrendingUp, ShoppingBag, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import PageHero from '@/components/PageHero'
+import PartnershipApplicationForm from '@/components/PartnershipApplicationForm'
+
+interface TierAvailability {
+  name: string
+  limit: number
+  currentCount: number
+  remaining: number
+  available: boolean
+  percentageFull: number
+}
 
 export default function PartnerPage() {
+  const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false)
+  const [selectedTier, setSelectedTier] = useState('Silver')
+  const [tierAvailability, setTierAvailability] = useState<TierAvailability[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Fetch tier availability on component mount
+  useEffect(() => {
+    async function fetchTierAvailability() {
+      try {
+        const response = await fetch('/api/partnership/tiers')
+        const data = await response.json()
+        if (data.success) {
+          setTierAvailability(data.tiers)
+        }
+      } catch (error) {
+        console.error('Failed to fetch tier availability:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchTierAvailability()
+  }, [])
+
   const partnershipTiers = [
     {
       name: 'Diamond',
@@ -127,48 +161,85 @@ export default function PartnerPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {partnershipTiers.map((tier, index) => (
-              <motion.div
-                key={tier.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className={index === 0 ? 'md:scale-105' : ''}
-              >
-                <Card className={`h-full border-2 shadow-xl hover:shadow-2xl transition-all duration-300 ${index === 0 ? 'border-blue-300' : 'border-gray-200'}`}>
-                  <CardHeader className="text-center pb-4" style={{backgroundColor: tier.bgColor}}>
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{backgroundColor: `${tier.color}20`}}>
-                      <tier.icon className="h-10 w-10" style={{color: tier.color}} />
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
-                      {tier.name} Partner
-                    </CardTitle>
-                    <div className="text-3xl font-bold mb-2" style={{color: tier.color}}>
-                      {tier.maxUsers.toLocaleString()} Users
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      {tier.benefits}
-                    </p>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="space-y-3 mb-6">
-                      {tier.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-start">
-                          <CheckCircle className="h-5 w-5 text-emerald-500 mr-3 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-600">{feature}</span>
+            {partnershipTiers.map((tier, index) => {
+              const availability = tierAvailability.find(t => t.name === tier.name)
+              const isAvailable = availability?.available ?? true
+              const remaining = availability?.remaining ?? 0
+              
+              return (
+                <motion.div
+                  key={tier.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  className={index === 0 ? 'md:scale-105' : ''}
+                >
+                  <Card className={`h-full border-2 shadow-xl hover:shadow-2xl transition-all duration-300 ${
+                    index === 0 ? 'border-blue-300' : 'border-gray-200'
+                  } ${!isAvailable ? 'opacity-75' : ''}`}>
+                    <CardHeader className="text-center pb-4" style={{backgroundColor: tier.bgColor}}>
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{backgroundColor: `${tier.color}20`}}>
+                        <tier.icon className="h-10 w-10" style={{color: tier.color}} />
+                      </div>
+                      <CardTitle className="text-2xl font-bold text-gray-900 mb-2">
+                        {tier.name} Partner
+                      </CardTitle>
+                      <div className="text-3xl font-bold mb-2" style={{color: tier.color}}>
+                        {tier.maxUsers.toLocaleString()} Users
+                      </div>
+                      
+                      {/* Availability Status */}
+                      {!isLoading && availability && (
+                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                          isAvailable 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-red-100 text-red-800'
+                        }`}>
+                          {isAvailable ? (
+                            <>
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                              {remaining} spots left
+                            </>
+                          ) : (
+                            <>
+                              <AlertCircle className="h-3 w-3 mr-1" />
+                              FULL
+                            </>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                    <Button 
-                      className="w-full text-white font-semibold"
-                      style={{backgroundColor: tier.color}}
-                    >
-                      Apply for {tier.name}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                      )}
+                      
+                      <p className="text-sm text-gray-600 mt-2">
+                        {tier.benefits}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <div className="space-y-3 mb-6">
+                        {tier.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-start">
+                            <CheckCircle className="h-5 w-5 text-emerald-500 mr-3 mt-0.5 flex-shrink-0" />
+                            <span className="text-gray-600">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <Button 
+                        className="w-full text-white font-semibold"
+                        style={{backgroundColor: isAvailable ? tier.color : '#9CA3AF'}}
+                        disabled={!isAvailable}
+                        onClick={() => {
+                          if (isAvailable) {
+                            setSelectedTier(tier.name)
+                            setIsApplicationFormOpen(true)
+                          }
+                        }}
+                      >
+                        {isAvailable ? `Apply for ${tier.name}` : 'Tier Full'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -283,6 +354,10 @@ export default function PartnerPage() {
                 size="lg" 
                 className="w-full sm:w-auto text-lg px-8 py-4"
                 style={{backgroundColor: '#F5873B', color: 'white'}}
+                onClick={() => {
+                  setSelectedTier('Silver')
+                  setIsApplicationFormOpen(true)
+                }}
               >
                 Apply Now <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -297,6 +372,13 @@ export default function PartnerPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Partnership Application Form */}
+      <PartnershipApplicationForm
+        isOpen={isApplicationFormOpen}
+        onClose={() => setIsApplicationFormOpen(false)}
+        selectedTier={selectedTier}
+      />
     </div>
   )
 }

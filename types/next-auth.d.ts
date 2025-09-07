@@ -7,20 +7,20 @@ declare module 'next-auth' {
       email: string
       name?: string | null
       image?: string | null
-      role: 'ADMIN' | 'MEMBER' | 'CUSTOMER'
+      role: 'ADMIN' | 'MEMBER' | 'WHOLESALER' | 'PART_TIME' | 'CUSTOMER'
       referralCode: string
     }
   }
 
   interface User {
-    role: 'ADMIN' | 'MEMBER' | 'CUSTOMER'
+    role: 'ADMIN' | 'MEMBER' | 'WHOLESALER' | 'PART_TIME' | 'CUSTOMER'
     referralCode: string
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    role: 'ADMIN' | 'MEMBER' | 'CUSTOMER'
+    role: 'ADMIN' | 'MEMBER' | 'WHOLESALER' | 'PART_TIME' | 'CUSTOMER'
     referralCode: string
   }
 }

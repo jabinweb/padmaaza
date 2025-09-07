@@ -50,6 +50,10 @@ model User {
   isActive      Boolean   @default(true)
   currentRankId String?
   
+  // Partner-specific fields
+  partnerTier   String?   // 'Diamond', 'Gold', 'Silver'
+  minReferrals  Int       @default(3)  // Minimum members a partner needs to add
+  
   accounts      Account[]
   sessions      Session[]
   
@@ -70,6 +74,9 @@ model User {
   // Rank system
   currentRank   Rank?     @relation(fields: [currentRankId], references: [id])
   rankAchievements RankAchievement[]
+  
+  // Form responses
+  formResponses FormResponse[]
   
   @@map("users")
 }
@@ -104,6 +111,7 @@ model Product {
   discount    Float     @default(0)
   images      String[]
   stock       Int       @default(0)
+  manageStock Boolean   @default(true)
   sku         String    @unique
   slug        String    @unique
   isActive    Boolean   @default(true)
@@ -276,13 +284,15 @@ model RankAchievement {
   rank      Rank     @relation(fields: [rankId], references: [id])
   
   @@unique([userId, rankId])
-  @@map("rank_achievements")
+    @@map("rank_achievements")
 }
 
 enum Role {
   ADMIN
-  MEMBER
-  CUSTOMER
+  MEMBER        // For Partners
+  WHOLESALER    // For Wholesale customers
+  PART_TIME     // For those who want part-time job opportunities
+  CUSTOMER      // Regular customers
 }
 
 enum OrderStatus {
@@ -317,4 +327,22 @@ enum AddressType {
   HOME
   WORK
   OTHER
+}
+
+model FormResponse {
+  id        String   @id @default(cuid())
+  formId    String   // e.g., "contact", "partnership", "bulk_inquiry"
+  data      Json     @db.JsonB // Actual form submission data
+  status    String   @default("new")
+  metadata  Json?    @db.JsonB // Additional metadata like IP, user agent
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String? // Optional relation to user if logged in
+  
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@index([status])
+  @@index([userId])
+  @@index([formId])
+  @@map("form_responses")
 }

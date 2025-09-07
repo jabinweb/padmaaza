@@ -198,6 +198,221 @@ class EmailServiceClass {
       html
     })
   }
+
+  // Partner application admin notification
+  async sendPartnerApplicationAdminNotification(data: any, newUser: any) {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #F5873B;">New Partner Application Received</h2>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Partner Information</h3>
+          <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Phone:</strong> ${data.phone}</p>
+          <p><strong>Partnership Tier:</strong> ${data.partnershipTier}</p>
+          <p><strong>Expected Customers:</strong> ${data.expectedCustomers}</p>
+        </div>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Business Information</h3>
+          <p><strong>Business Name:</strong> ${data.businessName || 'N/A'}</p>
+          <p><strong>Business Type:</strong> ${data.businessType}</p>
+          <p><strong>Experience:</strong> ${data.experience}</p>
+        </div>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Address</h3>
+          <p>${data.address}</p>
+          <p>${data.city}, ${data.state} ${data.zipCode}</p>
+        </div>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Additional Information</h3>
+          <p><strong>Motivation:</strong> ${data.motivation}</p>
+          <p><strong>Marketing Plan:</strong> ${data.marketingPlan}</p>
+        </div>
+        
+        <p style="color: #28a745; font-weight: bold;">✅ User has been automatically created and approved as a MEMBER.</p>
+        <p><strong>User ID:</strong> ${newUser.id}</p>
+        <p><strong>Referral Code:</strong> ${newUser.referralCode}</p>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: process.env.ADMIN_EMAIL || 'srajeev7053@gmail.com',
+      subject: `New Partner Application - ${data.partnershipTier} Tier`,
+      html
+    })
+  }
+
+  // Partner welcome email
+  async sendPartnerWelcomeEmail(data: any, newUser: any, randomPassword: string) {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #F5873B; color: white; padding: 20px; text-align: center;">
+          <h1>Welcome to Padmaaja Rasooi!</h1>
+          <p>Your partnership application has been approved</p>
+        </div>
+        
+        <div style="padding: 20px;">
+          <h2>Congratulations, ${data.firstName}!</h2>
+          <p>We're excited to welcome you as a <strong>${data.partnershipTier}</strong> partner in the Padmaaja Rasooi family.</p>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Your Login Details</h3>
+            <p><strong>Website:</strong> <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}">${process.env.NEXTAUTH_URL || 'http://localhost:3000'}</a></p>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Password:</strong> ${randomPassword}</p>
+            <p><strong>Your Referral Code:</strong> ${newUser.referralCode}</p>
+          </div>
+          
+          <div style="background-color: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Partnership Details</h3>
+            <p><strong>Tier:</strong> ${data.partnershipTier}</p>
+            <p><strong>Required Members:</strong> Minimum 3 members must be added</p>
+            <p><strong>Commission Structure:</strong> Earn commissions on all purchases made by your referrals</p>
+          </div>
+          
+          <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Next Steps</h3>
+            <ol>
+              <li>Log in to your partner dashboard using the credentials above</li>
+              <li>Complete your profile setup</li>
+              <li>Add minimum 3 members using your referral code</li>
+              <li>Track your earnings and commissions in real-time</li>
+            </ol>
+          </div>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Important Notes</h3>
+            <ul>
+              <li>You must add at least <strong>3 members</strong> to maintain your partnership</li>
+              <li>You'll earn commissions on all purchases made by your referrals</li>
+              <li>Please change your password after first login for security</li>
+              <li>Contact support for any questions: ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'}</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/signin" 
+               style="background-color: #F5873B; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+              Login to Your Dashboard
+            </a>
+          </div>
+          
+          <p>Thank you for joining Padmaaja Rasooi. We look forward to a successful partnership!</p>
+          
+          <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
+            <p>Best regards,<br>The Padmaaja Rasooi Team</p>
+          </div>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: data.email,
+      subject: 'Welcome to Padmaaja Rasooi Partnership Program!',
+      html
+    })
+  }
+
+  // Member added admin notification
+  async sendMemberAddedAdminNotification(partner: any, newMember: any) {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #F5873B;">New Member Added</h2>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>Partner Information</h3>
+          <p><strong>Partner:</strong> ${partner.name} (${partner.email})</p>
+          <p><strong>Partner Tier:</strong> ${partner.partnerTier || 'N/A'}</p>
+          <p><strong>Current Members:</strong> ${partner.referrals.length + 1}</p>
+          <p><strong>Min Required:</strong> ${partner.minReferrals}</p>
+          <p><strong>Status:</strong> ${partner.referrals.length + 1 >= partner.minReferrals ? '✅ Meeting minimum requirement' : '⚠️ Building minimum members'}</p>
+        </div>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3>New Member Information</h3>
+          <p><strong>Name:</strong> ${newMember.name}</p>
+          <p><strong>Email:</strong> ${newMember.email}</p>
+          <p><strong>Phone:</strong> ${newMember.phone}</p>
+          <p><strong>User ID:</strong> ${newMember.id}</p>
+          <p><strong>Referral Code:</strong> ${newMember.referralCode}</p>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: process.env.ADMIN_EMAIL || 'srajeev7053@gmail.com',
+      subject: `New Member Added by Partner: ${partner.name}`,
+      html
+    })
+  }
+
+  // Member welcome email
+  async sendMemberWelcomeEmail(memberData: any, partner: any, randomPassword: string) {
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #F5873B; color: white; padding: 20px; text-align: center;">
+          <h1>Welcome to Padmaaja Rasooi!</h1>
+          <p>You've been added by our partner: ${partner.name}</p>
+        </div>
+        
+        <div style="padding: 20px;">
+          <h2>Hello ${memberData.name}!</h2>
+          <p>Welcome to the Padmaaja Rasooi family! You've been added as a member by our partner <strong>${partner.name}</strong>.</p>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Your Account Details</h3>
+            <p><strong>Website:</strong> <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}">${process.env.NEXTAUTH_URL || 'http://localhost:3000'}</a></p>
+            <p><strong>Email:</strong> ${memberData.email}</p>
+            <p><strong>Password:</strong> ${randomPassword}</p>
+          </div>
+          
+          <div style="background-color: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>What's Next?</h3>
+            <ol>
+              <li>Log in to your account using the credentials above</li>
+              <li>Browse our premium spice collection</li>
+              <li>Place your first order and enjoy exclusive member benefits</li>
+              <li>Earn rewards and commissions through our referral program</li>
+            </ol>
+          </div>
+          
+          <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3>Member Benefits</h3>
+            <ul>
+              <li>Exclusive access to premium spices and masalas</li>
+              <li>Special member pricing and discounts</li>
+              <li>Earn commissions by referring others</li>
+              <li>Priority customer support</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/signin" 
+               style="background-color: #F5873B; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+              Login to Your Account
+            </a>
+          </div>
+          
+          <p><strong>Important:</strong> Please change your password after first login for security.</p>
+          <p>If you have any questions, contact us at ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'}</p>
+          
+          <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
+            <p>Best regards,<br>The Padmaaja Rasooi Team</p>
+          </div>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: memberData.email,
+      subject: 'Welcome to Padmaaja Rasooi!',
+      html
+    })
+  }
 }
 
 export const emailService = new EmailServiceClass()

@@ -371,50 +371,6 @@ export default function WholesalerPage() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-700">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-bold text-white mb-6"
-          >
-            Ready to Start Your Wholesaler Journey?
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto"
-          >
-            Join hundreds of successful distributors across India. Start your profitable partnership with Padmaaja today.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Button 
-              asChild
-              size="lg" 
-              className="bg-white text-orange-600 hover:bg-gray-100 font-semibold px-8 py-4 text-lg"
-            >
-              <Link href="/contact">Start Partnership</Link>
-            </Button>
-            <Button 
-              asChild
-              size="lg" 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-orange-600 font-semibold px-8 py-4 text-lg"
-            >
-              <Link href="tel:+91-9454906009">Call Now: +91-9454906009</Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
     </div>
   )
 }

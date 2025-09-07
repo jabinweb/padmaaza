@@ -15,10 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ArrowLeft, Save, Upload, X } from 'lucide-react'
+import { ArrowLeft, Save, Upload, X, ImageIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import Image from 'next/image'
+import MediaSelector, { MediaFile } from '@/components/admin/MediaSelector'
 
 interface Product {
   id?: string
@@ -28,6 +29,7 @@ interface Product {
   discount: number
   images: string[]
   stock: number
+  manageStock: boolean
   sku: string
   isActive: boolean
   categoryId: string
@@ -45,7 +47,6 @@ interface ProductFormProps {
 export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [uploading, setUploading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
   const [imageUrl, setImageUrl] = useState('')
   const [formData, setFormData] = useState<Product>({
@@ -55,6 +56,7 @@ export function ProductForm({ product }: ProductFormProps) {
     discount: 0,
     images: [],
     stock: 0,
+    manageStock: true,
     sku: '',
     isActive: true,
     categoryId: '',
@@ -77,48 +79,6 @@ export function ProductForm({ product }: ProductFormProps) {
 
   const handleInputChange = (field: keyof Product, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-
-    setUploading(true)
-    
-    try {
-      const formData = new FormData()
-      Array.from(files).forEach(file => {
-        formData.append('files', file)
-      })
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error('Upload failed')
-      }
-
-      const result = await response.json()
-      
-      if (result.success) {
-        setFormData(prev => ({ 
-          ...prev, 
-          images: [...prev.images, ...result.urls] 
-        }))
-        toast.success(result.message)
-      } else {
-        throw new Error(result.error || 'Upload failed')
-      }
-    } catch (error) {
-      console.error('Upload error:', error)
-      toast.error('Failed to upload images')
-    } finally {
-      setUploading(false)
-      // Reset file input
-      e.target.value = ''
-    }
   }
 
   const handleAddImageUrl = () => {
@@ -256,34 +216,37 @@ export function ProductForm({ product }: ProductFormProps) {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {/* File Upload Section */}
+                {/* Media Selector Section */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Upload from Computer</Label>
-                  <div className="flex items-center space-x-2">
-                    <Label htmlFor="images" className="cursor-pointer">
-                      <div className="flex items-center space-x-2 px-4 py-2 border border-dashed border-gray-300 rounded-lg hover:border-gray-400">
-                        <Upload className="h-4 w-4" />
-                        <span>{uploading ? 'Uploading...' : 'Upload Images'}</span>
-                      </div>
-                    </Label>
-                    <Input
-                      id="images"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={uploading}
-                      className="hidden"
-                    />
-                  </div>
+                  <Label className="text-sm font-medium">Product Images</Label>
+                  <MediaSelector
+                    allowedTypes={['image/*']}
+                    onSelect={(file: MediaFile) => {
+                      const imageUrl = file.url
+                      if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim()) {
+                        setFormData(prev => ({
+                          ...prev,
+                          images: [...prev.images, imageUrl]
+                        }))
+                        toast.success('Image added successfully')
+                      } else {
+                        toast.error('Invalid file selected - no valid URL found')
+                      }
+                    }}
+                  >
+                    <div className="flex items-center space-x-2 px-4 py-2 border border-dashed border-gray-300 rounded-lg hover:border-gray-400 cursor-pointer">
+                      <ImageIcon className="h-4 w-4" />
+                      <span>Browse & Upload Images</span>
+                    </div>
+                  </MediaSelector>
                   <p className="text-xs text-gray-500">
-                    Upload images from your computer. Supports JPG, PNG, WebP formats.
+                    Browse existing images or upload new ones. Supports JPG, PNG, WebP formats.
                   </p>
                 </div>
 
-                {/* URL Input Section */}
+                {/* URL Input Section (Optional) */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Add Image URL</Label>
+                  <Label className="text-sm font-medium">Add Image URL (Optional)</Label>
                   <div className="flex space-x-2">
                     <Input
                       placeholder="https://example.com/image.jpg"
@@ -384,15 +347,31 @@ export function ProductForm({ product }: ProductFormProps) {
               </div>
 
               <div>
-                <Label htmlFor="stock">Stock Quantity</Label>
-                <Input
-                  id="stock"
-                  type="number"
-                  min="0"
-                  value={formData.stock}
-                  onChange={(e) => handleInputChange('stock', parseInt(e.target.value) || 0)}
-                  required
-                />
+                <div className="flex items-center justify-between mb-3">
+                  <Label htmlFor="manageStock">Manage Stock</Label>
+                  <Switch
+                    id="manageStock"
+                    checked={formData.manageStock}
+                    onCheckedChange={(checked) => handleInputChange('manageStock', checked)}
+                  />
+                </div>
+                <p className="text-sm text-gray-500 mb-4">
+                  Enable this to track inventory levels for this product
+                </p>
+                
+                {formData.manageStock && (
+                  <div>
+                    <Label htmlFor="stock">Stock Quantity</Label>
+                    <Input
+                      id="stock"
+                      type="number"
+                      min="0"
+                      value={formData.stock}
+                      onChange={(e) => handleInputChange('stock', parseInt(e.target.value) || 0)}
+                      required
+                    />
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

@@ -3,7 +3,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ShoppingCart, Star, Eye } from 'lucide-react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { ShoppingCart, Star, Eye, X } from 'lucide-react'
 import Link from 'next/link'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { motion } from 'framer-motion'
@@ -11,6 +13,7 @@ import { cartManager } from '@/lib/cart'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Product } from '@/types'
+import { useState } from 'react'
 
 interface ProductCardProps {
   product: Product
@@ -19,6 +22,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index }: ProductCardProps) {
   const router = useRouter()
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
   
   const getDiscountedPrice = (price: number, discount: number) => {
     return price - (price * discount / 100)
@@ -55,7 +59,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
   const handleViewDetails = (e: React.MouseEvent) => {
     e.stopPropagation()
-    router.push(`/products/${product.slug}`)
+    setIsQuickViewOpen(true)
   }
 
   return (
@@ -100,9 +104,18 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         
         <CardHeader className="pb-2 p-3 sm:p-6 sm:pb-2">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <CardTitle className="text-base sm:text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight">
-              {product.name}
-            </CardTitle>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CardTitle className="text-base sm:text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight cursor-help">
+                    {product.name}
+                  </CardTitle>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>{product.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <CardDescription className="line-clamp-2 md:text-xs text-sm text-gray-600 leading-relaxed">
             {product.description || 'Premium quality product from Padmaaja Rasooi Pvt. Ltd.'}
@@ -127,9 +140,9 @@ export default function ProductCard({ product, index }: ProductCardProps) {
                 </span>
               )}
             </div>
-            <span className="text-xs sm:text-sm text-gray-500">
+            {/* <span className="text-xs sm:text-sm text-gray-500">
               Stock: <span className={product.stock > 0 ? 'text-green-600' : 'text-red-600'}>{product.stock}</span>
-            </span>
+            </span> */}
           </div>
           
           <div className="flex gap-2">
@@ -154,6 +167,153 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </div>
         </CardContent>
       </Card>
+
+      {/* Quick View Dialog */}
+      <Dialog open={isQuickViewOpen} onOpenChange={setIsQuickViewOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">{product.name}</DialogTitle>
+          </DialogHeader>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Product Image */}
+            <div className="space-y-4">
+              <div className="relative aspect-square overflow-hidden rounded-lg border">
+                <OptimizedImage
+                  src={product.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
+                  alt={product.name}
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-contain"
+                  quality={80}
+                />
+                {product.discount > 0 && (
+                  <Badge className="absolute top-4 left-4 bg-red-500 hover:bg-red-600 text-white font-semibold">
+                    {product.discount}% OFF
+                  </Badge>
+                )}
+              </div>
+              
+              {/* Additional Images if available */}
+              {product.images.length > 1 && (
+                <div className="grid grid-cols-4 gap-2">
+                  {product.images.slice(1, 5).map((image, idx) => (
+                    <div key={idx} className="aspect-square rounded border overflow-hidden">
+                      <OptimizedImage
+                        src={image}
+                        alt={`${product.name} ${idx + 2}`}
+                        width={100}
+                        height={100}
+                        className="w-full h-full object-contain"
+                        quality={60}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Product Details */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Product Details</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {product.description || 'Premium quality product from Padmaaja Rasooi Pvt. Ltd.'}
+                </p>
+              </div>
+
+              {/* Category and Brand */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <span className="text-sm font-medium text-gray-500">Category</span>
+                  <p className="font-semibold">{product.category?.name}</p>
+                </div>
+                <div>
+                  <span className="text-sm font-medium text-gray-500">Brand</span>
+                  <p className="font-semibold">{product.brand || 'Padmaaja Rasooi'}</p>
+                </div>
+                {product.weight && (
+                  <div>
+                    <span className="text-sm font-medium text-gray-500">Weight</span>
+                    <p className="font-semibold">{product.weight}</p>
+                  </div>
+                )}
+                {product.origin && (
+                  <div>
+                    <span className="text-sm font-medium text-gray-500">Origin</span>
+                    <p className="font-semibold">{product.origin}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Pricing */}
+              <div className="border-t pt-4">
+                <div className="flex items-center space-x-3 mb-4">
+                  {product.discount > 0 ? (
+                    <>
+                      <span className="text-2xl font-bold text-green-600">
+                        ₹{getDiscountedPrice(product.price, product.discount).toFixed(2)}
+                      </span>
+                      <span className="text-lg text-gray-500 line-through">
+                        ₹{product.price.toFixed(2)}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-2xl font-bold text-gray-900">
+                      ₹{product.price.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+                
+                {/* Stock Status */}
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-gray-500">Availability: </span>
+                  <span className={`font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    {product.stock > 0 ? `In Stock (${product.stock} available)` : 'Out of Stock'}
+                  </span>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  <Button 
+                    onClick={handleAddToCart}
+                    disabled={product.stock === 0}
+                    className="w-full"
+                    size="lg"
+                  >
+                    <ShoppingCart className="h-4 w-4 mr-2" />
+                    {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      setIsQuickViewOpen(false)
+                      router.push(`/products/${product.slug}`)
+                    }}
+                    className="w-full"
+                    size="lg"
+                  >
+                    View Full Details
+                  </Button>
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div className="flex items-center space-x-2 pt-4 border-t">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`h-4 w-4 ${i < 4 ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">4.5 (123 reviews)</span>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </motion.div>
   )
 }
