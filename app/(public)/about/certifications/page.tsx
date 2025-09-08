@@ -6,7 +6,7 @@ import { Shield, Award, CheckCircle, FileText, Globe, Factory, Leaf, Users, Cale
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import PageHero from '@/components/PageHero'
+import PageHero from '@/components/sections/PageHero'
 
 export default function CertificationsPage() {
   const certifications = [

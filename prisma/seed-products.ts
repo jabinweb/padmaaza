@@ -27,28 +27,54 @@ async function seedProducts() {
 
     // Product data based on the attached price sheet with proper per-kg calculations
     const riceProducts = [
+      // KASHMINA STEAM
+      {
+        baseName: 'Kashmina Steam Grade-1',
+        description: 'Superior Grade-1 Kashmina Steam rice with perfect steam processing for enhanced aroma and taste.',
+        marketRatePerKg: 116, // Updated rate
+        companyRatePerKg: 116, // Company rate same as market rate
+        origin: 'Haryana, India',
+        brand: 'Kashmina'
+      },
+      {
+        baseName: 'Kashmina Steam Dubar',
+        description: 'High-quality Dubar grade Kashmina Steam rice perfect for everyday cooking needs.',
+        marketRatePerKg: 68, // Updated rate
+        companyRatePerKg: 68, // Company rate same as market rate
+        origin: 'Haryana, India',
+        brand: 'Kashmina'
+      },
+      {
+        baseName: 'Kashmina Steam Tibar',
+        description: 'Premium Tibar grade Kashmina Steam rice with excellent texture and cooking properties.',
+        marketRatePerKg: 78, // Updated rate
+        companyRatePerKg: 78, // Company rate same as market rate
+        origin: 'Haryana, India',
+        brand: 'Kashmina'
+      },
+
       // KASHMINA SELLA
       {
         baseName: 'Kashmina Sella Grade-1',
         description: 'Premium Grade-1 Kashmina Sella rice with perfect texture and aroma. Ideal for biryani and special occasions.',
-        marketRatePerKg: 104, // From price sheet
-        companyRatePerKg: 79,  // From price sheet
+        marketRatePerKg: 104, // Updated rate
+        companyRatePerKg: 104, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       },
       {
         baseName: 'Kashmina Sella Tibar',
         description: 'High-quality Tibar grade Kashmina Sella rice with excellent cooking properties and authentic taste.',
-        marketRatePerKg: 72,  // From price sheet
-        companyRatePerKg: 54, // From price sheet
+        marketRatePerKg: 72, // Updated rate
+        companyRatePerKg: 72, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       },
       {
         baseName: 'Kashmina Sella Dubar',
         description: 'Premium Dubar grade Kashmina Sella rice perfect for everyday cooking and special meals.',
-        marketRatePerKg: 65,  // From price sheet
-        companyRatePerKg: 49, // From price sheet
+        marketRatePerKg: 65, // Updated rate
+        companyRatePerKg: 65, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       },
@@ -57,50 +83,24 @@ async function seedProducts() {
       {
         baseName: 'Kashmina Golden Grade-1',
         description: 'Exquisite Grade-1 Kashmina Golden rice with rich golden color and superior quality. Perfect for special occasions.',
-        marketRatePerKg: 109, // From price sheet
-        companyRatePerKg: 82, // From price sheet
+        marketRatePerKg: 109, // Updated rate
+        companyRatePerKg: 109, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       },
       {
         baseName: 'Kashmina Golden Tibar',
         description: 'Premium Tibar grade Kashmina Golden rice with authentic golden hue and exceptional flavor.',
-        marketRatePerKg: 74,  // From price sheet
-        companyRatePerKg: 56, // From price sheet
+        marketRatePerKg: 74, // Updated rate
+        companyRatePerKg: 74, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       },
       {
         baseName: 'Kashmina Golden Dubar',
         description: 'High-quality Dubar grade Kashmina Golden rice ideal for daily cooking and family meals.',
-        marketRatePerKg: 66,  // From price sheet
-        companyRatePerKg: 50, // From price sheet
-        origin: 'Haryana, India',
-        brand: 'Kashmina'
-      },
-
-      // KASHMINA STEAM
-      {
-        baseName: 'Kashmina Steam Grade-1',
-        description: 'Superior Grade-1 Kashmina Steam rice with perfect steam processing for enhanced aroma and taste.',
-        marketRatePerKg: 116, // From price sheet
-        companyRatePerKg: 86, // From price sheet
-        origin: 'Haryana, India',
-        brand: 'Kashmina'
-      },
-      {
-        baseName: 'Kashmina Steam Tibar',
-        description: 'Premium Tibar grade Kashmina Steam rice with excellent texture and cooking properties.',
-        marketRatePerKg: 76,  // From price sheet
-        companyRatePerKg: 58, // From price sheet
-        origin: 'Haryana, India',
-        brand: 'Kashmina'
-      },
-      {
-        baseName: 'Kashmina Steam Dubar',
-        description: 'High-quality Dubar grade Kashmina Steam rice perfect for everyday cooking needs.',
-        marketRatePerKg: 68,  // From price sheet
-        companyRatePerKg: 51, // From price sheet
+        marketRatePerKg: 66, // Updated rate
+        companyRatePerKg: 66, // Company rate same as market rate
         origin: 'Haryana, India',
         brand: 'Kashmina'
       }

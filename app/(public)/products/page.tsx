@@ -4,11 +4,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Search } from 'lucide-react'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/shop/ProductCard'
 import StructuredData from '@/components/StructuredData'
 import { generateProductListJsonLd, generateBreadcrumbJsonLd } from '@/lib/structured-data'
 import { Product, Category } from '@/types'
-import PageHero from '@/components/PageHero'
+import PageHero from '@/components/sections/PageHero'
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])

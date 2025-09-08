@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge'
 import { MapPin, Phone, Mail, Clock, Send, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
-import PageHero from '@/components/PageHero'
+import PageHero from '@/components/sections/PageHero'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

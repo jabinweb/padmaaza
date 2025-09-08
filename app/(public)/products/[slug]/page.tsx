@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { cartManager } from '@/lib/cart'
 import Link from 'next/link'
 import OptimizedImage from '@/components/ui/OptimizedImage'
+import ReviewsList from '@/components/reviews/ReviewsList'
 
 interface Product {
   id: string
@@ -1001,6 +1002,29 @@ export default function ProductDetailPage() {
                 }
               })()}
             </AnimatePresence>
+          </div>
+        </motion.section>
+
+        {/* Reviews Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="py-16"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Customer Reviews
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                See what our customers are saying about {product.name}
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <ReviewsList productId={product.id} productName={product.name} />
+            </div>
           </div>
         </motion.section>
       </div>

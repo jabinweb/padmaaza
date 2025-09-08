@@ -5,8 +5,8 @@ import { motion } from 'framer-motion'
 import { Crown, Award, Star, Users, TrendingUp, ShoppingBag, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import PageHero from '@/components/PageHero'
-import PartnershipApplicationForm from '@/components/PartnershipApplicationForm'
+import PageHero from '@/components/sections/PageHero'
+import PartnershipApplicationForm from '@/components/forms/PartnershipApplicationForm'
 
 interface TierAvailability {
   name: string

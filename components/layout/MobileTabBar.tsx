@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import CartSidebar from '@/components/CartSidebar'
+import CartSidebar from '@/components/shop/CartSidebar'
 import { cartManager } from '@/lib/cart'
 
 const tabs = [

@@ -57,6 +57,55 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google") {
+        try {
+          // Check if user already exists with this email
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email as string },
+            include: { accounts: true },
+          })
+
+          if (existingUser) {
+            // Check if this Google account is already linked
+            const existingAccount = existingUser.accounts.find(
+              acc => acc.provider === "google" && acc.providerAccountId === account.providerAccountId
+            )
+
+            if (!existingAccount) {
+              // Link the Google account to existing user
+              await prisma.account.create({
+                data: {
+                  userId: existingUser.id,
+                  type: account.type,
+                  provider: account.provider,
+                  providerAccountId: account.providerAccountId,
+                  access_token: account.access_token,
+                  refresh_token: account.refresh_token,
+                  expires_at: account.expires_at,
+                  token_type: account.token_type,
+                  scope: account.scope,
+                  id_token: account.id_token,
+                },
+              })
+            }
+
+            // Update user info from Google if name is missing
+            if (!existingUser.name && user.name) {
+              await prisma.user.update({
+                where: { id: existingUser.id },
+                data: { name: user.name },
+              })
+            }
+          }
+        } catch (error) {
+          console.error("Error during Google sign-in:", error)
+          return false
+        }
+      }
+      return true
+    },
+
     async jwt({ token, user, trigger, session }) {
       // Initial sign in
       if (user) {

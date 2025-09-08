@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useSession, signOut } from 'next-auth/react'
-import CartSidebar from '@/components/CartSidebar'
+import CartSidebar from '@/components/shop/CartSidebar'
 import MegaMenu from '@/components/layout/MegaMenu'
 
 interface MenuItem {

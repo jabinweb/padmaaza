@@ -23,8 +23,8 @@ import {
   Star
 } from 'lucide-react'
 import Link from 'next/link'
-import PageHero from '@/components/PageHero'
-import WholesalerRegistrationForm from '@/components/WholesalerRegistrationForm'
+import PageHero from '@/components/sections/PageHero'
+import WholesalerRegistrationForm from '@/components/forms/WholesalerRegistrationForm'
 
 export default function WholesalerPage() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)

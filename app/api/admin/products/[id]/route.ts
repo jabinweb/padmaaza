@@ -54,7 +54,7 @@ export async function PUT(
 
     const { id } = await params
     const body = await request.json()
-    const { name, description, price, discount, images, stock, sku, isActive, categoryId } = body
+    const { name, description, price, discount, images, stock, sku, isActive, categoryId, weight } = body
 
     const product = await prisma.product.update({
       where: { id },
@@ -68,6 +68,7 @@ export async function PUT(
         sku,
         isActive,
         categoryId,
+        weight,
         slug: name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') + '-' + Date.now()
       },
       include: {

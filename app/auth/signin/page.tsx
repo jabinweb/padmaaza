@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -24,6 +24,26 @@ export default function SignInPage() {
   
   // Get the callback URL from search params, default to /dashboard
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+
+  // Handle OAuth errors
+  useEffect(() => {
+    const oauthError = searchParams.get('error')
+    if (oauthError) {
+      switch (oauthError) {
+        case 'OAuthAccountNotLinked':
+          setError('An account already exists with this email address. Please sign in with your email and password, and then you can link your Google account from your profile settings.')
+          break
+        case 'OAuthCallback':
+          setError('There was an error with Google authentication. Please try again.')
+          break
+        case 'AccessDenied':
+          setError('Access was denied. Please try signing in again.')
+          break
+        default:
+          setError('Authentication error. Please try again.')
+      }
+    }
+  }, [searchParams])
 
   const {
     register,
@@ -58,7 +78,13 @@ export default function SignInPage() {
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
-    await signIn('google', { callbackUrl })
+    setError('')
+    try {
+      await signIn('google', { callbackUrl })
+    } catch (error) {
+      setError('Failed to sign in with Google. Please try again.')
+      setIsLoading(false)
+    }
   }
 
   return (

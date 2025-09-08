@@ -4,7 +4,7 @@ import { lazy, Suspense } from 'react'
 import { ProductGridSkeleton } from '@/components/ui/LazyLoader'
 
 // Lazy load heavy components - Client side only
-const ProductGrid = lazy(() => import('@/components/ProductGrid'))
+const ProductGrid = lazy(() => import('@/components/shop/ProductGrid'))
 const OurValues = lazy(() => import('@/components/sections/OurValues'))
 const AboutSection = lazy(() => import('@/components/sections/AboutSection'))
 const HeroSection = lazy(() => import('@/components/sections/HeroSection'))

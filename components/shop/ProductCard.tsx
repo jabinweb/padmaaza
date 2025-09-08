@@ -165,10 +165,8 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               <span className="text-xs ml-1 text-gray-500">({reviewStats.totalReviews})</span>
             </div>
           ) : (
-            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
-              <Star className="h-3 w-3 text-gray-300" />
-              <span className="text-xs ml-1 text-gray-400">No reviews</span>
-            </div>
+            <>
+            </>
           )}
           {product.stock === 0 && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">

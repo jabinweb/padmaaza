@@ -10,10 +10,14 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search')
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '12')
+    const isAdmin = searchParams.get('admin') === 'true'
     const skip = (page - 1) * limit
 
-    const where: any = {
-      isActive: true,
+    const where: any = {}
+
+    // Only filter by isActive if not admin request
+    if (!isAdmin) {
+      where.isActive = true
     }
 
     if (category) {

@@ -1,7 +1,7 @@
 import { LazyHeroSection, LazyOurValues, LazyAboutSection, LazyCertificationsSection, LazyKashminaSection, LazyManufacturingSection, LazyStatsSection, LazySustainabilitySection, LazyNewsSection } from '@/components/LazyComponents'
 import { Badge } from '@/components/ui/badge'
 import { prisma } from '@/lib/prisma'
-import ClientPageWrapper from '@/components/ClientPageWrapper'
+import ClientPageWrapper from '@/components/sections/ClientPageWrapper'
 import Image from 'next/image'
 
 async function getProducts() {

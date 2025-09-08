@@ -26,8 +26,8 @@ import {
   FileText,
   UserPlus
 } from 'lucide-react'
-import PageHero from '@/components/PageHero'
-import PartTimeRegistrationForm from '@/components/PartTimeRegistrationForm'
+import PageHero from '@/components/sections/PageHero'
+import PartTimeRegistrationForm from '@/components/forms/PartTimeRegistrationForm'
 
 export default function PartTimePage() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)

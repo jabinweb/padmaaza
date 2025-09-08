@@ -17,7 +17,8 @@ import {
   Tag,
   ChevronLeft,
   ChevronRight,
-  Mail
+  Mail,
+  Star
 } from 'lucide-react'
 
 const navigation = [
@@ -26,6 +27,7 @@ const navigation = [
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Categories', href: '/admin/categories', icon: Tag },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
+  { name: 'Reviews', href: '/admin/reviews', icon: Star },
   { name: 'Form Responses', href: '/admin/forms', icon: Mail },
   { name: 'Commissions', href: '/admin/commissions', icon: DollarSign },
   { name: 'Payouts', href: '/admin/payouts', icon: CreditCard },

@@ -45,7 +45,9 @@ interface Product {
   images: string[]
   sku: string
   weight: string | null
+  categoryId: string
   category: {
+    id: string
     name: string
   }
 }
@@ -82,7 +84,8 @@ export default function AdminProductsPage() {
       setLoading(true)
       const params = new URLSearchParams({
         page: '1',
-        limit: '20'
+        limit: '20',
+        admin: 'true' // Add admin flag to get all products
       })
       
       if (search) params.append('search', search)
@@ -182,20 +185,36 @@ export default function AdminProductsPage() {
 
     setQuickEditLoading(true)
     try {
-      const response = await fetch(`/admin/products/${editingProduct.id}/edit`, {
-        method: 'PATCH',
+      const response = await fetch(`/api/admin/products/${editingProduct.id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(quickEditForm)
+        body: JSON.stringify({
+          name: quickEditForm.name,
+          description: quickEditForm.description,
+          price: quickEditForm.price,
+          discount: quickEditForm.discount,
+          stock: quickEditForm.stock,
+          weight: quickEditForm.weight,
+          // Keep existing values that aren't being edited
+          images: editingProduct.images,
+          sku: editingProduct.sku,
+          isActive: editingProduct.isActive,
+          categoryId: editingProduct.categoryId || editingProduct.category.id
+        })
       })
 
-      if (!response.ok) throw new Error('Update failed')
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Update failed')
+      }
 
       toast.success('Product updated successfully')
       setQuickEditOpen(false)
       setEditingProduct(null)
       fetchProducts()
     } catch (error) {
-      toast.error('Failed to update product')
+      console.error('Quick edit error:', error)
+      toast.error(error instanceof Error ? error.message : 'Failed to update product')
     } finally {
       setQuickEditLoading(false)
     }

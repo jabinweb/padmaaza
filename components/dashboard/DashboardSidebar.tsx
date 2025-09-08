@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -33,70 +34,160 @@ interface SidebarItem {
   icon: React.ComponentType<{ className?: string }>
   badge?: string
   children?: SidebarItem[]
+  roles?: string[] // Allowed roles for this item
 }
 
-const sidebarItems: SidebarItem[] = [
-  {
-    title: 'Dashboard',
-    href: '/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'Network',
-    href: '',
-    icon: Network,
-    children: [
-      {
-        title: 'Team Genealogy',
-        href: '/dashboard/genealogy',
-        icon: Users,
-      },
-      {
-        title: 'My Referrals',
-        href: '/dashboard/referrals',
-        icon: Gift,
-      },
-      {
-        title: 'Team Overview',
-        href: '/dashboard/team',
-        icon: TrendingUp,
-      },
-    ]
-  },
-  { title: 'Achievements', href: '/dashboard/achievements', icon: Trophy },
-  {
-    title: 'Wallet & Earnings',
-    href: '/dashboard/wallet',
-    icon: Wallet,
-    children: [
-      {
-        title: 'My Wallet',
-        href: '/dashboard/wallet',
-        icon: Wallet,
-      },
-      {
-        title: 'Commission History',
-        href: '/dashboard/commissions',
-        icon: TrendingUp,
-      },
-      {
-        title: 'Payout Requests',
-        href: '/dashboard/payouts',
-        icon: CreditCard,
-      },
-    ]
-  },
-  {
-    title: 'Reports & Analytics',
-    href: '/dashboard/reports',
-    icon: BarChart3,
-  },
-  {
-    title: 'Profile Settings',
-    href: '/dashboard/profile',
-    icon: User,
-  },
-]
+// Role-based navigation items
+const getSidebarItems = (userRole: string): SidebarItem[] => {
+  const allItems: SidebarItem[] = [
+    {
+      title: 'Dashboard',
+      href: '/dashboard',
+      icon: LayoutDashboard,
+      roles: ['CUSTOMER', 'MEMBER', 'WHOLESALER', 'PART_TIME', 'ADMIN']
+    },
+    {
+      title: 'My Orders',
+      href: '/dashboard/orders',
+      icon: ShoppingBag,
+      roles: ['CUSTOMER', 'MEMBER', 'WHOLESALER', 'PART_TIME', 'ADMIN']
+    },
+    {
+      title: 'Network',
+      href: '',
+      icon: Network,
+      roles: ['MEMBER', 'WHOLESALER'],
+      children: [
+        {
+          title: 'Team Genealogy',
+          href: '/dashboard/genealogy',
+          icon: Users,
+          roles: ['MEMBER', 'WHOLESALER']
+        },
+        {
+          title: 'My Referrals',
+          href: '/dashboard/referrals',
+          icon: Gift,
+          roles: ['MEMBER', 'WHOLESALER']
+        },
+        {
+          title: 'Team Overview',
+          href: '/dashboard/team',
+          icon: TrendingUp,
+          roles: ['MEMBER', 'WHOLESALER']
+        },
+      ]
+    },
+    {
+      title: 'Achievements',
+      href: '/dashboard/achievements',
+      icon: Trophy,
+      roles: ['MEMBER', 'WHOLESALER']
+    },
+    {
+      title: 'Wallet & Earnings',
+      href: '/dashboard/wallet',
+      icon: Wallet,
+      roles: ['MEMBER', 'WHOLESALER', 'PART_TIME'],
+      children: [
+        {
+          title: 'My Wallet',
+          href: '/dashboard/wallet',
+          icon: Wallet,
+          roles: ['MEMBER', 'WHOLESALER', 'PART_TIME']
+        },
+        {
+          title: 'Commission History',
+          href: '/dashboard/commissions',
+          icon: TrendingUp,
+          roles: ['MEMBER', 'WHOLESALER']
+        },
+        {
+          title: 'Earnings',
+          href: '/dashboard/earnings',
+          icon: TrendingUp,
+          roles: ['PART_TIME']
+        },
+        {
+          title: 'Payout Requests',
+          href: '/dashboard/payouts',
+          icon: CreditCard,
+          roles: ['MEMBER', 'WHOLESALER', 'PART_TIME']
+        },
+      ]
+    },
+    {
+      title: 'Wholesale Portal',
+      href: '/dashboard/wholesale',
+      icon: Package,
+      roles: ['WHOLESALER']
+    },
+    {
+      title: 'Part-Time Jobs',
+      href: '/dashboard/part-time',
+      icon: Users,
+      roles: ['PART_TIME']
+    },
+    {
+      title: 'Reports & Analytics',
+      href: '/dashboard/reports',
+      icon: BarChart3,
+      roles: ['MEMBER', 'ADMIN']
+    },
+    {
+      title: 'Profile Settings',
+      href: '/dashboard/profile',
+      icon: User,
+      roles: ['CUSTOMER', 'MEMBER', 'WHOLESALER', 'PART_TIME', 'ADMIN']
+    },
+  ]
+
+  // Filter items based on user role
+  const filterItemsByRole = (items: SidebarItem[]): SidebarItem[] => {
+    return items
+      .filter(item => !item.roles || item.roles.includes(userRole))
+      .map(item => ({
+        ...item,
+        children: item.children ? filterItemsByRole(item.children) : undefined
+      }))
+      .filter(item => !item.children || item.children.length > 0) // Remove parent items with no visible children
+  }
+
+  return filterItemsByRole(allItems)
+}
+
+// Role display information
+const getRoleInfo = (role: string) => {
+  const roleMap: Record<string, { label: string; description: string; className: string }> = {
+    ADMIN: { 
+      label: 'Admin', 
+      description: 'Full system access',
+      className: 'bg-purple-100 text-purple-800 border-purple-200'
+    },
+    MEMBER: { 
+      label: 'Partner', 
+      description: 'Marketing partner',
+      className: 'bg-blue-100 text-blue-800 border-blue-200'
+    },
+    WHOLESALER: { 
+      label: 'Wholesaler', 
+      description: 'Bulk distribution partner',
+      className: 'bg-yellow-100 text-yellow-800 border-yellow-200'
+    },
+    PART_TIME: { 
+      label: 'Part-time', 
+      description: 'Delivery & support team',
+      className: 'bg-green-100 text-green-800 border-green-200'
+    },
+    CUSTOMER: { 
+      label: 'Customer', 
+      description: 'Valued customer',
+      className: 'bg-gray-100 text-gray-800 border-gray-200'
+    }
+  }
+  
+  return roleMap[role] || roleMap.CUSTOMER
+}
 
 interface DashboardSidebarProps {
   className?: string
@@ -107,6 +198,13 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([])
   const pathname = usePathname()
   const { data: session } = useSession()
+
+  // Get user role from session, default to CUSTOMER
+  const userRole = session?.user?.role || 'CUSTOMER'
+  const roleInfo = getRoleInfo(userRole)
+  
+  // Get sidebar items based on user role
+  const sidebarItems = getSidebarItems(userRole)
 
   const toggleExpanded = (title: string) => {
     setExpandedItems(prev => 
@@ -149,8 +247,8 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
                 exit={{ opacity: 0, x: -20 }}
                 className="flex items-center space-x-3"
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">M</span>
+                  <div className='w-8 h-8 rounded-lg flex items-center justify-center'>
+                  <Image src="/logo.png" alt="Padmaaja Logo" width={32} height={32} className="w-full h-full object-contain" />
                 </div>
                 <span className="font-bold text-gray-900">Padmaaja Rasooi</span>
               </motion.div>
@@ -182,14 +280,26 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <User className="h-5 w-5 text-white" />
+                  {session.user.image ? (
+                    <Image src={session.user.image} alt="User Avatar" width={40} height={40} className="rounded-full" />
+                  ) : (
+                    <User className="h-5 w-5 text-white" />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-900 truncate">
                     {session.user.name || 'User'}
                   </p>
-                  <p className="text-xs text-gray-500 truncate">
-                    {session.user.role}
+                  <div className="flex items-center space-x-2 mt-1">
+                    <Badge 
+                      variant="outline" 
+                      className={cn("text-xs", roleInfo.className)}
+                    >
+                      {roleInfo.label}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {roleInfo.description}
                   </p>
                 </div>
               </div>
