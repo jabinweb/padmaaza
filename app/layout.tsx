@@ -53,7 +53,15 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Padmaaja Rasooi - Premium Rice Products'
+        alt: 'Padmaaja Rasooi - Premium Rice Products',
+        type: 'image/png'
+      },
+      {
+        url: '/logo.png',
+        width: 800,
+        height: 600,
+        alt: 'Padmaaja Rasooi Logo',
+        type: 'image/png'
       }
     ]
   },
@@ -61,7 +69,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
     description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
-    images: ['/images/twitter-image.png']
+    images: ['/logo.png'],
+    creator: '@padmaajarasooi',
+    site: '@padmaajarasooi'
   },
   robots: {
     index: true,
@@ -78,16 +88,24 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logo.png', sizes: '192x192', type: 'image/png' }
     ],
+    shortcut: '/favicon-32x32.png',
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/logo.png', sizes: '152x152', type: 'image/png' }
     ],
     other: [
       {
         rel: 'mask-icon',
         url: '/logo.svg',
         color: '#10B981'
+      },
+      {
+        rel: 'icon',
+        url: '/logo.png',
+        type: 'image/png'
       }
     ]
   },
@@ -136,8 +154,17 @@ export default async function PublicRootLayout({
       <head>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="mask-icon" href="/logo.svg" color="#10B981" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" href="/logo.png" />
         <meta name="msapplication-TileColor" content="#10B981" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="theme-color" content="#10B981" />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:image" content="/logo.png" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         {/* Organization Structured Data */}
