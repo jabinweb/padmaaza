@@ -412,7 +412,7 @@ export default function CertificationsPage() {
                 className="bg-white text-emerald-600 hover:bg-emerald-50"
                 asChild
               >
-                <a href="/certifications/Padmaaja Rasooi Profile.pdf" download="Padmaaja Rasooi Profile.pdf">
+                <a href="https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/media/2025-09-07/padmaaza-rasooi-profile" download="Padmaaja Rasooi Profile.pdf">
                   <FileText className="w-5 h-5 mr-2" />
                   Download Company Profile
                 </a>

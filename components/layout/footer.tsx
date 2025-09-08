@@ -58,7 +58,6 @@ export function Footer() {
                   <li><Link href="/products" className="text-gray-400 hover:text-orange-400 transition-colors">Our Products</Link></li>
                   <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Partnership</Link></li>
                   <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Become Wholesaler</Link></li>
-                  <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Supply</Link></li>
                   <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Contact Us</Link></li>
                 </ul>
               </div>
@@ -68,7 +67,6 @@ export function Footer() {
                 <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Business</h4>
                 <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                   <li><Link href="/wholesaler" className="text-gray-400 hover:text-orange-400 transition-colors">Distributor Program</Link></li>
-                  <li><Link href="/bulk-supply" className="text-gray-400 hover:text-orange-400 transition-colors">Bulk Orders</Link></li>
                   <li><Link href="/partnership" className="text-gray-400 hover:text-orange-400 transition-colors">Business Partnership</Link></li>
                   <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Private Label</Link></li>
                   <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Export Inquiry</Link></li>
@@ -85,7 +83,6 @@ export function Footer() {
                   <li><Link href="/terms-of-service" className="text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</Link></li>
                   <li><Link href="/privacy-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
                   <li><Link href="/refund-policy" className="text-gray-400 hover:text-orange-400 transition-colors">Refund Policy</Link></li>
-                  <li><Link href="/contact" className="text-gray-400 hover:text-orange-400 transition-colors">Help Center</Link></li>
                 </ul>
               </div>
             </div>

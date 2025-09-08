@@ -1,13 +1,23 @@
 'use client'
 
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Factory, Users, TrendingUp, Award, ArrowRight, CheckCircle, Gauge, Globe } from 'lucide-react'
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Factory, Users, TrendingUp, Award, ArrowRight, CheckCircle, Gauge, Globe, Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 export default function ManufacturingSection() {
+    const [isVideoOpen, setIsVideoOpen] = useState(false)
     const facilities = [
         {
             icon: Factory,
@@ -93,6 +103,41 @@ export default function ManufacturingSection() {
                     <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                         State-of-the-art rice processing facilities ensuring every grain of Basmati and Sella rice meets international quality standards
                     </p>
+                    
+                    {/* Video Button */}
+                    <div className="mt-8">
+                        <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+                            <DialogTrigger asChild>
+                                <Button 
+                                    size="lg" 
+                                    className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                                >
+                                    <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                                    Watch Rice Processing Video
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">
+                                <DialogHeader className="sr-only">
+                                    <DialogTitle>Rice Processing Video</DialogTitle>
+                                    <DialogDescription>
+                                        Watch our complete rice processing journey from paddy to premium rice
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="relative w-full h-0 pb-[56.25%]"> {/* 16:9 aspect ratio */}
+                                    <video
+                                        className="absolute inset-0 w-full h-full"
+                                        controls
+                                        autoPlay
+                                        preload="metadata"
+                                        poster="/factory.png" // You can add a poster image
+                                    >
+                                        <source src="https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/media/2025-09-07/rice-processing" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
                 </motion.div>
 
                 {/* Facilities Stats Grid */}

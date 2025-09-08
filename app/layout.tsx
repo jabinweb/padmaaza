@@ -7,6 +7,7 @@ import { auth } from '@/auth';
 import StructuredData from '@/components/StructuredData'
 import { generateOrganizationJsonLd } from '@/lib/structured-data'
 import PWAInstallPrompt, { IOSInstallPrompt } from '@/components/PWAInstallPrompt'
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 
 // Optimize font loading
 const inter = Inter({ 
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'Padmaaja Rasooi - Premium Rice Products'
@@ -147,6 +148,12 @@ export default async function PublicRootLayout({
           <Toaster />
           <PWAInstallPrompt />
           <IOSInstallPrompt />
+          <FloatingWhatsApp 
+            phoneNumber="917053072789"
+            message="Hello! I'm interested in Padmaaja Rasooi products. Can you help me?"
+            position="bottom-right"
+            showTooltip={true}
+          />
         </Providers>
         
         {/* PWA Cache Manager and Update Notification */}
