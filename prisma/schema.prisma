@@ -105,6 +105,8 @@ model Category {
   
   products    Product[]
   
+  @@index([isActive])
+  @@index([name])
   @@map("categories")
 }
 
@@ -131,6 +133,14 @@ model Product {
   orderItems  OrderItem[]
   reviews     Review[]
   
+  @@index([isActive])
+  @@index([categoryId])
+  @@index([createdAt])
+  @@index([isActive, stock])
+  @@index([categoryId, isActive])
+  @@index([createdAt, isActive])
+  @@index([isActive, createdAt(sort: Desc)])
+  @@index([isActive, createdAt(sort: Desc), categoryId])
   @@map("products")
 }
 
@@ -380,6 +390,11 @@ model Review {
   @@index([userId])
   @@index([rating])
   @@index([isApproved])
+  @@index([createdAt])
+  @@index([productId, isApproved])
+  @@index([createdAt, isApproved])
+  @@index([isApproved, createdAt(sort: Desc)])
+  @@index([isApproved, createdAt(sort: Desc), productId])
   @@map("reviews")
 }
 

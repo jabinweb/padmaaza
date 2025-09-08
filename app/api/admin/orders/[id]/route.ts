@@ -33,9 +33,24 @@ export async function GET(
                 id: true,
                 name: true,
                 images: true,
-                sku: true
+                sku: true,
+                price: true
               }
             }
+          }
+        },
+        shippingAddress: {
+          select: {
+            firstName: true,
+            lastName: true,
+            company: true,
+            address1: true,
+            address2: true,
+            city: true,
+            state: true,
+            zipCode: true,
+            country: true,
+            phone: true
           }
         }
       }
@@ -82,6 +97,43 @@ export async function PATCH(
       data: {
         status,
         updatedAt: new Date()
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true
+          }
+        },
+        orderItems: {
+          include: {
+            product: {
+              select: {
+                id: true,
+                name: true,
+                images: true,
+                sku: true,
+                price: true
+              }
+            }
+          }
+        },
+        shippingAddress: {
+          select: {
+            firstName: true,
+            lastName: true,
+            company: true,
+            address1: true,
+            address2: true,
+            city: true,
+            state: true,
+            zipCode: true,
+            country: true,
+            phone: true
+          }
+        }
       }
     })
 

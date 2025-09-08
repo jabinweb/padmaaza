@@ -3,6 +3,28 @@ import { Badge } from '@/components/ui/badge'
 import { prisma } from '@/lib/prisma'
 import ClientPageWrapper from '@/components/sections/ClientPageWrapper'
 import Image from 'next/image'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains | Home',
+  description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition. Discover our sustainable farming practices and authentic Indian rice products.',
+  keywords: ['padmaaja rasooi', 'premium rice', 'quality rice', 'organic rice', 'basmati rice', 'rice products', 'agriculture', 'quality grains', 'healthy food', 'sustainable farming', 'indian rice'],
+  openGraph: {
+    title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
+    description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
+    type: 'website',
+    images: ['/hero-bg.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
+    description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms.',
+    images: ['/hero-bg.jpg'],
+  },
+  alternates: {
+    canonical: '/',
+  },
+}
 
 async function getProducts() {
   try {
@@ -33,9 +55,11 @@ export default async function Home() {
 
   return (
     <ClientPageWrapper>
-      <div className="min-h-screen bg-white pt-16">
+      <main className="min-h-screen bg-white pt-16">
         {/* Hero Section */}
-        <LazyHeroSection />
+        <header>
+          <LazyHeroSection />
+        </header>
 
         {/* About Section */}
         <LazyAboutSection />
@@ -158,8 +182,8 @@ export default async function Home() {
         {/* <LazyNewsSection /> */}
 
         {/* Our Values Section */}
-        <LazyOurValues />
-      </div>
+          <LazyOurValues />
+      </main>
     </ClientPageWrapper>
   )
 }

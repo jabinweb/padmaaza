@@ -122,26 +122,45 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+    <article
+      itemScope
+      itemType="https://schema.org/Product"
+      role="article"
+      aria-labelledby={`product-title-${product.id}`}
+      aria-describedby={`product-description-${product.id}`}
     >
-      <Card 
-        className="h-full hover:shadow-lg transition-all duration-300 group overflow-hidden cursor-pointer hover:scale-[1.02]"
-        onClick={handleCardClick}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="h-full"
       >
-        <div className="relative overflow-hidden">
-          <OptimizedImage
-            src={product.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
-            alt={product.name}
-            width={400}
-            height={300}
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-            priority={index < 4} // Prioritize first 4 products
-            quality={50}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
+        <Card 
+          className="h-full hover:shadow-lg transition-all duration-300 group overflow-hidden cursor-pointer hover:scale-[1.02]"
+          onClick={handleCardClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              handleCardClick()
+            }
+          }}
+          aria-label={`View details for ${product.name}`}
+        >
+          <header className="relative overflow-hidden">
+            <div itemProp="image">
+              <OptimizedImage
+                src={product.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
+                alt={`${product.name} - Premium rice product from Padmaaja Rasooi`}
+                width={400}
+                height={300}
+                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                priority={index < 4} // Prioritize first 4 products
+                quality={85}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+            </div>
           
           {/* Per kg price badge - Top Left */}
           {getPerKgPrice(product.price, product.weight, product.discount) && (
@@ -178,14 +197,18 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           <Badge className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-white/90 text-slate-700 border border-slate-200 text-xs font-medium shadow-lg backdrop-blur-sm">
               {product.category.name}
           </Badge>
-        </div>
+        </header>
         
-        <CardHeader className="pb-2 p-3 sm:pb-2">
+        <CardHeader className="pb-2 p-3 sm:pb-2" role="contentinfo">
           <div className="flex items-start justify-between gap-2 mb-2">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <CardTitle className="text-base sm:text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight cursor-help">
+                  <CardTitle 
+                    className="text-base sm:text-lg font-semibold truncate group-hover:text-blue-600 transition-colors flex-1 leading-tight cursor-help"
+                    id={`product-title-${product.id}`}
+                    itemProp="name"
+                  >
                     {product.name}
                   </CardTitle>
                 </TooltipTrigger>
@@ -195,7 +218,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          <CardDescription className="line-clamp-2 md:text-xs text-sm text-gray-600 leading-relaxed">
+          <CardDescription 
+            className="line-clamp-2 md:text-xs text-sm text-gray-600 leading-relaxed"
+            id={`product-description-${product.id}`}
+            itemProp="description"
+          >
             {product.description || 'Premium quality product from Padmaaja Rasooi Pvt. Ltd.'}
           </CardDescription>
         </CardHeader>
@@ -410,6 +437,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         </DialogContent>
       </Dialog>
     </motion.div>
+  </article>
   )
 }
     

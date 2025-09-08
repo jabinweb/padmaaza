@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import PageHero from '@/components/sections/PageHero'
 
 interface CartItem {
   id: string

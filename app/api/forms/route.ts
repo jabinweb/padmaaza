@@ -3,6 +3,13 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { Prisma } from '@prisma/client'
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
 // Validation schema for form submissions
 const FormSubmissionSchema = z.object({
   formId: z.string().min(1, 'Form ID is required'), // e.g., "contact", "partnership", "bulk_inquiry"
@@ -16,6 +23,13 @@ const FormSubmissionSchema = z.object({
   formSource: z.string().optional(), // Optional field to track which form page it came from
   // Allow additional fields that will be stored in JSON
 }).passthrough()
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: corsHeaders,
+  })
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -63,7 +77,10 @@ export async function POST(request: NextRequest) {
         message: 'Form submitted successfully',
         id: formResponse.id 
       },
-      { status: 200 }
+      { 
+        status: 200,
+        headers: corsHeaders
+      }
     )
 
   } catch (error) {
@@ -76,7 +93,10 @@ export async function POST(request: NextRequest) {
           message: 'Validation error',
           errors: error.errors 
         },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: corsHeaders
+        }
       )
     }
 
@@ -85,7 +105,10 @@ export async function POST(request: NextRequest) {
         success: false, 
         message: 'Internal server error' 
       },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: corsHeaders
+      }
     )
   }
 }

@@ -4,7 +4,6 @@ import { Footer } from '@/components/layout/footer'
 import MobileTabBar from '@/components/layout/MobileTabBar'
 import CTA from '@/components/sections/cta'
 import UpdateNotification from '@/components/UpdateNotification'
-import DevCacheManager from '@/components/DevCacheManager'
 
 export const metadata: Metadata = {
   title: 'Padmaaja Rasooi - Premium Food Products | Multigrain Flour & Rice',

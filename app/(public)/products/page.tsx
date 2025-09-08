@@ -48,7 +48,9 @@ export default function ProductsPage() {
     try {
       const response = await fetch('/api/categories')
       const data = await response.json()
-      setCategories(data)
+      // Handle both old format (array) and new format (object with categories)
+      const categoriesArray = Array.isArray(data) ? data : data.categories || []
+      setCategories(categoriesArray)
     } catch (error) {
       console.error('Error fetching categories:', error)
     }

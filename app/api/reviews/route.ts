@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
     const skip = (page - 1) * limit
+    const withStats = searchParams.get('withStats') === 'true'
 
     const where: any = {
       isApproved: true, // Only show approved reviews publicly
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
     if (userId) where.userId = userId
     if (rating) where.rating = parseInt(rating)
 
-    const [reviews, total] = await Promise.all([
+    const [reviews, total, aggregateStats] = await Promise.all([
       prisma.review.findMany({
         where,
         include: {
@@ -31,6 +32,12 @@ export async function GET(request: NextRequest) {
               id: true,
               name: true,
               image: true,
+              // Add user credibility for social proof
+              _count: {
+                select: {
+                  reviews: true, // Total reviews by this user
+                }
+              }
             }
           },
           product: {
@@ -51,30 +58,65 @@ export async function GET(request: NextRequest) {
             }
           }
         },
-        orderBy: {
-          createdAt: 'desc',
-        },
+        orderBy: [
+          { helpfulVotedBy: { _count: 'desc' } }, // Most helpful first
+          { rating: 'desc' }, // Higher ratings next
+          { createdAt: 'desc' } // Then by recency
+        ],
         skip,
         take: limit,
       }),
       prisma.review.count({ where }),
+      // Get aggregate stats for social proof
+      withStats ? prisma.review.groupBy({
+        by: ['rating'],
+        where: productId ? { productId, isApproved: true } : { isApproved: true },
+        _count: {
+          rating: true,
+        },
+      }) : null,
     ])
 
-    // Transform reviews to include userHasVoted flag
-    const transformedReviews = reviews.map(review => ({
+    // Calculate enhanced social proof metrics
+    const enhancedReviews = reviews.map(review => ({
       ...review,
-      userHasVoted: session?.user?.id ? review.helpfulVotedBy.length > 0 : false,
-      helpfulVotedBy: undefined, // Remove the raw data
-      helpfulVotes: review._count.helpfulVotedBy,
+      // Add social proof indicators
+      isVerifiedReviewer: review.user._count.reviews >= 3, // Users with 3+ reviews are "verified"
+      helpfulnessScore: review._count.helpfulVotedBy,
+      // Add time-based freshness
+      isFresh: new Date(review.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
     }))
 
+    // Calculate rating distribution for social proof
+    let ratingDistribution = null
+    if (aggregateStats) {
+      const totalReviews = aggregateStats.reduce((sum, stat) => sum + stat._count.rating, 0)
+      ratingDistribution = {
+        1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
+        ...aggregateStats.reduce((acc, stat) => ({
+          ...acc,
+          [stat.rating]: Math.round((stat._count.rating / totalReviews) * 100)
+        }), {})
+      }
+    }
+
     return NextResponse.json({
-      reviews: transformedReviews,
+      reviews: enhancedReviews,
       pagination: {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit),
+        totalPages: Math.ceil(total / limit),
+      },
+      // Enhanced social proof data
+      socialProof: {
+        totalReviews: total,
+        averageRating: enhancedReviews.length > 0 
+          ? enhancedReviews.reduce((sum, review) => sum + review.rating, 0) / enhancedReviews.length 
+          : 0,
+        ratingDistribution,
+        verifiedReviewersCount: enhancedReviews.filter(r => r.isVerifiedReviewer).length,
+        recentReviewsCount: enhancedReviews.filter(r => r.isFresh).length,
       }
     })
   } catch (error) {
@@ -85,112 +127,4 @@ export async function GET(request: NextRequest) {
     )
   }
 }
-
-// POST /api/reviews - Create a new review
-export async function POST(request: NextRequest) {
-  try {
-    const session = await auth()
-    
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
-    }
-
-    const body = await request.json()
-    const { productId, rating, title, comment, images = [] } = body
-
-    // Validate required fields
-    if (!productId || !rating) {
-      return NextResponse.json(
-        { error: 'Product ID and rating are required' },
-        { status: 400 }
-      )
-    }
-
-    // Validate rating range
-    if (rating < 1 || rating > 5) {
-      return NextResponse.json(
-        { error: 'Rating must be between 1 and 5' },
-        { status: 400 }
-      )
-    }
-
-    // Check if product exists
-    const product = await prisma.product.findUnique({
-      where: { id: productId }
-    })
-
-    if (!product) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      )
-    }
-
-    // Check if user already reviewed this product
-    const existingReview = await prisma.review.findUnique({
-      where: {
-        productId_userId: {
-          productId,
-          userId: session.user.id
-        }
-      }
-    })
-
-    if (existingReview) {
-      return NextResponse.json(
-        { error: 'You have already reviewed this product' },
-        { status: 400 }
-      )
-    }
-
-    // Check if user has purchased this product (for verified reviews)
-    const hasPurchased = await prisma.orderItem.findFirst({
-      where: {
-        productId,
-        order: {
-          userId: session.user.id,
-          status: 'DELIVERED'
-        }
-      }
-    })
-
-    const review = await prisma.review.create({
-      data: {
-        productId,
-        userId: session.user.id,
-        rating,
-        title,
-        comment,
-        images,
-        isVerified: !!hasPurchased,
-        isApproved: false, // Requires admin approval
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            image: true,
-          }
-        },
-        product: {
-          select: {
-            id: true,
-            name: true,
-          }
-        }
-      }
-    })
-
-    return NextResponse.json({
-      review,
-      message: 'Review submitted successfully. It will be visible after admin approval.'
-    })
-  } catch (error) {
-    console.error('Error creating review:', error)
-    return NextResponse.json(
-      { error: 'Failed to create review' },
-      { status: 500 }
-    )
-  }
-}
+         

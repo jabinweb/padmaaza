@@ -7,7 +7,7 @@ import { auth } from '@/auth';
 import StructuredData from '@/components/StructuredData'
 import { generateOrganizationJsonLd } from '@/lib/structured-data'
 import PWAInstallPrompt, { IOSInstallPrompt } from '@/components/PWAInstallPrompt'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import ClientFloatingWhatsApp from '@/components/ClientFloatingWhatsApp'
 
 // Optimize font loading
 const inter = Inter({ 
@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
+  },
+  other: {
+    charset: 'utf-8',
   },
   metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
   alternates: {
@@ -167,21 +170,63 @@ export default async function PublicRootLayout({
         <meta name="twitter:image" content="/logo.png" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+        {/* Skip to main content link for accessibility */}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-blue-600 text-white p-2 z-50 rounded">
+          Skip to main content
+        </a>
+        
         {/* Organization Structured Data */}
         <StructuredData data={organizationData} id="organization-data" />
         
-        <Providers session={session}>
-          <main className="flex-1">{children}</main>
-          <Toaster />
-          <PWAInstallPrompt />
-          <IOSInstallPrompt />
-          <FloatingWhatsApp 
-            phoneNumber="+919475758817"
-            message="Hello! I'm interested in Padmaaja Rasooi products. Can you help me?"
-            position="bottom-right"
-            showTooltip={true}
-          />
-        </Providers>
+        <div 
+          itemScope 
+          itemType="https://schema.org/WebSite"
+          className="min-h-screen flex flex-col"
+        >
+          <meta itemProp="url" content={baseUrl} />
+          <meta itemProp="name" content="Padmaaja Rasooi" />
+          
+          <Providers session={session}>
+            {/* Enhanced semantic structure for better SEO */}
+            <div className="flex-1 min-h-screen">
+              <main 
+                id="main-content" 
+                className="flex-1 min-h-screen" 
+                role="main" 
+                aria-label="Main content"
+                itemScope
+                itemType="https://schema.org/WebPage"
+              >
+                <article className="min-h-screen">
+                  {children}
+                </article>
+              </main>
+            </div>
+            
+            {/* Footer for semantic completeness */}
+            <footer 
+              role="contentinfo" 
+              aria-label="Site footer"
+              className="hidden"
+              itemScope
+              itemType="https://schema.org/WPFooter"
+            >
+              <div itemProp="copyrightHolder" itemScope itemType="https://schema.org/Organization">
+                <meta itemProp="name" content="Padmaaja Rasooi" />
+              </div>
+            </footer>
+            
+            <Toaster />
+            <PWAInstallPrompt />
+            <IOSInstallPrompt />
+            <ClientFloatingWhatsApp 
+              phoneNumber="+919475758817"
+              message="Hello! I'm interested in Padmaaja Rasooi products. Can you help me?"
+              position="bottom-right"
+              showTooltip={true}
+            />
+          </Providers>
+        </div>
         
         {/* PWA Cache Manager and Update Notification */}
         <script
@@ -242,6 +287,14 @@ export default async function PublicRootLayout({
                   });
                 }
               }
+              
+              // Simple component preloading for bundle optimization
+              setTimeout(() => {
+                if (typeof window !== 'undefined') {
+                  import('/components/ProductCard').catch(() => {});
+                  import('/components/FloatingWhatsApp').catch(() => {});
+                }
+              }, 2000);
             `,
           }}
         />

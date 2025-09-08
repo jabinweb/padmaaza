@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import Link from 'next/link'
 
 export default function Error({
   error,
@@ -27,15 +28,16 @@ export default function Error({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 flex items-center justify-center px-4">
-      <div className="max-w-2xl mx-auto text-center">
-        {/* Animated Error Icon */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8"
-        >
+    <main className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 flex items-center justify-center px-4">
+      <section className="max-w-2xl mx-auto text-center">
+        <header className="mb-8">
+          {/* Animated Error Icon */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-8"
+          >
           <div className="relative mx-auto w-32 h-32 mb-6">
             <motion.div
               animate={{ 
@@ -167,10 +169,10 @@ export default function Error({
             variant="outline" 
             className="border-slate-300"
           >
-            <a href="/contact">
+            <Link href="/contact">
               <Mail className="w-5 h-5 mr-2" />
               Report Issue
-            </a>
+            </Link>
           </Button>
         </motion.div>
 
@@ -235,7 +237,8 @@ export default function Error({
             © 2024 Padmaaja Rasooi Pvt. Ltd. • &quot;The careful choice&quot;
           </p>
         </motion.div>
-      </div>
-    </div>
+        </header>
+      </section>
+    </main>
   )
 }
