@@ -52,7 +52,7 @@ export default function CTA() {
                 <Link href="/contact">Get in Touch</Link>
               </Button>
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-white bg-transparent hover:bg-white hover:text-slate-900 px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg font-bold rounded-lg sm:rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                <Link href="/partners">Part time Job</Link>
+                <Link href="/part-time">Part time Job</Link>
               </Button>
             </div>
           </motion.div>

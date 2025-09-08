@@ -16,70 +16,106 @@ export default function CertificationsPage() {
       description: 'Food Safety and Standards Authority of India certification ensuring food safety and quality standards.',
       category: 'Food Safety',
       issuedBy: 'Food Safety and Standards Authority of India',
-      validUntil: '2026-12-31',
-      licenseNumber: 'FSSAI-12345678901234',
+      validity: 'Valid',
+      licenseNumber: '10825009000073',
       icon: Shield,
       color: 'bg-green-500',
       status: 'Active'
     },
     {
       id: 2,
-      name: 'ISO 22000:2018',
-      description: 'International standard for food safety management systems throughout the food chain.',
+      name: 'ISO 9001:2015',
+      description: 'Quality Management System certification ensuring consistent quality in products and services.',
       category: 'Quality Management',
       issuedBy: 'International Organization for Standardization',
-      validUntil: '2025-08-15',
-      licenseNumber: 'ISO-22000-2024-001',
+      validity: '26 Sep 2024 – 25 Sep 2027',
+      licenseNumber: '305024092612Q',
       icon: Award,
       color: 'bg-blue-500',
       status: 'Active'
     },
     {
       id: 3,
-      name: 'HACCP Certification',
-      description: 'Hazard Analysis and Critical Control Points system for identifying and preventing food safety hazards.',
-      category: 'Food Safety',
-      issuedBy: 'Global Food Safety Initiative',
-      validUntil: '2025-11-20',
-      licenseNumber: 'HACCP-2024-PR-789',
-      icon: CheckCircle,
-      color: 'bg-purple-500',
-      status: 'Active'
-    },
-    {
-      id: 4,
-      name: 'Organic Certification',
-      description: 'Certified organic processing facility for handling and processing organic food products.',
-      category: 'Organic Standards',
-      issuedBy: 'India Organic Certification Agency',
-      validUntil: '2025-03-10',
-      licenseNumber: 'IOCA-ORG-2024-456',
+      name: 'ISO 14001:2015',
+      description: 'Environmental Management System certification for sustainable environmental practices.',
+      category: 'Environmental Management',
+      issuedBy: 'International Organization for Standardization',
+      validity: '26 Sep 2024 – 25 Sep 2027',
+      licenseNumber: '305024092613E',
       icon: Leaf,
       color: 'bg-green-600',
       status: 'Active'
     },
     {
+      id: 4,
+      name: 'ISO 22000:2018',
+      description: 'Food Safety Management System certification throughout the food chain.',
+      category: 'Food Safety',
+      issuedBy: 'International Organization for Standardization',
+      validity: '26 Sep 2024 – 25 Sep 2027',
+      licenseNumber: '305024092615F',
+      icon: CheckCircle,
+      color: 'bg-purple-500',
+      status: 'Active'
+    },
+    {
       id: 5,
-      name: 'Export License',
-      description: 'License for export of food products to international markets with quality compliance.',
+      name: 'ISO 45001:2018',
+      description: 'Occupational Health and Safety Management System ensuring workplace safety.',
+      category: 'Health & Safety',
+      issuedBy: 'International Organization for Standardization',
+      validity: '26 Sep 2024 – 25 Sep 2027',
+      licenseNumber: '305024092614HS',
+      icon: Shield,
+      color: 'bg-red-500',
+      status: 'Active'
+    },
+    {
+      id: 6,
+      name: 'HACCP Certification',
+      description: 'Hazard Analysis and Critical Control Points system for identifying and preventing food safety hazards.',
+      category: 'Food Safety',
+      issuedBy: 'Global Food Safety Initiative',
+      validity: '26 Sep 2024 – 25 Sep 2027',
+      licenseNumber: 'UQ-2024092617',
+      icon: FileText,
+      color: 'bg-orange-500',
+      status: 'Active'
+    },
+    {
+      id: 7,
+      name: 'IEC Code',
+      description: 'Import Export Code for international trade operations.',
       category: 'Export Authorization',
       issuedBy: 'Director General of Foreign Trade',
-      validUntil: '2026-06-30',
-      licenseNumber: 'DGFT-EXP-2024-123',
+      validity: 'Valid',
+      licenseNumber: 'AAPCP0216M',
       icon: Globe,
       color: 'bg-indigo-500',
       status: 'Active'
     },
     {
-      id: 6,
-      name: 'BRC Global Standard',
-      description: 'British Retail Consortium standard for food safety and quality in food manufacturing.',
-      category: 'International Standards',
-      issuedBy: 'British Retail Consortium',
-      validUntil: '2025-09-25',
-      licenseNumber: 'BRC-2024-FOOD-567',
+      id: 8,
+      name: 'LEI Code',
+      description: 'Legal Entity Identifier for global financial transactions and regulatory reporting.',
+      category: 'Financial Compliance',
+      issuedBy: 'Global Legal Entity Identifier Foundation',
+      validity: 'Valid till 14 Jan 2026',
+      licenseNumber: '3358009WKDVJJPAJMH24',
       icon: FileText,
-      color: 'bg-red-500',
+      color: 'bg-cyan-500',
+      status: 'Active'
+    },
+    {
+      id: 9,
+      name: 'Startup Recognition',
+      description: 'Government recognition as a startup entity for various benefits and support.',
+      category: 'Government Recognition',
+      issuedBy: 'Department for Promotion of Industry and Internal Trade',
+      validity: 'Valid',
+      licenseNumber: 'DIPP179613',
+      icon: Factory,
+      color: 'bg-pink-500',
       status: 'Active'
     }
   ]
@@ -89,25 +125,25 @@ export default function CertificationsPage() {
       title: 'Food Safety Management',
       description: 'Comprehensive food safety protocols ensuring consumer health and product integrity.',
       icon: Shield,
-      certifications: ['FSSAI License', 'HACCP Certification', 'ISO 22000:2018']
+      certifications: ['FSSAI License', 'ISO 22000:2018', 'HACCP Certification']
     },
     {
-      title: 'Quality Assurance',
+      title: 'Quality Management',
       description: 'Rigorous quality control measures maintaining consistent product excellence.',
       icon: Award,
-      certifications: ['ISO 22000:2018', 'BRC Global Standard']
+      certifications: ['ISO 9001:2015', 'ISO 22000:2018']
     },
     {
-      title: 'Environmental Standards',
-      description: 'Sustainable practices and environmental responsibility in food processing.',
+      title: 'Environmental & Safety',
+      description: 'Environmental responsibility and workplace safety in all operations.',
       icon: Leaf,
-      certifications: ['Organic Certification', 'Environmental Compliance']
+      certifications: ['ISO 14001:2015', 'ISO 45001:2018']
     },
     {
-      title: 'International Trade',
-      description: 'Authorized for global export with international quality compliance.',
+      title: 'Business Compliance',
+      description: 'Legal and regulatory compliance for domestic and international operations.',
       icon: Globe,
-      certifications: ['Export License', 'BRC Global Standard']
+      certifications: ['IEC Code', 'LEI Code', 'Startup Recognition']
     }
   ]
 
@@ -147,9 +183,9 @@ export default function CertificationsPage() {
           bgColor: "bg-emerald-600"
         }}
         features={[
-          { icon: CheckCircle, label: "6+ Active Certifications", color: "green" },
-          { icon: Award, label: "International Standards", color: "blue" },
-          { icon: Globe, label: "Export Authorized", color: "purple" }
+          { icon: CheckCircle, label: "9+ Active Certifications", color: "green" },
+          { icon: Award, label: "ISO Standards Certified", color: "blue" },
+          { icon: Globe, label: "Export & Trade Authorized", color: "purple" }
         ]}
         backgroundGradient="from-emerald-600/10 to-blue-600/10"
         titleGradient="from-emerald-600 to-blue-600"
@@ -218,8 +254,8 @@ export default function CertificationsPage() {
                           <span className="text-slate-700 font-medium">{cert.issuedBy}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-500">Valid until:</span>
-                          <span className="text-slate-700 font-medium">{new Date(cert.validUntil).toLocaleDateString()}</span>
+                          <span className="text-slate-500">Validity:</span>
+                          <span className="text-slate-700 font-medium">{cert.validity}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-slate-500">License:</span>
@@ -370,13 +406,16 @@ export default function CertificationsPage() {
               Contact us for detailed certification documents or verification of our compliance status.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-emerald-600 hover:bg-emerald-50">
-                <FileText className="w-5 h-5 mr-2" />
-                Download Certificates
-              </Button>
-              <Button size="lg" variant="outline" className="border-white hover:bg-white/10">
-                <ExternalLink className="w-5 h-5 mr-2" />
-                Contact Compliance Team
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="bg-white text-emerald-600 hover:bg-emerald-50"
+                asChild
+              >
+                <a href="/certifications/Padmaaja Rasooi Profile.pdf" download="Padmaaja Rasooi Profile.pdf">
+                  <FileText className="w-5 h-5 mr-2" />
+                  Download Company Profile
+                </a>
               </Button>
             </div>
           </motion.div>

@@ -553,6 +553,134 @@ class EmailServiceClass {
       html
     })
   }
+
+  async sendPartTimeWelcomeEmail(partTimeData: {
+    to: string
+    name: string
+    email: string
+    password: string
+    preferredRole: string
+  }) {
+    const settings = await getSystemSettings()
+    
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: white; padding: 30px; text-align: center;">
+          <h1 style="margin: 0; font-size: 28px;">Welcome to Padmaaja!</h1>
+          <p style="margin: 10px 0 0 0; font-size: 16px;">Part-Time Job Application Received</p>
+        </div>
+        
+        <div style="padding: 30px; background-color: #f9f9f9;">
+          <h2 style="color: #333; margin-bottom: 20px;">Dear ${partTimeData.name},</h2>
+          
+          <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+            Thank you for applying for a part-time position with Padmaaja! We're excited about your interest in joining our team.
+          </p>
+
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #8B5CF6; margin-top: 0;">Application Details:</h3>
+            <p><strong>Preferred Role:</strong> ${partTimeData.preferredRole}</p>
+            <p><strong>Application Status:</strong> Under Review</p>
+          </div>
+
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #8B5CF6; margin-top: 0;">Your Login Credentials:</h3>
+            <p><strong>Email:</strong> ${partTimeData.email}</p>
+            <p><strong>Password:</strong> ${partTimeData.password}</p>
+            <p style="color: #666; font-size: 14px;">Please keep these credentials safe. You can use them to log in to your dashboard.</p>
+          </div>
+
+          <div style="background: #E0F2FE; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #0369A1; margin-top: 0;">What's Next?</h3>
+            <ul style="color: #666; padding-left: 20px;">
+              <li>Our HR team will review your application within 2-3 business days</li>
+              <li>You'll receive a call to discuss the opportunity</li>
+              <li>Complete a brief interview process</li>
+              <li>Start your part-time job journey with us!</li>
+            </ul>
+          </div>
+
+          <p style="color: #666; line-height: 1.6; margin-top: 30px;">
+            If you have any questions, feel free to contact our support team.
+          </p>
+
+          <p style="color: #666; line-height: 1.6;">
+            Best regards,<br>
+            <strong>Padmaaja Team</strong>
+          </p>
+        </div>
+        
+        <div style="background-color: #333; color: white; padding: 20px; text-align: center;">
+          <p style="margin: 0; font-size: 14px;">© 2024 Padmaaja. All rights reserved.</p>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: partTimeData.to,
+      subject: 'Part-Time Job Application Received - Padmaaja',
+      html
+    })
+  }
+
+  async sendPartTimeAdminNotification(partTimeData: {
+    applicantName: string
+    applicantEmail: string
+    preferredRole: string
+    phone: string
+    availableHours: string
+    availableDays: string
+    motivation: string
+    registrationDate: string
+  }) {
+    const settings = await getSystemSettings()
+    
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: white; padding: 30px; text-align: center;">
+          <h1 style="margin: 0; font-size: 28px;">New Part-Time Job Application</h1>
+          <p style="margin: 10px 0 0 0; font-size: 16px;">Application received on ${partTimeData.registrationDate}</p>
+        </div>
+        
+        <div style="padding: 30px; background-color: #f9f9f9;">
+          <h2 style="color: #333; margin-bottom: 20px;">Application Details:</h2>
+          
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #8B5CF6; margin-top: 0;">Applicant Information:</h3>
+            <p><strong>Name:</strong> ${partTimeData.applicantName}</p>
+            <p><strong>Email:</strong> ${partTimeData.applicantEmail}</p>
+            <p><strong>Phone:</strong> ${partTimeData.phone}</p>
+          </div>
+
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #8B5CF6; margin-top: 0;">Job Preferences:</h3>
+            <p><strong>Preferred Role:</strong> ${partTimeData.preferredRole}</p>
+            <p><strong>Available Hours:</strong> ${partTimeData.availableHours} per day</p>
+            <p><strong>Available Days:</strong> ${partTimeData.availableDays}</p>
+          </div>
+
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #8B5CF6; margin-top: 0;">Motivation:</h3>
+            <p style="line-height: 1.6;">${partTimeData.motivation}</p>
+          </div>
+
+          <p style="color: #666; line-height: 1.6; margin-top: 30px;">
+            Please review this application and contact the applicant for the next steps.
+          </p>
+        </div>
+        
+        <div style="background-color: #333; color: white; padding: 20px; text-align: center;">
+          <p style="margin: 0; font-size: 14px;">© 2024 Padmaaja Admin Panel</p>
+        </div>
+      </div>
+    `
+
+    return await this.sendEmail({
+      to: settings.supportEmail,
+      subject: `New Part-Time Application - ${partTimeData.applicantName}`,
+      html
+    })
+  }
 }
 
 export const emailService = new EmailServiceClass()
