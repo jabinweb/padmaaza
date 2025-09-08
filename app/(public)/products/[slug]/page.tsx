@@ -1023,7 +1023,11 @@ export default function ProductDetailPage() {
             </div>
             
             <div className="max-w-4xl mx-auto">
-              <ReviewsList productId={product.id} productName={product.name} />
+              <ReviewsList 
+                productId={product.id} 
+                productName={product.name} 
+                disableImageUpload={true}
+              />
             </div>
           </div>
         </motion.section>

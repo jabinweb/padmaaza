@@ -422,11 +422,12 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
             </AnimatePresence>
           </Link>
 
-          <Link
-            href="/admin"
-            className={cn(
-              "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-              pathname.startsWith('/admin')
+          {session?.user?.role === 'ADMIN' && (
+            <Link
+              href="/admin"
+              className={cn(
+                "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                pathname.startsWith('/admin')
                 ? "bg-purple-100 text-purple-900"
                 : "text-gray-700 hover:bg-gray-100",
               isCollapsed && "justify-center px-2"
@@ -445,6 +446,7 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
               )}
             </AnimatePresence>
           </Link>
+          )}
 
           <Button
             variant="ghost"

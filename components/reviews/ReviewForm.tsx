@@ -16,6 +16,7 @@ interface ReviewFormProps {
   productName: string
   onSubmit?: (review: any) => void
   onCancel?: () => void
+  disableImageUpload?: boolean
   existingReview?: {
     id: string
     rating: number
@@ -30,6 +31,7 @@ export default function ReviewForm({
   productName, 
   onSubmit, 
   onCancel,
+  disableImageUpload = false,
   existingReview 
 }: ReviewFormProps) {
   const { data: session } = useSession()
@@ -216,56 +218,58 @@ export default function ReviewForm({
           </div>
 
           {/* Images */}
-          <div className="space-y-2">
-            <Label>Photos (Optional)</Label>
-            <div className="space-y-3">
-              {images.length > 0 && (
-                <div className="grid grid-cols-5 gap-2">
-                  {images.map((image, index) => (
-                    <div key={index} className="relative group">
-                      <Image
-                        src={image}
-                        alt={`Review image ${index + 1}`}
-                        width={80}
-                        height={80}
-                        className="object-cover rounded-md"
+          {!disableImageUpload && (
+            <div className="space-y-2">
+              <Label>Photos (Optional)</Label>
+              <div className="space-y-3">
+                {images.length > 0 && (
+                  <div className="grid grid-cols-5 gap-2">
+                    {images.map((image, index) => (
+                      <div key={index} className="relative group">
+                        <Image
+                          src={image}
+                          alt={`Review image ${index + 1}`}
+                          width={80}
+                          height={80}
+                          className="object-cover rounded-md"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {images.length < 5 && (
+                  <div>
+                    <label className="cursor-pointer">
+                      <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center hover:border-gray-400 transition-colors">
+                        <Upload className="h-6 w-6 mx-auto mb-2 text-gray-400" />
+                        <p className="text-sm text-gray-600">
+                          {uploadingImage ? 'Uploading...' : 'Click to upload photos'}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Max 5 images, 5MB each
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={uploadingImage}
+                        className="hidden"
                       />
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-              
-              {images.length < 5 && (
-                <div>
-                  <label className="cursor-pointer">
-                    <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center hover:border-gray-400 transition-colors">
-                      <Upload className="h-6 w-6 mx-auto mb-2 text-gray-400" />
-                      <p className="text-sm text-gray-600">
-                        {uploadingImage ? 'Uploading...' : 'Click to upload photos'}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Max 5 images, 5MB each
-                      </p>
-                    </div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={uploadingImage}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-              )}
+                    </label>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Submit Buttons */}
           <div className="flex items-center space-x-3 pt-4">

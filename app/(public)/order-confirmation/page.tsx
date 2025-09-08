@@ -31,6 +31,15 @@ interface OrderConfirmation {
     name: string
     email: string
   }
+  shippingAddress?: {
+    name: string
+    address: string
+    address2?: string
+    city: string
+    state: string
+    zipCode: string
+    phone?: string
+  }
 }
 
 export default function OrderConfirmationPage() {
@@ -95,9 +104,9 @@ export default function OrderConfirmationPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'PENDING': return 'bg-yellow-500'
-      case 'PAID': return 'bg-blue-500'
-      case 'SHIPPED': return 'bg-purple-500'
+      case 'PENDING': return 'bg-amber-500'
+      case 'PAID': return 'bg-emerald-500'
+      case 'SHIPPED': return 'bg-emerald-600'
       case 'DELIVERED': return 'bg-green-500'
       case 'CANCELLED': return 'bg-red-500'
       default: return 'bg-gray-500'
@@ -106,15 +115,124 @@ export default function OrderConfirmationPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50 pt-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header Skeleton */}
+          <div className="text-center mb-10">
+            <div className="relative inline-block mb-6">
+              <div className="w-20 h-20 bg-gray-200 rounded-full animate-pulse mx-auto"></div>
+            </div>
+            <div className="h-10 bg-gray-200 rounded-lg mb-3 max-w-md mx-auto animate-pulse"></div>
+            <div className="h-6 bg-gray-200 rounded-lg mb-6 max-w-lg mx-auto animate-pulse"></div>
+            <div className="h-12 bg-gray-200 rounded-xl max-w-xs mx-auto animate-pulse"></div>
+          </div>
+
+          {/* Content Skeleton */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Main Content Skeleton - 2 columns */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Order Summary Card Skeleton */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="h-16 bg-gray-200 animate-pulse"></div>
+                <div className="p-6">
+                  {/* Order header info skeleton */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="h-6 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="h-6 bg-gray-200 rounded animate-pulse w-20 mx-auto"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="h-8 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Items list skeleton */}
+                  <div className="space-y-4">
+                    <div className="h-6 bg-gray-200 rounded animate-pulse w-32"></div>
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                        <div className="w-16 h-16 bg-gray-200 rounded-lg animate-pulse flex-shrink-0"></div>
+                        <div className="flex-1 space-y-2">
+                          <div className="h-5 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="flex space-x-4">
+                            <div className="h-4 bg-gray-200 rounded animate-pulse w-16"></div>
+                            <div className="h-4 bg-gray-200 rounded animate-pulse w-20"></div>
+                          </div>
+                        </div>
+                        <div className="h-6 bg-gray-200 rounded animate-pulse w-20"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Shipping Address Card Skeleton */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="h-16 bg-gray-200 animate-pulse"></div>
+                <div className="p-6 space-y-3">
+                  <div className="h-5 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar Skeleton */}
+            <div className="space-y-6">
+              {/* Status Card Skeleton */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="h-16 bg-gray-200 animate-pulse"></div>
+                <div className="p-6 space-y-4">
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-20"></div>
+                    <div className="h-5 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-32"></div>
+                    <div className="h-5 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Card Skeleton */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="h-16 bg-gray-200 animate-pulse"></div>
+                <div className="p-6 space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-3 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons Skeleton */}
+              <div className="space-y-3">
+                <div className="h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+                <div className="h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
 
   if (error || !orderData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center pt-20">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
             {error || 'Order not found'}
@@ -135,7 +253,7 @@ export default function OrderConfirmationPage() {
           <ConfettiBoom
             particleCount={150}
             effectCount={3}
-            colors={['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#F97316']}
+            colors={['#10B981', '#059669', '#34D399', '#6EE7B7', '#A7F3D0', '#D1FAE5']}
             shapeSize={12}
             spreadDeg={60}
             effectInterval={300}
@@ -143,52 +261,35 @@ export default function OrderConfirmationPage() {
         </div>
       )}
 
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Enhanced Header with Animation */}
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50 pt-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Professional Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
           >
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 200 }}
-              className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
-            >
-              <CheckCircle className="h-8 w-8 text-white" />
-            </motion.div>
+            <div className="relative inline-block mb-6">
+              <div className="absolute inset-0 bg-emerald-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
+              <div className="relative w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-emerald-100">
+                <CheckCircle className="h-10 w-10 text-emerald-500" />
+              </div>
+            </div>
             
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4"
-            >
-              Order Confirmed! 
-            </motion.h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+              Order Confirmed!
+            </h1>
             
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-xl text-gray-600 max-w-2xl mx-auto"
-            >
-              Thank you <span className="font-semibold text-gray-800">{orderData.customer.name}</span> for your purchase! 
-              Your order has been confirmed and our team is preparing it with care.
-            </motion.p>
+            <p className="text-lg text-gray-600 max-w-lg mx-auto mb-6">
+              Thank you <span className="font-semibold text-emerald-600">{orderData.customer.name}</span>! 
+              Your order has been confirmed and is being prepared.
+            </p>
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="mt-6 inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-lg border border-gray-200"
-            >
-              <Package className="h-5 w-5 text-blue-600" />
-              <span className="font-medium text-gray-700">Order #{orderData.orderId.slice(-8)}</span>
-            </motion.div>
+            <div className="inline-flex items-center bg-emerald-50 text-emerald-700 px-6 py-3 rounded-xl border border-emerald-200 shadow-sm">
+              <Package className="h-5 w-5 mr-2" />
+              <span className="font-semibold">Order #{orderData.orderId.slice(-8).toUpperCase()}</span>
+          </div>
 
             {/* Floating Celebration Elements */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -222,7 +323,7 @@ export default function OrderConfirmationPage() {
                 }}
                 className="absolute top-32 right-1/4 transform translate-x-1/2"
               >
-                <Gift className="h-8 w-8 text-purple-500 opacity-70" />
+                <Gift className="h-8 w-8 text-emerald-500 opacity-70" />
               </motion.div>
 
               <motion.div
@@ -244,62 +345,46 @@ export default function OrderConfirmationPage() {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Enhanced Order Details */}
+          {/* Professional Content Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Main Order Information - Takes 2 columns */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="lg:col-span-2 space-y-6"
             >
-              <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-                  <CardTitle className="flex items-center text-xl">
-                    <Package className="h-6 w-6 mr-3" />
-                    Order Details
+              {/* Order Summary Card */}
+              <Card className="shadow-lg border-0 bg-white">
+                <CardHeader className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
+                  <CardTitle className="flex items-center text-lg font-semibold">
+                    <Package className="h-5 w-5 mr-3" />
+                    Order Summary
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-8 space-y-6">
-                  {/* Order Info Grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
-                        <span className="text-gray-600 font-medium">Order ID</span>
-                        <span className="font-bold text-gray-900">#{orderData.orderId.slice(-8)}</span>
-                      </div>
-                      
-                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
-                        <span className="text-blue-700 font-medium">Status</span>
-                        <Badge className={`${getStatusColor(orderData.status)} text-white px-4 py-2 font-semibold`}>
-                          {orderData.status}
-                        </Badge>
-                      </div>
+                <CardContent className="p-6">
+                  {/* Order Header Info */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                    <div className="text-center md:text-left">
+                      <div className="text-sm text-gray-500 mb-1">Order ID</div>
+                      <div className="font-semibold text-gray-900">#{orderData.orderId.slice(-8).toUpperCase()}</div>
                     </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg">
-                        <span className="text-green-700 font-medium">Total</span>
-                        <span className="font-bold text-2xl text-green-600">
-                          ₹{orderData.total.toFixed(2)}
-                        </span>
-                      </div>
-                      
-                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
-                        <span className="text-purple-700 font-medium">Delivery</span>
-                        <span className="font-bold text-purple-900">
-                          {new Date(orderData.estimatedDelivery).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric'
-                          })}
-                        </span>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-sm text-gray-500 mb-1">Status</div>
+                      <Badge className={`${getStatusColor(orderData.status)} text-white px-3 py-1 text-xs font-medium`}>
+                        {orderData.status}
+                      </Badge>
+                    </div>
+                    <div className="text-center md:text-right">
+                      <div className="text-sm text-gray-500 mb-1">Total Amount</div>
+                      <div className="text-xl font-bold text-emerald-600">₹{orderData.total.toFixed(2)}</div>
                     </div>
                   </div>
                   
-                  <Separator />
-                  
-                  {/* Enhanced Items List */}
+                  {/* Items List */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Items Ordered</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">Items Ordered</h3>
                     {orderData.items.map((item, index) => {
                       const discountedPrice = item.discount > 0 
                         ? item.price - (item.price * item.discount / 100)
@@ -308,47 +393,39 @@ export default function OrderConfirmationPage() {
                       return (
                         <motion.div
                           key={item.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
-                          className="flex items-center space-x-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all duration-300"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.4, delay: 0.3 + (index * 0.1) }}
+                          className="flex items-center space-x-4 p-4 bg-white border border-gray-100 rounded-lg hover:shadow-md transition-shadow"
                         >
-                          <div className="relative">
+                          <div className="relative flex-shrink-0">
                             <Image
                               src={item.image || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
                               alt={item.name}
-                              width={70}
-                              height={70}
-                              className="rounded-lg object-cover shadow-md"
+                              width={64}
+                              height={64}
+                              className="rounded-lg object-cover"
                             />
                             {item.discount > 0 && (
-                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
                                 {item.discount}% OFF
                               </div>
                             )}
                           </div>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-gray-900 mb-1">{item.name}</h4>
-                            <div className="flex items-center gap-4">
-                              <span className="text-sm text-gray-600 bg-white px-2 py-1 rounded">
-                                Qty: {item.quantity}
-                              </span>
-                              <div className="flex items-center gap-2">
-                                <span className="font-bold text-green-600">
-                                  ₹{discountedPrice.toFixed(2)}
-                                </span>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-gray-900 truncate">{item.name}</h4>
+                            <div className="flex items-center space-x-4 mt-1">
+                              <span className="text-sm text-gray-500">Qty: {item.quantity}</span>
+                              <div className="flex items-center space-x-2">
+                                <span className="font-semibold text-emerald-600">₹{discountedPrice.toFixed(2)}</span>
                                 {item.discount > 0 && (
-                                  <span className="text-sm text-gray-500 line-through">
-                                    ₹{item.price.toFixed(2)}
-                                  </span>
+                                  <span className="text-sm text-gray-400 line-through">₹{item.price.toFixed(2)}</span>
                                 )}
                               </div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <span className="font-bold text-lg text-gray-900">
-                              ₹{(discountedPrice * item.quantity).toFixed(2)}
-                            </span>
+                            <div className="font-bold text-gray-900">₹{(discountedPrice * item.quantity).toFixed(2)}</div>
                           </div>
                         </motion.div>
                       )
@@ -356,140 +433,126 @@ export default function OrderConfirmationPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Shipping Address Card */}
+              {orderData.shippingAddress && (
+                <Card className="shadow-lg border-0 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
+                    <CardTitle className="flex items-center text-lg font-semibold">
+                      <Truck className="h-5 w-5 mr-3" />
+                      Shipping Address
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-2 text-gray-700">
+                      <p className="font-semibold text-gray-900">{orderData.shippingAddress.name}</p>
+                      <p>{orderData.shippingAddress.address}</p>
+                      {orderData.shippingAddress.address2 && (
+                        <p>{orderData.shippingAddress.address2}</p>
+                      )}
+                      <p>{orderData.shippingAddress.city}, {orderData.shippingAddress.state} {orderData.shippingAddress.zipCode}</p>
+                      {orderData.shippingAddress.phone && (
+                        <p className="flex items-center mt-3">
+                          <span className="text-gray-500 mr-2">Phone:</span>
+                          {orderData.shippingAddress.phone}
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </motion.div>
 
-            {/* Enhanced Status & Next Steps */}
+            {/* Sidebar - Order Status & Actions */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
               className="space-y-6"
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Truck className="h-5 w-5 mr-2" />
+              {/* Customer & Status Card */}
+              <Card className="shadow-lg border-0 bg-white">
+                <CardHeader className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
+                  <CardTitle className="flex items-center text-lg font-semibold">
+                    <Clock className="h-5 w-5 mr-3" />
                     Order Status
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-sm space-y-1">
-                    <p className="font-medium">Customer: {orderData.customer.name}</p>
-                    <p className="text-gray-500">Email: {orderData.customer.email}</p>
-                    <div className="mt-3">
-                      <Badge className={`${getStatusColor(orderData.status)} text-white`}>
-                        Current Status: {orderData.status}
-                      </Badge>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">Customer</div>
+                      <div className="font-medium text-gray-900">{orderData.customer.name}</div>
+                      <div className="text-sm text-gray-600">{orderData.customer.email}</div>
+                    </div>
+                    
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">Expected Delivery</div>
+                      <div className="font-medium text-gray-900">
+                        {new Date(orderData.estimatedDelivery).toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2" />
-                    What&apos;s Next?
+              {/* Progress Card */}
+              <Card className="shadow-lg border-0 bg-white">
+                <CardHeader className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
+                  <CardTitle className="flex items-center text-lg font-semibold">
+                    <ArrowRight className="h-5 w-5 mr-3" />
+                    Order Progress
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        ['PAID', 'SHIPPED', 'DELIVERED'].includes(orderData.status) 
-                          ? 'bg-green-100' 
-                          : 'bg-blue-100'
-                      }`}>
-                        <span className={`text-xs font-bold ${
-                          ['PAID', 'SHIPPED', 'DELIVERED'].includes(orderData.status)
-                            ? 'text-green-600'
-                            : 'text-blue-600'
-                        }`}>
-                          1
-                        </span>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        1
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Order Processing</p>
-                        <p className="text-xs text-gray-500">
-                          {orderData.status === 'PENDING' 
-                            ? "We're preparing your items" 
-                            : "✓ Complete"}
-                        </p>
+                        <div className="font-medium text-gray-900">Order Processing</div>
+                        <div className="text-sm text-gray-600">We're preparing your items</div>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        ['SHIPPED', 'DELIVERED'].includes(orderData.status)
-                          ? 'bg-green-100'
-                          : 'bg-gray-100'
-                      }`}>
-                        <span className={`text-xs font-bold ${
-                          ['SHIPPED', 'DELIVERED'].includes(orderData.status)
-                            ? 'text-green-600'
-                            : 'text-gray-400'
-                        }`}>
-                          2
-                        </span>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        2
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Shipped</p>
-                        <p className="text-xs text-gray-500">
-                          {orderData.status === 'SHIPPED' 
-                            ? "Your order is on the way" 
-                            : orderData.status === 'DELIVERED' 
-                            ? "✓ Complete"
-                            : "You'll receive tracking information"}
-                        </p>
+                        <div className="font-medium text-gray-500">Shipped</div>
+                        <div className="text-sm text-gray-500">You'll receive tracking information</div>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        orderData.status === 'DELIVERED'
-                          ? 'bg-green-100'
-                          : 'bg-gray-100'
-                      }`}>
-                        <span className={`text-xs font-bold ${
-                          orderData.status === 'DELIVERED'
-                            ? 'text-green-600'
-                            : 'text-gray-400'
-                        }`}>
-                          3
-                        </span>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        3
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Delivered</p>
-                        <p className="text-xs text-gray-500">
-                          {orderData.status === 'DELIVERED' 
-                            ? "✓ Your order has arrived!" 
-                            : "Your order arrives!"}
-                        </p>
+                        <div className="font-medium text-gray-500">Delivered</div>
+                        <div className="text-sm text-gray-500">Your order arrives!</div>
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <div className="space-y-4">
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg" asChild>
-                    <Link href="/orders">
-                      View All Orders
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Link>
+              {/* Action Buttons */}
+              <div className="grid grid-cols-1 gap-2">
+                <Link href="/orders">
+                  <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-medium transition-colors">
+                    View All Orders
                   </Button>
-                </motion.div>
-                
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button variant="outline" className="w-full border-2 border-gray-300 hover:border-gray-400 font-semibold py-3 rounded-xl" asChild>
-                    <Link href="/products">Continue Shopping</Link>
+                </Link>
+                <Link href="/products">
+                  <Button variant="outline" className="w-full border-emerald-200 text-emerald-600 hover:bg-emerald-50 py-3 rounded-lg font-medium transition-colors">
+                    Continue Shopping
                   </Button>
-                </motion.div>
+                </Link>
               </div>
             </motion.div>
           </div>

@@ -26,6 +26,7 @@ interface Review {
   isVerified: boolean
   helpfulVotes: number
   createdAt: string
+  userHasVoted?: boolean // Track if current user has voted this review as helpful
   user: {
     id: string
     name: string
@@ -42,6 +43,7 @@ interface ReviewsListProps {
   averageRating?: number
   totalReviews?: number
   ratingBreakdown?: { [key: number]: number }
+  disableImageUpload?: boolean
 }
 
 export default function ReviewsList({ 
@@ -49,7 +51,8 @@ export default function ReviewsList({
   productName, 
   averageRating = 0,
   totalReviews = 0,
-  ratingBreakdown = {}
+  ratingBreakdown = {},
+  disableImageUpload = false
 }: ReviewsListProps) {
   const { data: session } = useSession()
   const [reviews, setReviews] = useState<Review[]>([])
@@ -203,6 +206,45 @@ export default function ReviewsList({
     }
   }
 
+  const handleHelpfulVote = async (reviewId: string) => {
+    if (!session?.user) {
+      toast.error('Please sign in to vote')
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
+        method: 'POST'
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        
+        // Update the review in the list with new vote status and count
+        setReviews(prev => prev.map(review => 
+          review.id === reviewId 
+            ? { 
+                ...review, 
+                userHasVoted: data.hasVoted,
+                helpfulVotes: data.totalVotes,
+                _count: {
+                  ...review._count,
+                  helpfulVotedBy: data.totalVotes
+                }
+              }
+            : review
+        ))
+
+        toast.success(data.hasVoted ? 'Marked as helpful' : 'Removed helpful vote')
+      } else {
+        const data = await response.json()
+        toast.error(data.error || 'Failed to vote')
+      }
+    } catch (error) {
+      toast.error('Failed to vote')
+    }
+  }
+
   const renderRatingBreakdown = () => {
     if (!calculatedStats.totalReviews) return null
 
@@ -282,6 +324,7 @@ export default function ReviewsList({
           productId={productId}
           productName={productName}
           existingReview={editingReview || undefined}
+          disableImageUpload={disableImageUpload}
           onSubmit={handleReviewSubmit}
           onCancel={() => {
             setShowForm(false)
@@ -334,7 +377,8 @@ export default function ReviewsList({
                 review={review}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                userHasVoted={false} // You'd need to track this
+                onHelpfulVote={handleHelpfulVote}
+                userHasVoted={review.userHasVoted || false}
               />
             ))}
 

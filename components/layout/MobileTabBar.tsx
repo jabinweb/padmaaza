@@ -44,13 +44,13 @@ const tabs = [
     href: '/dashboard',
     activeRoutes: ['/dashboard']
   },
-  {
-    id: 'more',
-    label: 'More',
-    icon: MoreHorizontal,
-    href: '/more',
-    activeRoutes: ['/more', '/about', '/contact', '/partnership', '/bulk-supply']
-  }
+  // {
+  //   id: 'more',
+  //   label: 'More',
+  //   icon: MoreHorizontal,
+  //   href: '/more',
+  //   activeRoutes: ['/more', '/about', '/contact', '/partnership', '/bulk-supply']
+  // }
 ]
 
 export default function MobileTabBar() {

@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 // GET /api/reviews - Get reviews with filters
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth()
     const { searchParams } = new URL(request.url)
     const productId = searchParams.get('productId')
     const userId = searchParams.get('userId')
@@ -38,6 +39,11 @@ export async function GET(request: NextRequest) {
               name: true,
             }
           },
+          helpfulVotedBy: session?.user?.id ? {
+            where: {
+              userId: session.user.id
+            }
+          } : false,
           _count: {
             select: {
               helpfulVotedBy: true,
@@ -54,8 +60,16 @@ export async function GET(request: NextRequest) {
       prisma.review.count({ where }),
     ])
 
+    // Transform reviews to include userHasVoted flag
+    const transformedReviews = reviews.map(review => ({
+      ...review,
+      userHasVoted: session?.user?.id ? review.helpfulVotedBy.length > 0 : false,
+      helpfulVotedBy: undefined, // Remove the raw data
+      helpfulVotes: review._count.helpfulVotedBy,
+    }))
+
     return NextResponse.json({
-      reviews,
+      reviews: transformedReviews,
       pagination: {
         page,
         limit,

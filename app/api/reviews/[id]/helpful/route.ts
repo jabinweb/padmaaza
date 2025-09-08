@@ -41,18 +41,22 @@ export async function POST(
       })
 
       // Update helpful count
-      await prisma.review.update({
+      const updatedReview = await prisma.review.update({
         where: { id: reviewId },
         data: {
           helpfulVotes: {
             decrement: 1
           }
+        },
+        select: {
+          helpfulVotes: true
         }
       })
 
       return NextResponse.json({ 
         message: 'Helpful vote removed',
-        voted: false 
+        hasVoted: false,
+        totalVotes: updatedReview.helpfulVotes
       })
     } else {
       // Add the vote
@@ -64,18 +68,22 @@ export async function POST(
       })
 
       // Update helpful count
-      await prisma.review.update({
+      const updatedReview = await prisma.review.update({
         where: { id: reviewId },
         data: {
           helpfulVotes: {
             increment: 1
           }
+        },
+        select: {
+          helpfulVotes: true
         }
       })
 
       return NextResponse.json({ 
         message: 'Review marked as helpful',
-        voted: true 
+        hasVoted: true,
+        totalVotes: updatedReview.helpfulVotes
       })
     }
   } catch (error) {

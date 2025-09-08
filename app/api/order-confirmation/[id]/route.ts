@@ -37,6 +37,18 @@ export async function GET(
             name: true,
             email: true
           }
+        },
+        shippingAddress: {
+          select: {
+            firstName: true,
+            lastName: true,
+            address1: true,
+            address2: true,
+            city: true,
+            state: true,
+            zipCode: true,
+            phone: true
+          }
         }
       }
     })
@@ -59,6 +71,15 @@ export async function GET(
         name: order.user.name || 'Customer',
         email: order.user.email
       },
+      shippingAddress: order.shippingAddress ? {
+        name: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
+        address: order.shippingAddress.address1,
+        address2: order.shippingAddress.address2,
+        city: order.shippingAddress.city,
+        state: order.shippingAddress.state,
+        zipCode: order.shippingAddress.zipCode,
+        phone: order.shippingAddress.phone
+      } : null,
       items: order.orderItems.map(item => ({
         id: item.id,
         name: item.product.name,
