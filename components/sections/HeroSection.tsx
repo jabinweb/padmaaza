@@ -128,11 +128,11 @@ export default function HeroSection() {
     <div className="relative bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/20">
 
       {/* Amazon-style Hero Layout */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-8 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-4 md:gap-5 lg:gap-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-6 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
           
           {/* Main Banner Slider - Left Side (3/4 width) - Better mobile aspect ratio */}
-          <div className="lg:col-span-3 relative overflow-hidden rounded-lg shadow-lg aspect-[3/2] sm:aspect-[16/10] md:aspect-video isolate">
+          <div className="lg:col-span-3 relative overflow-hidden rounded-lg shadow-lg aspect-[16/10] md:aspect-video isolate">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -239,41 +239,41 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Modern Category Cards - Right Side (1/4 width) - Match slider height exactly */}
-          <div className="lg:col-span-1 aspect-[3/2] sm:aspect-[16/10] md:aspect-video lg:aspect-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4 h-full">
+          {/* Modern Category Cards - Right Side (1/4 width) - Ultra compact mobile */}
+          <div className="lg:col-span-1 aspect-[4/3] sm:aspect-[16/10] md:aspect-video lg:aspect-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5 sm:gap-2 lg:gap-3 h-full">
               {featuredCategories.slice(0, 4).map((category, index) => (
                 <motion.div
                   key={category.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="min-h-[100px] sm:min-h-[110px] lg:h-full lg:min-h-0"
+                  className="min-h-[50px] sm:min-h-[70px] lg:h-full lg:min-h-0"
                 >
                   <Link href={category.link}>
-                    <div className="group h-full relative bg-white rounded-lg border border-gray-200 hover:border-emerald-300 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden">
+                    <div className="group h-full relative bg-white rounded-md border border-gray-200 hover:border-emerald-300 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden">
                       {/* Gradient Background Accent */}
-                      <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${category.bgColor}`}></div>
+                      <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${category.bgColor}`}></div>
                       
-                      {/* Content - Mobile-optimized Layout */}
-                      <div className="relative px-3 !py-0 sm:p-5 h-full flex items-center gap-3 sm:gap-4">
-                        {/* Icon Container */}
-                        <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-10 lg:h-10 rounded-lg bg-gradient-to-br ${category.bgColor} flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-lg flex-shrink-0`}>
-                          <Wheat className="w-5 h-5 sm:w-6 sm:h-6 lg:w-5 lg:h-5 text-white" />
+                      {/* Content - Ultra Compact Mobile Layout */}
+                      <div className="relative px-2 py-1.5 sm:px-3 sm:py-2 lg:p-4 h-full flex items-center gap-2 sm:gap-3">
+                        {/* Icon Container - Very small on mobile */}
+                        <div className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-md bg-gradient-to-br ${category.bgColor} flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-sm flex-shrink-0`}>
+                          <Wheat className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-white" />
                         </div>
                         
-                        {/* Typography */}
+                        {/* Typography - Ultra compact */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-base sm:text-lg lg:text-base text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight mb-1">
+                          <h3 className="font-semibold text-xs sm:text-sm lg:text-base text-gray-900 group-hover:text-emerald-600 transition-colors leading-tight mb-0.5">
                             {category.title}
                           </h3>
-                          <p className="text-sm sm:text-base lg:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                          <p className="text-[10px] sm:text-xs lg:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
                             {category.subtitle}
                           </p>
                         </div>
                         
-                        {/* Arrow Icon - Visible on larger screens */}
-                        <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-all duration-300 flex-shrink-0">
+                        {/* Arrow Icon - Hidden on mobile */}
+                        <div className="hidden lg:block opacity-0 group-hover:opacity-100 transition-all duration-300 flex-shrink-0">
                           <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-emerald-600" />
                         </div>
                       </div>
@@ -286,17 +286,19 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Secondary Strip - Improved mobile layout */}
-      <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 text-white py-5 sm:py-6">
+      {/* Secondary Strip - Repositioned and Mobile Optimized */}
+      <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 text-white py-4 sm:py-5 md:py-6 mt-4 sm:mt-6">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4 sm:gap-6">
-            <div className="flex-1">
-              <h3 className="text-base sm:text-lg font-semibold mb-2">🌾 Premium Rice • Direct from Farms • Free Shipping ₹500+</h3>
-              <p className="text-yellow-100 text-sm sm:text-base">Aged Basmati & Golden Sella rice delivered fresh to your kitchen</p>
+          <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
+            <div className="flex-1 max-w-4xl">
+              <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1 sm:mb-2">🌾 Premium Rice • Direct from Farms • Free Shipping ₹500+</h3>
+              <p className="text-yellow-100 text-xs sm:text-sm md:text-base">Aged Basmati & Golden Sella rice delivered fresh to your kitchen</p>
             </div>
-            <Button variant="outline" size="lg" className="bg-white text-amber-700 hover:bg-yellow-50 border-white text-sm sm:text-base font-medium px-6 py-3 rounded-lg">
-              Explore Rice Varieties
-            </Button>
+            <Link href="/products">
+              <Button variant="outline" size="sm" className="bg-white text-amber-700 hover:bg-yellow-50 border-white text-xs sm:text-sm font-medium px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                Explore Rice Varieties
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

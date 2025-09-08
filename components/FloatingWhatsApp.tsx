@@ -65,7 +65,7 @@ export default function FloatingWhatsApp({
             stiffness: 260, 
             damping: 20 
           }}
-          className={`fixed ${positionClasses[position]} z-50`}
+          className={`fixed ${positionClasses[position]} z-50 md:mb-0  mb-12`}
         >
           <div className="relative">
             {/* Tooltip */}

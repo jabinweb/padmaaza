@@ -35,6 +35,27 @@ const getDiscountedPrice = (price: number, discount: number) => {
   return price - (price * discount / 100)
 }
 
+// Helper function to calculate per kg price
+const getPerKgPrice = (price: number, weight: string | undefined, discount: number = 0) => {
+  if (!weight) return null
+  
+  // Extract numeric value from weight string (e.g., "1kg", "500g", "2.5 kg")
+  const weightMatch = weight.toLowerCase().match(/(\d+(?:\.\d+)?)\s*(kg|g|gram|kilos?)/i)
+  if (!weightMatch) return null
+  
+  const value = parseFloat(weightMatch[1])
+  const unit = weightMatch[2].toLowerCase()
+  
+  // Convert to kg
+  let weightInKg = value
+  if (unit.startsWith('g')) {
+    weightInKg = value / 1000
+  }
+  
+  const finalPrice = discount > 0 ? getDiscountedPrice(price, discount) : price
+  return Math.round(finalPrice / weightInKg)
+}
+
 export default function ProductDetailPage() {
   const params = useParams()
   const router = useRouter()
@@ -46,9 +67,9 @@ export default function ProductDetailPage() {
   const [activeTab, setActiveTab] = useState('overview')
 
   useEffect(() => {
-    if (params.slug) {
+    if (params.slug && typeof params.slug === 'string') {
       // Decode the slug in case it's URL encoded
-      const decodedSlug = decodeURIComponent(params.slug as string)
+      const decodedSlug = decodeURIComponent(params.slug)
       fetchProduct(decodedSlug)
     }
   }, [params.slug])
@@ -478,6 +499,14 @@ export default function ProductDetailPage() {
                       </span>
                     )}
                   </div>
+                  
+                  {/* Per kg price display */}
+                  {getPerKgPrice(product.price, product.weight, product.discount) && (
+                    <div className="text-lg text-gray-600 font-medium">
+                      ₹{getPerKgPrice(product.price, product.weight, product.discount)}/kg
+                    </div>
+                  )}
+                  
                   {product.discount > 0 && (
                     <div className="flex items-center space-x-2">
                       <Badge className="bg-green-100 text-green-800 hover:bg-green-100">

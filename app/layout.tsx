@@ -176,7 +176,7 @@ export default async function PublicRootLayout({
           <PWAInstallPrompt />
           <IOSInstallPrompt />
           <FloatingWhatsApp 
-            phoneNumber="917053072789"
+            phoneNumber="+919475758817"
             message="Hello! I'm interested in Padmaaja Rasooi products. Can you help me?"
             position="bottom-right"
             showTooltip={true}

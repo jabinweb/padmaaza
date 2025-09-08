@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { 
   Table,
   TableBody,
@@ -20,7 +22,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Search, Plus, Edit, Trash2, MoreHorizontal, Download } from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Search, Plus, Edit, Trash2, MoreHorizontal, Download, Save } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -28,15 +37,26 @@ import Image from 'next/image'
 interface Product {
   id: string
   name: string
+  description: string | null
   price: number
   discount: number
   stock: number
   isActive: boolean
   images: string[]
   sku: string
+  weight: string | null
   category: {
     name: string
   }
+}
+
+interface QuickEditFormData {
+  name: string
+  description: string
+  price: number
+  discount: number
+  stock: number
+  weight: string
 }
 
 export default function AdminProductsPage() {
@@ -45,6 +65,17 @@ export default function AdminProductsPage() {
   const [search, setSearch] = useState('')
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
   const [bulkActionLoading, setBulkActionLoading] = useState(false)
+  const [quickEditOpen, setQuickEditOpen] = useState(false)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [quickEditForm, setQuickEditForm] = useState<QuickEditFormData>({
+    name: '',
+    description: '',
+    price: 0,
+    discount: 0,
+    stock: 0,
+    weight: ''
+  })
+  const [quickEditLoading, setQuickEditLoading] = useState(false)
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -131,6 +162,50 @@ export default function AdminProductsPage() {
     } catch (error) {
       toast.error('Failed to delete product')
     }
+  }
+
+  const handleQuickEdit = (product: Product) => {
+    setEditingProduct(product)
+    setQuickEditForm({
+      name: product.name,
+      description: product.description || '',
+      price: product.price,
+      discount: product.discount,
+      stock: product.stock,
+      weight: product.weight || ''
+    })
+    setQuickEditOpen(true)
+  }
+
+  const handleQuickEditSave = async () => {
+    if (!editingProduct) return
+
+    setQuickEditLoading(true)
+    try {
+      const response = await fetch(`/admin/products/${editingProduct.id}/edit`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(quickEditForm)
+      })
+
+      if (!response.ok) throw new Error('Update failed')
+
+      toast.success('Product updated successfully')
+      setQuickEditOpen(false)
+      setEditingProduct(null)
+      fetchProducts()
+    } catch (error) {
+      toast.error('Failed to update product')
+    } finally {
+      setQuickEditLoading(false)
+    }
+  }
+
+  const handleQuickEditInputChange = (field: keyof QuickEditFormData, value: string | number) => {
+    setQuickEditForm(prev => ({
+      ...prev,
+      [field]: value
+    }))
   }
 
   return (
@@ -280,28 +355,39 @@ export default function AdminProductsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
-                            <Link href={`/admin/products/${product.id}/edit`}>
-                              <Edit className="h-4 w-4 mr-2" />
-                              Edit
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => handleDeleteProduct(product.id)}
-                            className="text-red-600"
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <div className="flex items-center space-x-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => handleQuickEdit(product)}
+                          className="h-8 px-2"
+                        >
+                          <Edit className="h-3 w-3 mr-1" />
+                          Quick Edit
+                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                              <Link href={`/admin/products/${product.id}/edit`}>
+                                <Edit className="h-4 w-4 mr-2" />
+                                Full Edit
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => handleDeleteProduct(product.id)}
+                              className="text-red-600"
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -310,6 +396,139 @@ export default function AdminProductsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Quick Edit Dialog */}
+      <Dialog open={quickEditOpen} onOpenChange={setQuickEditOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Quick Edit Product</DialogTitle>
+          </DialogHeader>
+          
+          {editingProduct && (
+            <div className="space-y-6">
+              {/* Product Image and Basic Info */}
+              <div className="flex items-start space-x-4">
+                <Image
+                  src={editingProduct.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
+                  alt={editingProduct.name}
+                  width={80}
+                  height={80}
+                  className="rounded-lg object-cover"
+                />
+                <div className="flex-1">
+                  <p className="text-sm text-gray-500">SKU: {editingProduct.sku}</p>
+                  <p className="text-sm text-gray-500">Category: {editingProduct.category.name}</p>
+                </div>
+              </div>
+
+              {/* Form Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="quick-name">Product Name</Label>
+                  <Input
+                    id="quick-name"
+                    value={quickEditForm.name}
+                    onChange={(e) => handleQuickEditInputChange('name', e.target.value)}
+                    placeholder="Product name"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quick-weight">Weight</Label>
+                  <Input
+                    id="quick-weight"
+                    value={quickEditForm.weight}
+                    onChange={(e) => handleQuickEditInputChange('weight', e.target.value)}
+                    placeholder="e.g., 1kg, 500g"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quick-price">Price (₹)</Label>
+                  <Input
+                    id="quick-price"
+                    type="number"
+                    step="0.01"
+                    value={quickEditForm.price}
+                    onChange={(e) => handleQuickEditInputChange('price', parseFloat(e.target.value) || 0)}
+                    placeholder="0.00"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quick-discount">Discount (%)</Label>
+                  <Input
+                    id="quick-discount"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={quickEditForm.discount}
+                    onChange={(e) => handleQuickEditInputChange('discount', parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quick-stock">Stock Quantity</Label>
+                  <Input
+                    id="quick-stock"
+                    type="number"
+                    min="0"
+                    value={quickEditForm.stock}
+                    onChange={(e) => handleQuickEditInputChange('stock', parseInt(e.target.value) || 0)}
+                    placeholder="0"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quick-discounted-price">Final Price</Label>
+                  <div className="p-2 bg-gray-50 rounded-md text-sm">
+                    ₹{(quickEditForm.price - (quickEditForm.price * quickEditForm.discount / 100)).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="quick-description">Description</Label>
+                <Textarea
+                  id="quick-description"
+                  value={quickEditForm.description}
+                  onChange={(e) => handleQuickEditInputChange('description', e.target.value)}
+                  placeholder="Product description"
+                  rows={3}
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-end space-x-2 pt-4 border-t">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setQuickEditOpen(false)}
+                  disabled={quickEditLoading}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleQuickEditSave}
+                  disabled={quickEditLoading}
+                >
+                  {quickEditLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="h-4 w-4 mr-2" />
+                      Save Changes
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

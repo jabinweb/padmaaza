@@ -28,6 +28,27 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     return price - (price * discount / 100)
   }
 
+  // Helper function to calculate per kg price
+  const getPerKgPrice = (price: number, weight: string | null, discount: number = 0) => {
+    if (!weight) return null
+    
+    // Extract numeric value from weight string (e.g., "1kg", "500g", "2.5 kg")
+    const weightMatch = weight.toLowerCase().match(/(\d+(?:\.\d+)?)\s*(kg|g|gram|kilos?)/i)
+    if (!weightMatch) return null
+    
+    const value = parseFloat(weightMatch[1])
+    const unit = weightMatch[2].toLowerCase()
+    
+    // Convert to kg
+    let weightInKg = value
+    if (unit.startsWith('g')) {
+      weightInKg = value / 1000
+    }
+    
+    const finalPrice = discount > 0 ? getDiscountedPrice(price, discount) : price
+    return Math.round(finalPrice / weightInKg)
+  }
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -83,11 +104,21 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             quality={50}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
+          
+          {/* Per kg price badge - Top Left */}
+          {getPerKgPrice(product.price, product.weight, product.discount) && (
+            <Badge className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg text-base">
+              ₹{getPerKgPrice(product.price, product.weight, product.discount)}/kg
+            </Badge>
+          )}
+          
+          {/* Discount badge - Top Left, below per kg badge if both exist */}
           {product.discount > 0 && (
-            <Badge className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-red-500 hover:bg-red-600 text-white font-semibold shadow-lg text-xs">
+            <Badge className={`absolute ${getPerKgPrice(product.price, product.weight, product.discount) ? 'top-8 sm:top-10' : 'top-2 sm:top-3'} left-2 sm:left-3 bg-red-500 hover:bg-red-600 text-white font-semibold shadow-lg text-xs`}>
               {product.discount}% OFF
             </Badge>
           )}
+          
           <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
             <Star className="h-3 w-3 text-yellow-400 fill-current" />
             <span className="text-xs ml-1 font-medium">4.5</span>
@@ -102,7 +133,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </Badge>
         </div>
         
-        <CardHeader className="pb-2 p-3 sm:p-6 sm:pb-2">
+        <CardHeader className="pb-2 p-3 sm:pb-2">
           <div className="flex items-start justify-between gap-2 mb-2">
             <TooltipProvider>
               <Tooltip>
@@ -264,6 +295,14 @@ export default function ProductCard({ product, index }: ProductCardProps) {
                     </span>
                   )}
                 </div>
+                
+                {/* Per kg price in quick view */}
+                {getPerKgPrice(product.price, product.weight, product.discount) && (
+                  <div className="mb-4 text-sm text-gray-600">
+                    <span className="font-medium">Per kg: </span>
+                    ₹{getPerKgPrice(product.price, product.weight, product.discount)}/kg
+                  </div>
+                )}
                 
                 {/* Stock Status */}
                 <div className="mb-4">
