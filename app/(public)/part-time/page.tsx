@@ -34,83 +34,43 @@ export default function PartTimePage() {
 
   const jobBenefits = [
     {
+      icon: DollarSign,
+      title: "Fixed Monthly Salary",
+      description: "Guaranteed ₹10,000 monthly salary regardless of sales"
+    },
+    {
+      icon: TrendingUp,
+      title: "1% Sales Incentive",
+      description: "Earn 1% commission on every successful sale you make"
+    },
+    {
       icon: Clock,
       title: "Flexible Hours",
       description: "Work according to your available time schedule"
     },
     {
-      icon: Home,
-      title: "Work From Home",
-      description: "Remote work opportunities with online training"
-    },
-    {
-      icon: TrendingUp,
-      title: "Performance Bonuses",
-      description: "Earn extra income based on your achievements"
-    },
-    {
       icon: Award,
-      title: "Skill Development",
-      description: "Learn digital marketing and sales skills"
+      title: "Sales Training",
+      description: "Free product knowledge and sales technique training"
     }
   ]
 
-  const jobRoles = [
-    {
-      id: 1,
-      icon: Users,
-      title: "Social Media Marketing",
-      description: "Promote products on social media platforms",
-      requirements: ["Basic social media knowledge", "Good communication skills", "2-3 hours daily"],
-      earnings: "₹5,000 - ₹15,000/month",
-      color: "from-blue-500 to-blue-600"
-    },
-    {
-      id: 2,
-      icon: Phone,
-      title: "Customer Support",
-      description: "Handle customer inquiries and provide assistance",
-      requirements: ["Good communication skills", "Basic computer knowledge", "4-5 hours daily"],
-      earnings: "₹8,000 - ₹20,000/month",
-      color: "from-green-500 to-green-600"
-    },
-    {
-      id: 3,
-      icon: Target,
-      title: "Sales Representative",
-      description: "Generate leads and promote products to potential customers",
-      requirements: ["Sales experience preferred", "Excellent communication", "3-4 hours daily"],
-      earnings: "₹10,000 - ₹25,000/month",
-      color: "from-purple-500 to-purple-600"
-    },
-    {
-      id: 4,
-      icon: FileText,
-      title: "Content Creator",
-      description: "Create engaging content for marketing campaigns",
-      requirements: ["Creative writing skills", "Basic design knowledge", "2-3 hours daily"],
-      earnings: "₹6,000 - ₹18,000/month",
-      color: "from-orange-500 to-orange-600"
-    },
-    {
-      id: 5,
-      icon: Mail,
-      title: "Email Marketing",
-      description: "Manage email campaigns and customer communications",
-      requirements: ["Email marketing knowledge", "Good writing skills", "2-3 hours daily"],
-      earnings: "₹7,000 - ₹16,000/month",
-      color: "from-red-500 to-red-600"
-    },
-    {
-      id: 6,
-      icon: Briefcase,
-      title: "Business Development",
-      description: "Find new business opportunities and partnerships",
-      requirements: ["Business acumen", "Networking skills", "3-4 hours daily"],
-      earnings: "₹12,000 - ₹30,000/month",
-      color: "from-indigo-500 to-indigo-600"
-    }
-  ]
+  const jobRole = {
+    id: 1,
+    icon: Target,
+    title: "Sales Executive",
+    description: "Sell premium Kashmiri rice products to customers",
+    requirements: [
+      "Good communication skills", 
+      "Basic smartphone knowledge", 
+      "3-4 hours daily availability",
+      "Willingness to learn"
+    ],
+    salary: "₹10,000/month",
+    incentive: "1% commission on sales",
+    totalEarnings: "₹10,000 + Sales Commission",
+    color: "from-green-500 to-green-600"
+  }
 
   const workProcess = [
     {
@@ -142,12 +102,12 @@ export default function PartTimePage() {
   return (
     <div className="min-h-screen bg-white">
       <PageHero
-        title="Part-Time Job Opportunities"
-        description="Join our team and earn extra income with flexible part-time jobs. Work from home, choose your hours, and grow your skills while building a successful career."
-        backgroundGradient="from-purple-600 to-purple-700"
+        title="Join Our Sales Team"
+        subtitle="Sales Executive Position"
+        description="₹10,000 guaranteed monthly salary + 1% commission. Flexible hours, comprehensive training, premium products."
+        backgroundGradient="from-green-600 to-emerald-700"
         badge={{
-          text: "Part-Time Jobs",
-          variant: "outline"
+          text: "Now Hiring"
         }}
         actions={[
           {
@@ -168,7 +128,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6 }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              Why Choose Part-Time Work With Us?
+              Why Work With Us?
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -176,7 +136,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-xl text-gray-600 max-w-3xl mx-auto"
             >
-              Flexible opportunities designed for students, homemakers, and professionals looking for extra income
+              Guaranteed salary + unlimited earning potential
             </motion.p>
           </div>
 
@@ -218,7 +178,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6 }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              Available Part-Time Positions
+              Position Details
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -226,42 +186,51 @@ export default function PartTimePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-xl text-gray-600 max-w-3xl mx-auto"
             >
-              Choose from various roles that match your skills and availability
+              Everything you need to know about the role
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {jobRoles.map((role, index) => (
+          <div className="flex justify-center">
+            <div className="max-w-md w-full">
               <motion.div
-                key={role.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
                 className="group relative"
               >
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 shadow-lg group-hover:-translate-y-2">
                   <CardHeader className="pb-4">
                     <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 bg-gradient-to-br ${role.color} rounded-xl flex items-center justify-center`}>
-                        <role.icon className="h-6 w-6 text-white" />
+                      <div className={`w-12 h-12 bg-gradient-to-br ${jobRole.color} rounded-xl flex items-center justify-center`}>
+                        <jobRole.icon className="h-6 w-6 text-white" />
                       </div>
                       <div className="flex-1">
                         <CardTitle className="text-lg font-bold text-gray-900">
-                          {role.title}
+                          {jobRole.title}
                         </CardTitle>
                         <Badge className="bg-green-100 text-green-800 mt-1">
-                          {role.earnings}
+                          {jobRole.totalEarnings}
                         </Badge>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <p className="text-gray-600 mb-4">
-                      {role.description}
+                      {jobRole.description}
                     </p>
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between text-sm mb-2">
+                        <span className="text-gray-600">Base Salary:</span>
+                        <span className="font-semibold text-green-600">{jobRole.salary}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Commission:</span>
+                        <span className="font-semibold text-green-600">{jobRole.incentive}</span>
+                      </div>
+                    </div>
                     <h4 className="font-semibold text-gray-900 mb-2">Requirements:</h4>
                     <ul className="space-y-1">
-                      {role.requirements.map((req, reqIndex) => (
+                      {jobRole.requirements.map((req, reqIndex) => (
                         <li key={reqIndex} className="flex items-center text-sm text-gray-500">
                           <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
                           {req}
@@ -271,7 +240,7 @@ export default function PartTimePage() {
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -286,7 +255,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6 }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              How It Works
+              How To Get Started
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -294,7 +263,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-xl text-gray-600 max-w-3xl mx-auto"
             >
-              Simple 4-step process to start your part-time career with us
+              Simple 4-step process to start earning
             </motion.p>
           </div>
 
@@ -339,7 +308,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6 }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              Success Stories
+              What Our Team Says
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -347,7 +316,7 @@ export default function PartTimePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-xl text-gray-600 max-w-3xl mx-auto"
             >
-              Real people earning real income with our part-time opportunities
+              Real experiences from our sales team
             </motion.p>
           </div>
 
@@ -355,23 +324,23 @@ export default function PartTimePage() {
             {[
               {
                 name: "Priya Sharma",
-                role: "Social Media Marketing",
-                earnings: "₹12,000/month",
-                story: "As a college student, I needed flexible work. This part-time job helps me earn while studying.",
+                role: "Sales Executive",
+                earnings: "₹13,500/month",
+                story: "The guaranteed salary of ₹10,000 plus commission gives me financial security. Great training and support!",
                 rating: 5
               },
               {
                 name: "Rahul Gupta",
-                role: "Customer Support",
-                earnings: "₹18,000/month",
-                story: "Working from home has been amazing. Great support from the team and steady income.",
+                role: "Sales Executive", 
+                earnings: "₹15,200/month",
+                story: "I love the 1% commission structure. The more I sell, the more I earn. Management is very supportive.",
                 rating: 5
               },
               {
                 name: "Anjali Verma",
-                role: "Content Creator",
-                earnings: "₹15,000/month",
-                story: "I can work during my free time and the training provided was excellent. Highly recommended!",
+                role: "Sales Executive",
+                earnings: "₹12,800/month",
+                story: "Perfect for someone who wants stable income with growth potential. Training helped me develop sales skills.",
                 rating: 5
               }
             ].map((story, index) => (

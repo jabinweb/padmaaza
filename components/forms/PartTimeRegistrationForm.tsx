@@ -154,10 +154,10 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
         languagesKnown: ''
       })
 
-      toast.success('Part-time job application submitted successfully!')
+      toast.success('Sales Executive application submitted successfully!')
     } catch (error) {
       console.error('Registration error:', error)
-      toast.error(error instanceof Error ? error.message : 'Registration failed')
+      toast.error(error instanceof Error ? error.message : 'Application submission failed')
     } finally {
       setLoading(false)
     }
@@ -170,21 +170,21 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
           <DialogHeader>
             <DialogTitle className="text-2xl flex items-center">
               <Briefcase className="h-6 w-6 mr-3" />
-              Part-Time Job Application
+              Sales Executive Application
             </DialogTitle>
             <DialogDescription>
-              Apply for flexible part-time opportunities and start earning extra income
+              Apply for our Sales Executive position with guaranteed ₹10,000 salary + 1% commission
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex items-center justify-center gap-4 mb-6">
-            <Badge className="bg-purple-100 text-purple-800 px-4 py-2">
-              <Clock className="h-4 w-4 mr-2" />
-              Flexible Hours
-            </Badge>
             <Badge className="bg-green-100 text-green-800 px-4 py-2">
+              <Clock className="h-4 w-4 mr-2" />
+              ₹10,000 Guaranteed
+            </Badge>
+            <Badge className="bg-blue-100 text-blue-800 px-4 py-2">
               <Award className="h-4 w-4 mr-2" />
-              Performance Bonuses
+              1% Sales Commission
             </Badge>
           </div>
 
@@ -192,7 +192,7 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
             {/* Personal Information */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <User className="h-5 w-5 mr-2 text-purple-600" />
+                <User className="h-5 w-5 mr-2 text-green-600" />
                 Personal Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -267,7 +267,7 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
             {/* Address Information */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <MapPin className="h-5 w-5 mr-2 text-purple-600" />
+                <MapPin className="h-5 w-5 mr-2 text-green-600" />
                 Address Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -317,8 +317,8 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
             {/* Professional Information */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <GraduationCap className="h-5 w-5 mr-2 text-purple-600" />
-                Professional Information
+                <GraduationCap className="h-5 w-5 mr-2 text-green-600" />
+                Sales Experience & Availability
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -351,18 +351,13 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="preferredRole">Preferred Job Role *</Label>
+                  <Label htmlFor="preferredRole">Position *</Label>
                   <Select value={formData.preferredRole} onValueChange={(value) => handleInputChange('preferredRole', value)}>
                     <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select preferred role" />
+                      <SelectValue placeholder="Select position" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="social-media">Social Media Marketing</SelectItem>
-                      <SelectItem value="customer-support">Customer Support</SelectItem>
-                      <SelectItem value="sales">Sales Representative</SelectItem>
-                      <SelectItem value="content-creator">Content Creator</SelectItem>
-                      <SelectItem value="email-marketing">Email Marketing</SelectItem>
-                      <SelectItem value="business-development">Business Development</SelectItem>
+                      <SelectItem value="sales-executive">Sales Executive</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -400,7 +395,7 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
             {/* Additional Information */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <FileText className="h-5 w-5 mr-2 text-purple-600" />
+                <FileText className="h-5 w-5 mr-2 text-green-600" />
                 Additional Information
               </h3>
               <div className="space-y-4">
@@ -437,12 +432,12 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
                   />
                 </div>
                 <div>
-                  <Label htmlFor="motivation">Why do you want to work part-time with us? *</Label>
+                  <Label htmlFor="motivation">Why do you want to join our sales team? *</Label>
                   <Textarea
                     id="motivation"
                     value={formData.motivation}
                     onChange={(e) => handleInputChange('motivation', e.target.value)}
-                    placeholder="Tell us about your motivation and what you hope to achieve"
+                    placeholder="Tell us about your interest in sales and what motivates you"
                     className="mt-1"
                     rows={4}
                     required
@@ -456,7 +451,7 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
               <Button 
                 type="submit" 
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 rounded-lg transition-all duration-200"
+                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 rounded-lg transition-all duration-200"
               >
                 {loading ? (
                   <>
@@ -485,7 +480,7 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
             </DialogTitle>
             <DialogDescription asChild>
               <div className="space-y-4">
-                <p>Your part-time job application has been submitted successfully!</p>
+                <p>Your Sales Executive application has been submitted successfully!</p>
                 
                 {loginCredentials && (
                   <div className="bg-gray-50 p-4 rounded-lg">
@@ -498,13 +493,13 @@ export default function PartTimeRegistrationForm({ isOpen, onClose }: PartTimeRe
                   </div>
                 )}
 
-                <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="bg-green-50 p-4 rounded-lg">
                   <h4 className="font-semibold mb-2">What's Next?</h4>
                   <ul className="text-sm space-y-1">
-                    <li>• Our HR team will review your application</li>
+                    <li>• Our sales team will review your application</li>
                     <li>• You'll receive a call within 2-3 business days</li>
                     <li>• Complete the interview process</li>
-                    <li>• Start your part-time job journey!</li>
+                    <li>• Start earning ₹10,000 + 1% commission!</li>
                   </ul>
                 </div>
               </div>
