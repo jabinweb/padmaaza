@@ -13,13 +13,13 @@ export default function FounderPage() {
       name: 'Rajeev Singh',
       role: 'Founder & Chief Managing Director',
       image: '/Rajeev Singh.jpg',
-      email: 'srajeev7053@gmail.com',
+      email: 'info@padmajarice.com',
       phone: '+91 94757 58817',
-      description: 'Dynamic entrepreneur with 7+ years of experience in real estate. He successfully led Padmaja Group to a turnover of ₹100+ crores, showcasing his sharp business acumen and leadership skills.',
+      description: 'Dynamic entrepreneur with 7+ years of experience in real estate. He successfully led Padmaja Group to a turnover of ₹200+ crores, showcasing his sharp business acumen and leadership skills.',
       vision: 'Now, he brings the same vision and excellence to the food processing industry, aiming to build a trusted and scalable brand focused on quality, innovation, and customer satisfaction.',
       achievements: [
         '7+ years real estate experience',
-        '₹100+ crores group turnover',
+        '₹200+ crores group turnover',
         'Dynamic business leadership',
         'Strategic vision & execution'
       ]
@@ -61,7 +61,7 @@ export default function FounderPage() {
     {
       year: '2015-2020',
       title: 'Real Estate Foundation',
-      description: 'Built successful real estate business with Padmaja Group, achieving ₹100+ crores turnover'
+      description: 'Built successful real estate business with Padmaja Group, achieving ₹200+ crores turnover'
     },
     {
       year: '2018-2022',
@@ -145,7 +145,7 @@ export default function FounderPage() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto mb-12"
             >
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400 mb-2">₹100+ Cr</div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">₹200+ Cr</div>
                 <div className="text-slate-300 text-sm">Group Turnover</div>
               </div>
               <div className="text-center">
@@ -153,7 +153,7 @@ export default function FounderPage() {
                 <div className="text-slate-300 text-sm">Combined Experience</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400 mb-2">2024</div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">2023</div>
                 <div className="text-slate-300 text-sm">Founded Padmaaja Rasooi</div>
               </div>
             </motion.div>
@@ -364,7 +364,7 @@ export default function FounderPage() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-gray-900">Business Legacy</h3>
-                      <p className="text-orange-600 font-medium">₹100+ Crores Achieved</p>
+                      <p className="text-orange-600 font-medium">₹200+ Crores Achieved</p>
                     </div>
                   </div>
 
@@ -530,7 +530,7 @@ export default function FounderPage() {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-3">Email Us</h3>
                   <p className="text-slate-400 mb-4">Send us a message anytime</p>
-                  <p className="text-orange-400 font-medium">srajeev7053@gmail.com</p>
+                  <p className="text-orange-400 font-medium">info@padmajarice.com</p>
                 </CardContent>
               </Card>
             </motion.div>

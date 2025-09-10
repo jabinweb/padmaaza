@@ -22,7 +22,6 @@ import {
   FileText,
   Star
 } from 'lucide-react'
-import Link from 'next/link'
 import PageHero from '@/components/sections/PageHero'
 import WholesalerRegistrationForm from '@/components/forms/WholesalerRegistrationForm'
 
@@ -180,7 +179,7 @@ export default function WholesalerPage() {
               transition={{ duration: 0.6 }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              Why Partner With Padmaaja?
+              Why Partner With Padmaaja Rasooi?
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}

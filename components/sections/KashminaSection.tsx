@@ -32,7 +32,7 @@ export default function KashminaSection() {
                             Kashmina
                         </span>
                         <br />
-                        <span className="text-gray-800 text-3xl md:text-4xl lg:text-5xl font-medium">Premium Aged Basmati Rice</span>
+                        <span className="text-gray-800 text-3xl md:text-4xl lg:text-5xl font-medium">Premium Basmati Rice</span>
                     </h2>
                     <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
                         Authentic aged Basmati rice with <span className="text-amber-600 font-medium">extraordinary length, exquisite aroma, and royal taste</span>

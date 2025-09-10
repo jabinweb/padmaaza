@@ -37,16 +37,16 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: 'Business Email',
-      details: 'srajeev7053@gmail.com',
+      details: 'info@padmajarice.com',
       subtitle: 'For inquiries and partnerships',
-      highlight: '24-hour response guarantee'
+      highlight: 'Quick Response'
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      details: 'Monday - Saturday',
-      subtitle: '9:00 AM - 6:00 PM IST',
-      highlight: 'Closed on Sundays'
+      details: 'Always Open',
+      subtitle: '24 x 7 x 375',
+      highlight: 'Always Welcome'
     }
   ]
 
@@ -54,8 +54,8 @@ export default function ContactPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <PageHero
-        title="Get in Touch"
-        subtitle="Contact Padmaaja Rasooi"
+        title=""
+        subtitle="Contact Us"
         description="Partner with India's premium Basmati rice manufacturer. Connect with us for wholesale opportunities, bulk orders, and business partnerships."
         badge={{
           text: "Professional • Reliable • Trusted"
@@ -163,7 +163,7 @@ export default function ContactPage() {
         </motion.div>
 
         {/* Business Partnership CTA */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -190,7 +190,7 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Professional Contact Form & Information */}
         <section className="py-20 bg-gray-50">

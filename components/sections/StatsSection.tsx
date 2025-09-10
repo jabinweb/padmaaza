@@ -86,7 +86,7 @@ export default function StatsSection() {
             
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
-                <motion.div 
+                {/* <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -104,10 +104,10 @@ export default function StatsSection() {
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                         Two decades of rice expertise, bringing premium Basmati and Sella varieties from Northern India's fertile plains to kitchens worldwide
                     </p>
-                </motion.div>
+                </motion.div> */}
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
@@ -118,26 +118,21 @@ export default function StatsSection() {
                             className="relative group"
                         >
                             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500 group-hover:bg-white/10">
-                                {/* Animated background */}
                                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                                 
                                 <div className="relative z-10">
-                                    {/* Icon */}
                                     <div className={`w-16 h-16 bg-gradient-to-br ${stat.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                                         <stat.icon className="w-8 h-8 text-white" />
                                     </div>
 
-                                    {/* Value */}
                                     <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:scale-105 transition-transform duration-300">
                                         {stat.value}
                                     </div>
 
-                                    {/* Label */}
                                     <div className="text-lg font-semibold text-gray-300 mb-3">
                                         {stat.label}
                                     </div>
 
-                                    {/* Description */}
                                     <p className="text-gray-400 text-sm leading-relaxed">
                                         {stat.description}
                                     </p>
@@ -145,7 +140,7 @@ export default function StatsSection() {
                             </div>
                         </motion.div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Achievements Section */}
                 <motion.div

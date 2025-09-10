@@ -42,7 +42,7 @@ export default function CTA() {
                 <Mail className="h-5 w-5 sm:h-6 sm:w-6 mr-3 sm:mr-4 text-emerald-300 flex-shrink-0" />
                 <div className="text-left">
                   <div className="text-xs sm:text-sm text-emerald-200 font-medium">Email Us</div>
-                  <div className="text-base sm:text-lg font-bold break-all sm:break-normal">srajeev7053@gmail.com</div>
+                  <div className="text-base sm:text-lg font-bold break-all sm:break-normal">info@padmajarice.com</div>
                 </div>
               </div>
             </div>

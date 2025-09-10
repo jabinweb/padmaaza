@@ -104,7 +104,7 @@ export default function PageHero({
   titleGradient = 'from-blue-600 to-emerald-600',
   className = '',
   alignment = 'auto',
-  maxWidth = '5xl'
+  maxWidth = '4xl'
 }: PageHeroProps) {
   const maxWidthClass = getMaxWidthClass(maxWidth)
   

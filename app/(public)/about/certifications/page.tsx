@@ -251,12 +251,12 @@ export default function CertificationsPage() {
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span className="text-slate-500">Issued by:</span>
-                          <span className="text-slate-700 font-medium">{cert.issuedBy}</span>
+                          <span className="text-slate-700 font-medium text-end">{cert.issuedBy}</span>
                         </div>
-                        <div className="flex justify-between">
+                        {/* <div className="flex justify-between">
                           <span className="text-slate-500">Validity:</span>
                           <span className="text-slate-700 font-medium">{cert.validity}</span>
-                        </div>
+                        </div> */}
                         <div className="flex justify-between">
                           <span className="text-slate-500">License:</span>
                           <span className="text-slate-700 font-mono text-xs">{cert.licenseNumber}</span>
@@ -333,7 +333,7 @@ export default function CertificationsPage() {
       </section>
 
       {/* Awards & Recognition */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -388,7 +388,7 @@ export default function CertificationsPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact CTA */}
       <section className="py-20 bg-gradient-to-r from-emerald-600 to-blue-600">

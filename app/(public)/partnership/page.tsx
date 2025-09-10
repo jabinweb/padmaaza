@@ -46,11 +46,11 @@ export default function PartnerPage() {
     {
       name: 'Diamond',
       icon: Crown,
-      maxUsers: 3000,
+      maxUsers: 500,
       color: '#3B82F6', // Blue for premium
       bgColor: '#EFF6FF',
       features: [
-        'Maximum 3,000 customers',
+        'Maximum 500 members',
         'Highest commission rates',
         'Premium marketing materials',
         'Direct company support',
@@ -68,7 +68,7 @@ export default function PartnerPage() {
       color: '#F59E0B', // Gold
       bgColor: '#FFFBEB',
       features: [
-        'Maximum 1,500 customers',
+        'Maximum 1,500 members',
         'High commission rates',
         'Standard marketing materials',
         'Regular company support',
@@ -82,11 +82,11 @@ export default function PartnerPage() {
     {
       name: 'Silver',
       icon: Star,
-      maxUsers: 500,
+      maxUsers: 3000,
       color: '#6B7280', // Silver gray
       bgColor: '#F9FAFB',
       features: [
-        'Maximum 500 customers',
+        'Maximum 3,000 members',
         'Standard commission rates',
         'Basic marketing materials',
         'Email support',

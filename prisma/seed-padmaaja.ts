@@ -317,7 +317,7 @@ async function seedPadmaajaRasooi() {
       id: 'padmaaja-system',
       siteName: 'Padmaaja Rasooi',
       siteDescription: 'Authentic Indian Food Products - Preserving Traditional Flavors with Modern Quality Standards',
-      supportEmail: 'srajeev7053@gmail.com',
+      supportEmail: 'info@padmajarice.com',
       minimumPayout: 1000,
       enableReferrals: true,
       enableCommissions: true,

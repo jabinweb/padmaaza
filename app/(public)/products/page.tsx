@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Search } from 'lucide-react'
+import { Search, Loader2 } from 'lucide-react'
 import ProductCard from '@/components/shop/ProductCard'
 import StructuredData from '@/components/StructuredData'
 import { generateProductListJsonLd, generateBreadcrumbJsonLd } from '@/lib/structured-data'
@@ -14,15 +15,23 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
+  const [totalProducts, setTotalProducts] = useState(0)
 
-  const fetchProducts = useCallback(async () => {
+  const fetchProducts = useCallback(async (currentPage = 1, isLoadMore = false) => {
     try {
-      setLoading(true)
+      if (!isLoadMore) {
+        setLoading(true)
+      } else {
+        setLoadingMore(true)
+      }
+      
       const params = new URLSearchParams({
-        page: page.toString(),
+        page: currentPage.toString(),
         limit: '12',
       })
       
@@ -31,18 +40,34 @@ export default function ProductsPage() {
 
       const response = await fetch(`/api/products?${params}`)
       const data = await response.json()
-      setProducts(data.products)
+      
+      if (isLoadMore) {
+        setProducts(prev => [...prev, ...data.products])
+        setHasMore(data.products.length === 12)
+      } else {
+        setProducts(data.products)
+        setHasMore(data.products.length === 12)
+      }
+      
+      setTotalProducts(data.total || 0)
+      
     } catch (error) {
       console.error('Error fetching products:', error)
     } finally {
       setLoading(false)
+      setLoadingMore(false)
     }
-  }, [search, selectedCategory, page])
+  }, [search, selectedCategory])
 
   useEffect(() => {
     fetchCategories()
-    fetchProducts()
+    fetchProducts(1, false)
   }, [fetchProducts])
+
+  useEffect(() => {
+    setPage(1)
+    fetchProducts(1, false)
+  }, [search, selectedCategory, fetchProducts])
 
   const fetchCategories = async () => {
     try {
@@ -54,6 +79,12 @@ export default function ProductsPage() {
     } catch (error) {
       console.error('Error fetching categories:', error)
     }
+  }
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1
+    setPage(nextPage)
+    fetchProducts(nextPage, true)
   }
 
   // Generate structured data
@@ -132,6 +163,28 @@ export default function ProductsPage() {
           <div className="text-center py-12">
             <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
             <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+
+        {/* Load More Button */}
+        {!loading && hasMore && products.length > 0 && (
+          <div className="flex justify-center mt-12">
+            <Button
+              onClick={handleLoadMore}
+              disabled={loadingMore}
+              variant="outline"
+              size="lg"
+              className="px-8 py-3"
+            >
+              {loadingMore ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                'Load More Products'
+              )}
+            </Button>
           </div>
         )}
       </div>

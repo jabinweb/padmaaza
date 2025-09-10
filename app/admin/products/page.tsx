@@ -317,7 +317,7 @@ export default function AdminProductsPage() {
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="overflow-y-auto !h-[600px]">
                 {products.map((product) => (
                   <TableRow key={product.id}>
                     <TableCell>

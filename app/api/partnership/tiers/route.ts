@@ -5,9 +5,9 @@ export async function GET() {
   try {
     // Define tier limits
     const tierLimits = {
-      Diamond: 100,  // Maximum 100 Diamond partners
-      Gold: 500,     // Maximum 500 Gold partners
-      Silver: 1000   // Maximum 1000 Silver partners
+      Diamond: 500,  // Maximum 500 Diamond partners
+      Gold: 1500,     // Maximum 1500 Gold partners
+      Silver: 3000   // Maximum 3000 Silver partners
     }
 
     // Count current partners for each tier

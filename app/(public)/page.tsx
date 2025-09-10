@@ -74,7 +74,7 @@ export default async function Home() {
         <LazyStatsSection />
 
         {/* Our Reach Section */}
-        <section className="py-12 lg:py-16 bg-gradient-to-br from-amber-50 to-yellow-50">
+        {/* <section className="py-12 lg:py-16 bg-gradient-to-br from-amber-50 to-yellow-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <Badge variant="secondary" className="bg-amber-100 text-amber-800 px-4 py-2 text-sm font-medium mb-4">Our Reach</Badge>
@@ -87,7 +87,6 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {/* Amazon */}
               <div className="group">
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-orange-200 group-hover:-translate-y-1">
                   <div className="w-24 h-24 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
@@ -108,7 +107,6 @@ export default async function Home() {
                 </div>
               </div>
 
-              {/* Zepto */}
               <div className="group">
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-purple-200 group-hover:-translate-y-1">
                   <div className="w-24 h-24 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
@@ -129,7 +127,6 @@ export default async function Home() {
                 </div>
               </div>
 
-              {/* Blinkit */}
               <div className="group">
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border border-gray-100 group-hover:border-emerald-200 group-hover:-translate-y-1">
                   <div className="w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-all duration-300">
@@ -155,7 +152,7 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Our Products Section */}
         {/* <section className="py-8 py-10 lg:py-20 bg-white">
@@ -176,7 +173,7 @@ export default async function Home() {
         <LazyCertificationsSection />
 
         {/* Sustainability Section */}
-        <LazySustainabilitySection />
+        {/* <LazySustainabilitySection /> */}
 
         {/* News & Updates Section */}
         {/* <LazyNewsSection /> */}

@@ -257,7 +257,7 @@ model SystemSettings {
   id                String   @id @default(cuid())
   siteName          String   @default("Padmaaja Rasooi")
   siteDescription   String   @default("Premium quality rice products and grains. Experience the finest rice sourced directly from local farmers.")
-  supportEmail      String   @default("srajeev7053@gmail.com")
+  supportEmail      String   @default("info@padmajarice.com")
   minimumPayout     Float    @default(1000)
   enableReferrals   Boolean  @default(true)
   enableCommissions Boolean  @default(true)

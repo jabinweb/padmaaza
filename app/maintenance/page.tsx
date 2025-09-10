@@ -65,8 +65,8 @@ export default function MaintenancePage() {
           </div>
           <p className="text-sm text-gray-500">
             For urgent matters, contact us at{' '}
-            <a href="mailto:srajeev7053@gmail.com" className="text-blue-600 hover:underline">
-              srajeev7053@gmail.com
+            <a href="mailto:info@padmajarice.com" className="text-blue-600 hover:underline">
+              info@padmajarice.com
             </a>
           </p>
         </CardContent>

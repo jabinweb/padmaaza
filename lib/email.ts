@@ -240,7 +240,7 @@ class EmailServiceClass {
     `
 
     return await this.sendEmail({
-      to: process.env.ADMIN_EMAIL || 'srajeev7053@gmail.com',
+      to: process.env.ADMIN_EMAIL || 'info@padmajarice.com',
       subject: `New Partner Application - ${data.partnershipTier} Tier`,
       html
     })
@@ -290,7 +290,7 @@ class EmailServiceClass {
               <li>You must add at least <strong>3 members</strong> to maintain your partnership</li>
               <li>You'll earn commissions on all purchases made by your referrals</li>
               <li>Please change your password after first login for security</li>
-              <li>Contact support for any questions: ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'}</li>
+              <li>Contact support for any questions: ${process.env.SUPPORT_EMAIL || 'info@padmajarice.com'}</li>
             </ul>
           </div>
           
@@ -344,7 +344,7 @@ class EmailServiceClass {
     `
 
     return await this.sendEmail({
-      to: process.env.ADMIN_EMAIL || 'srajeev7053@gmail.com',
+      to: process.env.ADMIN_EMAIL || 'info@padmajarice.com',
       subject: `New Member Added by Partner: ${partner.name}`,
       html
     })
@@ -398,7 +398,7 @@ class EmailServiceClass {
           </div>
           
           <p><strong>Important:</strong> Please change your password after first login for security.</p>
-          <p>If you have any questions, contact us at ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'}</p>
+          <p>If you have any questions, contact us at ${process.env.SUPPORT_EMAIL || 'info@padmajarice.com'}</p>
           
           <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
             <p>Best regards,<br>The Padmaaja Rasooi Team</p>
@@ -474,7 +474,7 @@ class EmailServiceClass {
           </div>
           
           <p>Our team will contact you within 24 hours to assist with your first order and answer any questions.</p>
-          <p>For immediate assistance, contact us at ${process.env.SUPPORT_EMAIL || 'srajeev7053@gmail.com'} or call our wholesaler hotline.</p>
+          <p>For immediate assistance, contact us at ${process.env.SUPPORT_EMAIL || 'info@padmajarice.com'} or call our wholesaler hotline.</p>
           
           <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #666;">
             <p>Best regards,<br>The Padmaaja Rasooi Wholesale Team</p>

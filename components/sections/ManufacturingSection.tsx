@@ -23,7 +23,7 @@ export default function ManufacturingSection() {
             icon: Factory,
             title: "Advanced Rice Milling",
             description: "Modern rice milling facility with precision technology for perfect grain separation and quality",
-            value: "200+ MT/Day",
+            value: "100+ MT/Day",
             label: "Rice Processing"
         },
         {
@@ -113,7 +113,7 @@ export default function ManufacturingSection() {
                                     className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                                 >
                                     <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                                    Watch Rice Processing Video
+                                    Watch Video
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">

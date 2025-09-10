@@ -49,7 +49,7 @@ export default function OurValues() {
             Our Rice Values
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-            The Padmaaja Rice Promise
+            The Quality if Kashhmna Premium
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">
             Our dedication to rice excellence is built on four core principles that ensure every grain of Basmati and Sella rice meets the highest standards.
