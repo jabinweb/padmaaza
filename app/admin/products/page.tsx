@@ -27,9 +27,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
-import { Search, Plus, Edit, Trash2, MoreHorizontal, Download, Save } from 'lucide-react'
+import CsvImport from '@/components/ui/csv-import'
+import CsvExport from '@/components/ui/csv-export'
+import { Search, Plus, Edit, Trash2, MoreHorizontal, Download, Save, Upload } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -234,12 +235,105 @@ export default function AdminProductsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Products</h1>
           <p className="text-gray-600">Manage your product catalog</p>
         </div>
-        <Button asChild>
-          <Link href="/admin/products/new">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Product
-          </Link>
-        </Button>
+        <div className="flex items-center space-x-2">
+          <CsvExport
+            title="Export Products"
+            description="Export products to a CSV file. Select the columns you want to include."
+            columns={[
+              { key: 'name', label: 'Name' },
+              { key: 'description', label: 'Description' },
+              { key: 'price', label: 'Price' },
+              { key: 'category.name', label: 'Category' },
+              { key: 'stock', label: 'Stock' },
+              { key: 'active', label: 'Status' },
+              { key: 'createdAt', label: 'Created At' }
+            ]}
+            onExport={async (selectedColumns, filters, onProgress) => {
+              try {
+                const response = await fetch('/api/admin/products/export', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ 
+                    columns: selectedColumns,
+                    filters 
+                  }),
+                })
+
+                if (!response.ok) {
+                  throw new Error('Export failed')
+                }
+
+                const result = await response.json()
+                return {
+                  success: true,
+                  data: result.data || products,
+                  message: 'Export completed successfully'
+                }
+              } catch (error) {
+                return {
+                  success: false,
+                  message: error instanceof Error ? error.message : 'Export failed',
+                }
+              }
+            }}
+          >
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </CsvExport>
+          
+          <CsvImport
+            title="Import Products"
+            description="Import products from a CSV file. Download the template to see the required format."
+            templateColumns={[
+              { key: 'name', label: 'Name', required: true },
+              { key: 'description', label: 'Description', required: true },
+              { key: 'price', label: 'Price', required: true },
+              { key: 'categoryId', label: 'Category ID', required: true },
+              { key: 'stock', label: 'Stock', required: false },
+              { key: 'active', label: 'Active', required: false }
+            ]}
+            onImport={async (data, onProgress) => {
+              try {
+                const response = await fetch('/api/admin/products/import', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ data }),
+                })
+
+                if (!response.ok) {
+                  throw new Error('Import failed')
+                }
+
+                const result = await response.json()
+                fetchProducts() // Refresh the products list
+                return result
+              } catch (error) {
+                return {
+                  success: false,
+                  message: error instanceof Error ? error.message : 'Import failed',
+                }
+              }
+            }}
+          >
+            <Button variant="outline" size="sm">
+              <Upload className="h-4 w-4 mr-2" />
+              Import
+            </Button>
+          </CsvImport>
+          
+          <Button asChild>
+            <Link href="/admin/products/new">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Product
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <Card>
@@ -295,123 +389,129 @@ export default function AdminProductsPage() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {loading ? (
             <div className="text-center py-8">Loading...</div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12">
-                    <Checkbox
-                      checked={selectedProducts.length === products.length && products.length > 0}
-                      onCheckedChange={handleSelectAll}
-                    />
-                  </TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>SKU</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Stock</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="overflow-y-auto !h-[600px]">
-                {products.map((product) => (
-                  <TableRow key={product.id}>
-                    <TableCell>
+            <div className="border rounded-lg">
+              <Table>
+                <TableHeader className="sticky top-0 bg-white z-10">
+                  <TableRow>
+                    <TableHead className="w-12">
                       <Checkbox
-                        checked={selectedProducts.includes(product.id)}
-                        onCheckedChange={(checked) => handleSelectProduct(product.id, !!checked)}
+                        checked={selectedProducts.length === products.length && products.length > 0}
+                        onCheckedChange={handleSelectAll}
                       />
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-3">
-                        <Image
-                          src={product.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
-                          alt={product.name}
-                          width={40}
-                          height={40}
-                          className="rounded-lg object-cover"
-                        />
-                        <div>
-                          <p className="font-medium">{product.name}</p>
-                          {product.discount > 0 && (
-                            <Badge variant="secondary" className="text-xs">
-                              {product.discount}% OFF
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">{product.sku}</TableCell>
-                    <TableCell>{product.category.name}</TableCell>
-                    <TableCell>
-                      <div>
-                        {product.discount > 0 ? (
-                          <>
-                            <span className="font-bold text-green-600">
-                              ₹{(product.price - (product.price * product.discount / 100)).toFixed(2)}
-                            </span>
-                            <span className="text-sm text-gray-500 line-through ml-2">
-                              ₹{product.price.toFixed(2)}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="font-bold">₹{product.price.toFixed(2)}</span>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={product.stock > 10 ? 'default' : product.stock > 0 ? 'secondary' : 'destructive'}>
-                        {product.stock}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={product.isActive ? 'default' : 'secondary'}>
-                        {product.isActive ? 'Active' : 'Inactive'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          onClick={() => handleQuickEdit(product)}
-                          className="h-8 px-2"
-                        >
-                          <Edit className="h-3 w-3 mr-1" />
-                          Quick Edit
-                        </Button>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                              <Link href={`/admin/products/${product.id}/edit`}>
-                                <Edit className="h-4 w-4 mr-2" />
-                                Full Edit
-                              </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => handleDeleteProduct(product.id)}
-                              className="text-red-600"
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </TableCell>
+                    </TableHead>
+                    <TableHead>Product</TableHead>
+                    <TableHead>SKU</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Stock</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+              </Table>
+              <div className="max-h-[55vh] overflow-y-auto">
+                <Table>
+                  <TableBody>
+                    {products.map((product) => (
+                      <TableRow key={product.id}>
+                        <TableCell className="w-12">
+                          <Checkbox
+                            checked={selectedProducts.includes(product.id)}
+                            onCheckedChange={(checked) => handleSelectProduct(product.id, !!checked)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-3">
+                            <Image
+                              src={product.images[0] || 'https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg'}
+                              alt={product.name}
+                              width={40}
+                              height={40}
+                              className="rounded-lg object-cover"
+                            />
+                            <div>
+                              <p className="font-medium">{product.name}</p>
+                              {product.discount > 0 && (
+                                <Badge variant="secondary" className="text-xs">
+                                  {product.discount}% OFF
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-mono text-sm">{product.sku}</TableCell>
+                        <TableCell>{product.category.name}</TableCell>
+                        <TableCell>
+                          <div>
+                            {product.discount > 0 ? (
+                              <>
+                                <span className="font-bold text-green-600">
+                                  ₹{(product.price - (product.price * product.discount / 100)).toFixed(2)}
+                                </span>
+                                <span className="text-sm text-gray-500 line-through ml-2">
+                                  ₹{product.price.toFixed(2)}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="font-bold">₹{product.price.toFixed(2)}</span>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={product.stock > 10 ? 'default' : product.stock > 0 ? 'secondary' : 'destructive'}>
+                            {product.stock}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={product.isActive ? 'default' : 'secondary'}>
+                            {product.isActive ? 'Active' : 'Inactive'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center space-x-2">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => handleQuickEdit(product)}
+                              className="h-8 px-2"
+                            >
+                              <Edit className="h-3 w-3 mr-1" />
+                              Quick Edit
+                            </Button>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem asChild>
+                                  <Link href={`/admin/products/${product.id}/edit`}>
+                                    <Edit className="h-4 w-4 mr-2" />
+                                    Full Edit
+                                  </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() => handleDeleteProduct(product.id)}
+                                  className="text-red-600"
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>
