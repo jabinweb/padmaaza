@@ -179,7 +179,7 @@ export default function HeroSection() {
                 <div className="absolute inset-0 z-20 flex items-center">
                   <div className="max-w-lg px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 w-full">
                     {/* Semi-transparent background for text */}
-                    <div className="bg-black/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8">
+                    {/* <div className="bg-black/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -203,7 +203,7 @@ export default function HeroSection() {
                           </Button>
                         </div>
                       </motion.div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </motion.div>
