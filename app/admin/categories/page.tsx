@@ -24,6 +24,7 @@ import { Search, Plus, Edit, Trash2, MoreHorizontal, Download } from 'lucide-rea
 import { toast } from 'sonner'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CategoryFormDialog } from '@/components/admin/CategoryFormDialog'
 
 interface Category {
   id: string
@@ -135,12 +136,7 @@ export default function AdminCategoriesPage() {
           <h1 className="text-3xl font-bold text-gray-900">Categories</h1>
           <p className="text-gray-600">Manage your product categories</p>
         </div>
-        <Button asChild>
-          <Link href="/admin/categories/new">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Category
-          </Link>
-        </Button>
+        <CategoryFormDialog onSuccess={fetchCategories} />
       </div>
 
       <Card>
@@ -272,12 +268,17 @@ export default function AdminCategoriesPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
-                            <Link href={`/admin/categories/${category.id}/edit`}>
-                              <Edit className="h-4 w-4 mr-2" />
-                              Edit
-                            </Link>
-                          </DropdownMenuItem>
+                          <CategoryFormDialog 
+                            category={category}
+                            mode="edit"
+                            onSuccess={fetchCategories}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Edit className="h-4 w-4 mr-2" />
+                                Edit
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuItem
                             onClick={() => handleDeleteCategory(category.id)}
                             className="text-red-600"

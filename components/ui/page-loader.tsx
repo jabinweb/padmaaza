@@ -75,9 +75,6 @@ export default function PageLoader({ onLoadingComplete, duration = 800 }: PageLo
               transition={{ duration: 0.1 }}
             />
           </div>
-          <p className="text-sm text-white/80 font-medium text-center drop-shadow">
-            {Math.round(progress)}% Complete
-          </p>
         </motion.div>
       </div>
     </motion.div>

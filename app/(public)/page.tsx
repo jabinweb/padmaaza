@@ -176,7 +176,7 @@ export default async function Home() {
         {/* <LazySustainabilitySection /> */}
 
         {/* News & Updates Section */}
-        {/* <LazyNewsSection /> */}
+        <LazyNewsSection />
 
         {/* Our Values Section */}
           <LazyOurValues />

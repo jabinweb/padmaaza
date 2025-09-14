@@ -14,8 +14,8 @@ interface Banner {
   description: string
   image: string
   cta: string
-  ctaLink: string
-  bgColor: string
+  ctaLink?: string
+  bgColor?: string
 }
 
 interface FeatureCard {
@@ -41,16 +41,6 @@ export default function HeroSection() {
       ctaLink: "/products?category=rice",
       bgColor: "from-amber-600 via-yellow-600 to-orange-700"
     },
-    // {
-    //   id: 2,
-    //   title: "Golden Sella Rice Collection",
-    //   subtitle: "Steam Processed • Premium Quality",
-    //   description: "Traditional parboiled rice with golden color, enhanced nutrition, and perfect grain separation for authentic dishes",
-    //   image: "/rice_bags.png",
-    //   cta: "Shop Sella Rice",
-    //   ctaLink: "/products?category=sella",
-    //   bgColor: "from-yellow-500 via-amber-600 to-orange-600"
-    // },
     {
       id: 3,
       title: "Kashmina Brand Collection",
@@ -60,6 +50,24 @@ export default function HeroSection() {
       cta: "Shop Kashmina",
       ctaLink: "/products?brand=kashmina",
       bgColor: "from-emerald-600 via-green-600 to-yellow-600"
+    },
+    {
+      id: 4,
+      title: "Wholesale Rice Supplies",
+      subtitle: "Bulk Orders • Competitive Rates",
+      description: "Reliable wholesale rice supplier offering bulk quantities of premium Basmati and Sella rice for businesses and retailers",
+      image: "https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/women-carrying-rice",
+      cta: "Shop Wholesale",
+      ctaLink: "/wholesaler",
+      bgColor: "from-orange-600 via-red-600 to-amber-600"
+    },
+    {
+      id: 5,
+      title: "Indian Frmer Plowing",
+      subtitle: "Traditional Farming • Heritage Grain",
+      description: "Experience the rich heritage of rice cultivation with traditional farming methods passed down through generations.",
+      image: "https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/media/2025-09-07/indian-farmer-plowing",
+      cta: "Learn More",
     }
   ], [])
 
@@ -143,7 +151,7 @@ export default function HeroSection() {
                 className="absolute inset-0 isolate"
               >
                 {/* Background Color Fallback */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${banners[currentSlide].bgColor} z-0`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${banners[currentSlide].bgColor ?? 'from-amber-600 via-yellow-600 to-orange-700'} z-0`}></div>
                 
                 <Image
                   src={banners[currentSlide].image}
@@ -197,7 +205,7 @@ export default function HeroSection() {
                         </p>
                         <div className="pt-3 sm:pt-4">
                           <Button asChild size="default" className="bg-white text-gray-900 hover:bg-gray-100 text-sm sm:text-base font-medium px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-lg shadow-lg">
-                            <Link href={banners[currentSlide].ctaLink}>
+                            <Link href={banners[currentSlide].ctaLink ?? '/'}>
                               {banners[currentSlide].cta}
                             </Link>
                           </Button>
@@ -287,7 +295,7 @@ export default function HeroSection() {
       </div>
 
       {/* Secondary Strip - Repositioned and Mobile Optimized */}
-      <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 text-white py-4 sm:py-5 md:py-6 mt-4 sm:mt-6">
+      {/* <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 text-white py-4 sm:py-5 md:py-6 mt-4 sm:mt-6">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
             <div className="flex-1 max-w-4xl">
@@ -301,7 +309,7 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

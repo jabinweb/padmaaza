@@ -47,6 +47,7 @@ interface ProductFormProps {
 export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [categoriesLoading, setCategoriesLoading] = useState(true)
   const [categories, setCategories] = useState<Category[]>([])
   const [imageUrl, setImageUrl] = useState('')
   const [formData, setFormData] = useState<Product>({
@@ -69,11 +70,16 @@ export function ProductForm({ product }: ProductFormProps) {
 
   const fetchCategories = async () => {
     try {
+      setCategoriesLoading(true)
       const response = await fetch('/api/categories')
       const data = await response.json()
-      setCategories(data)
+      // Handle the new API response structure
+      setCategories(data.categories || [])
     } catch (error) {
       console.error('Error fetching categories:', error)
+      setCategories([]) // Fallback to empty array
+    } finally {
+      setCategoriesLoading(false)
     }
   }
 
@@ -195,14 +201,20 @@ export function ProductForm({ product }: ProductFormProps) {
                   <Label htmlFor="category">Category</Label>
                   <Select value={formData.categoryId} onValueChange={(value) => handleInputChange('categoryId', value)}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
+                      <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select category"} />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
+                      {categoriesLoading ? (
+                        <SelectItem value="" disabled>Loading...</SelectItem>
+                      ) : categories.length > 0 ? (
+                        categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="" disabled>No categories available</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
