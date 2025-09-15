@@ -137,6 +137,9 @@ export default function HeroSection() {
           
           {/* Main Banner Slider - Left Side (3/4 width) - Better mobile aspect ratio */}
           <div className="lg:col-span-3 relative overflow-hidden rounded-lg shadow-lg aspect-[16/10] md:aspect-video isolate">
+            {/* Skeleton Loader for CLS prevention */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse z-0" />
+            
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}

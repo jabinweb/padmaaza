@@ -4,11 +4,19 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
+  // Performance optimizations
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
   images: { 
     unoptimized: false, // Enable image optimization
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1 year cache
     domains: ['images.unsplash.com', '4m5m4tx28rtva30c.public.blob.vercel-storage.com'],
     remotePatterns: [
       {
@@ -34,14 +42,39 @@ const nextConfig = {
       'lodash',
       '@radix-ui/react-dialog',
       '@radix-ui/react-select',
-      '@radix-ui/react-tooltip'
+      '@radix-ui/react-tooltip',
+      'react-hook-form',
+      '@hookform/resolvers'
     ],
     optimizeCss: true,
+    webpackBuildWorker: true,
     turbo: {
       rules: {
         '*.svg': ['@svgr/webpack'],
       }
     }
+  },
+  
+  // Bundle optimization
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: 10,
+          chunks: 'all',
+        },
+        common: {
+          minChunks: 2,
+          priority: 5,
+          reuseExistingChunk: true,
+          chunks: 'all',
+        },
+      }
+    }
+    return config
   },
   serverExternalPackages: ['@prisma/client'],
   turbopack: {
