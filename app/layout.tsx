@@ -157,7 +157,17 @@ export default async function PublicRootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="//images.unsplash.com" />
+        <link rel="dns-prefetch" href="//4m5m4tx28rtva30c.public.blob.vercel-storage.com" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        
+        {/* Preconnect to critical resources */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://4m5m4tx28rtva30c.public.blob.vercel-storage.com" crossOrigin="anonymous" />
+        
+        {/* Favicon and app icons */}
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />

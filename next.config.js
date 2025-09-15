@@ -5,14 +5,43 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: { 
-    unoptimized: true,
+    unoptimized: false, // Enable image optimization
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: ['images.unsplash.com', '4m5m4tx28rtva30c.public.blob.vercel-storage.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https', 
+        hostname: '4m5m4tx28rtva30c.public.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.indiagatefoods.com',
+      }
+    ]
   },
   experimental: {
-    optimizePackageImports: ['@radix-ui/react-icons', 'lucide-react', 'framer-motion', 'date-fns', 'lodash'],
+    optimizePackageImports: [
+      '@radix-ui/react-icons', 
+      'lucide-react', 
+      'framer-motion', 
+      'date-fns', 
+      'lodash',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-select',
+      '@radix-ui/react-tooltip'
+    ],
     optimizeCss: true,
+    turbo: {
+      rules: {
+        '*.svg': ['@svgr/webpack'],
+      }
+    }
   },
   serverExternalPackages: ['@prisma/client'],
   turbopack: {

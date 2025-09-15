@@ -80,28 +80,24 @@ export default function HeroSection() {
     {
       title: "Kashmina Sella Premium",
       subtitle: "Extra long grain",
-      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=400&fit=crop&q=80",
       link: "/products?brand=basmati-1121",
       bgColor: "from-amber-500 to-yellow-600"
     },
     {
       title: "Kashmina Gold Premium",
       subtitle: "Steam processed",
-      image: "https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?w=600&h=400&fit=crop&q=80",
       link: "/products?category=sella",
       bgColor: "from-yellow-500 to-amber-600"
     },
     {
       title: "Kashmina Steam Premium",
       subtitle: "Traditional quality",
-      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=400&fit=crop&q=80",
       link: "/products?brand=kashmina",
       bgColor: "from-emerald-500 to-green-600"
     },
     {
       title: "Wholesale",
       subtitle: "Wholesale rates",
-      image: "https://images.unsplash.com/photo-1594736797933-d0d6483cae4d?w=600&h=400&fit=crop&q=80",
       link: "/wholesaler",
       bgColor: "from-orange-500 to-red-600"
     }
@@ -158,8 +154,11 @@ export default function HeroSection() {
                   alt={banners[currentSlide].title}
                   fill
                   className="object-cover z-10"
-                  priority
+                  priority={currentSlide === 0} // Only prioritize first image
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 75vw"
+                  quality={85} // Optimize quality vs file size
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   onLoadStart={() => setImageLoading(true)}
                   onError={(e) => {
                     console.error('Image failed to load:', banners[currentSlide].image);
