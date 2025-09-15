@@ -241,13 +241,14 @@ export default async function PublicRootLayout({
           </Providers>
         </div>
         
-        {/* PWA Cache Manager and Update Notification */}
+        {/* PWA Cache Manager and Update Notification - Deferred for mobile performance */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Enhanced Service Worker Registration with Cache Management
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
+              // Deferred Service Worker Registration for mobile performance
+              if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                // Use requestIdleCallback to register SW when main thread is idle
+                requestIdleCallback(function() {
                   navigator.serviceWorker.register('/sw.js', {
                     scope: '/',
                     updateViaCache: 'none'
@@ -255,10 +256,11 @@ export default async function PublicRootLayout({
                   .then(function(registration) {
                     console.log('SW registered: ', registration);
                     
-                    // Check for updates every 30 seconds
-                    setInterval(() => {
-                      registration.update();
-                    }, 30000);
+                    // Check for updates less frequently on mobile
+                    const isMobile = window.innerWidth <= 768;
+                    if (!isMobile) {
+                      setInterval(() => registration.update(), 30000);
+                    }
                     
                     // Listen for updates
                     registration.addEventListener('updatefound', () => {
@@ -266,8 +268,10 @@ export default async function PublicRootLayout({
                       if (newWorker) {
                         newWorker.addEventListener('statechange', () => {
                           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New version available - force reload
-                            if (confirm('New version available! Refresh to update?')) {
+                            // New version available - show less intrusive notification on mobile
+                            if (isMobile) {
+                              console.log('New version available - will update on next visit');
+                            } else if (confirm('New version available! Refresh to update?')) {
                               window.location.reload();
                             }
                           }
@@ -279,35 +283,38 @@ export default async function PublicRootLayout({
                     console.log('SW registration failed: ', registrationError);
                   });
                 });
-                
-                // Handle service worker messages
-                navigator.serviceWorker.addEventListener('message', event => {
-                  if (event.data && event.data.type === 'SW_UPDATED') {
-                    console.log('Service Worker updated, forcing reload...');
-                    window.location.reload();
-                  }
+              } else if ('serviceWorker' in navigator) {
+                // Fallback for browsers without requestIdleCallback
+                window.addEventListener('load', function() {
+                  setTimeout(() => {
+                    navigator.serviceWorker.register('/sw.js', {
+                      scope: '/',
+                      updateViaCache: 'none'
+                    });
+                  }, 2000); // Delay registration on mobile
                 });
               }
               
               // Development cache bypass
               if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                // Disable cache in development
                 if ('caches' in window) {
                   caches.keys().then(names => {
-                    names.forEach(name => {
-                      caches.delete(name);
-                    });
+                    names.forEach(name => caches.delete(name));
                   });
                 }
               }
               
-              // Simple component preloading for bundle optimization
-              setTimeout(() => {
-                if (typeof window !== 'undefined') {
-                  import('/components/ProductCard').catch(() => {});
-                  import('/components/FloatingWhatsApp').catch(() => {});
-                }
-              }, 2000);
+              // Deferred component preloading with mobile detection
+              if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => {
+                  const isMobile = window.innerWidth <= 768;
+                  if (!isMobile) {
+                    // Only preload on desktop to save mobile bandwidth/processing
+                    import('/components/ProductCard').catch(() => {});
+                    import('/components/FloatingWhatsApp').catch(() => {});
+                  }
+                }, { timeout: 5000 });
+              }
             `,
           }}
         />

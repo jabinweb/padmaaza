@@ -137,7 +137,7 @@ export default function PageHero({
   const isCenter = getAlignment() === 'center'
   
   return (
-    <section className="relative pt-28 pb-16 overflow-hidden min-h-[30vh] flex items-center">
+    <section className="relative pt-32 pb-12 overflow-hidden min-h-[30vh] flex items-center">
       {/* Background Gradient - Standardized */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-emerald-600/10" />
       

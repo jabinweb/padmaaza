@@ -35,7 +35,8 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   const navItems = [
-    { name: 'Home', href: '/' },
+    // { name: 'Home', href: '/' },
+    { name: 'Recipes', href: '/recipes' },
     // { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ]
@@ -108,12 +109,20 @@ export function Header() {
     setActiveDropdown(null)
   }
 
+  const handleMobileMenuClick = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  const handleMobileLinkClick = () => {
+    setMobileMenuOpen(false)
+  }
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 flex items-center">
+          <Link href="/" className="flex-shrink-0 flex items-center z-10">
             <div className="flex items-center space-x-3">
               <Image
                 src="/kashmina-logo.png"
@@ -140,7 +149,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200"
+                className="text-base font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200"
               >
                 {item.name}
               </Link>
@@ -155,7 +164,7 @@ export function Header() {
                 onMouseLeave={handleMouseLeave}
               >
                 <button
-                  className={`flex items-center space-x-1 text-sm font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200 ${
+                  className={`flex items-center space-x-1 text-base font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200 ${
                     activeDropdown === key ? 'text-emerald-600' : ''
                   }`}
                 >
@@ -181,8 +190,8 @@ export function Header() {
               {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar className="h-8 w-8">
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                      <Avatar className="h-10 w-10">
                         <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
                         <AvatarFallback>
                           {session.user.name?.[0] || session.user.email?.[0] || 'U'}
@@ -229,10 +238,10 @@ export function Header() {
                 </DropdownMenu>
               ) : (
                 <div className="flex items-center space-x-2">
-                  <Button variant="ghost" asChild>
+                  <Button variant="ghost" className="h-10 px-4 py-2 text-base font-medium" asChild>
                     <Link href="/auth/signin">Sign In</Link>
                   </Button>
-                  <Button asChild>
+                  <Button className="h-10 px-4 py-2 text-base font-medium" asChild>
                     <Link href="/auth/signup">Sign Up</Link>
                   </Button>
                 </div>
@@ -243,10 +252,11 @@ export function Header() {
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors duration-200"
+              onClick={handleMobileMenuClick}
+              className="p-4 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors duration-200 touch-manipulation min-w-[48px] min-h-[48px] flex items-center justify-center"
+              aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
@@ -260,7 +270,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden border-t bg-white border-slate-200 shadow-lg"
+            className="lg:hidden border-t bg-white border-slate-200 shadow-lg relative z-50"
           >
             <div className="px-4 py-6 space-y-6 max-h-[80vh] overflow-y-auto">
               {/* Regular Nav Items */}
@@ -268,8 +278,8 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-base font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
+                  className="mobile-nav-item block text-lg font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-200 py-3 px-2 rounded-lg hover:bg-slate-50 touch-manipulation"
+                  onClick={handleMobileLinkClick}
                 >
                   {item.name}
                 </Link>
@@ -278,7 +288,7 @@ export function Header() {
               {/* Mobile Mega Menu Items */}
               {Object.entries(megaMenus).map(([key, menu]) => (
                 <div key={key} className="space-y-3">
-                  <h3 className="font-semibold text-slate-800 text-base sm:text-lg">{menu.title}</h3>
+                  <h3 className="font-semibold text-slate-800 text-lg sm:text-xl">{menu.title}</h3>
                   
                   {menu.type === 'categories' ? (
                     // Products with Categories - Mobile Responsive
@@ -287,7 +297,7 @@ export function Header() {
                         const IconComponent = category.icon
                         return (
                           <div key={idx} className="space-y-2">
-                            <div className="flex items-center space-x-2 text-emerald-600 font-medium text-sm sm:text-base">
+                            <div className="flex items-center space-x-2 text-emerald-600 font-medium text-base sm:text-lg">
                               <IconComponent className="w-4 h-4 flex-shrink-0" />
                               <span>{category.name}</span>
                             </div>
@@ -296,11 +306,11 @@ export function Header() {
                                 <Link
                                   key={itemIdx}
                                   href={item.href}
-                                  className="block text-sm text-slate-600 hover:text-emerald-600 transition-colors duration-200 py-1"
-                                  onClick={() => setMobileMenuOpen(false)}
+                                  className="mobile-nav-item block text-base text-slate-600 hover:text-emerald-600 hover:bg-slate-50 transition-colors duration-200 py-2 px-2 rounded-md touch-manipulation"
+                                  onClick={handleMobileLinkClick}
                                 >
                                   <div className="font-medium">{item.name}</div>
-                                  <div className="text-xs text-slate-500">{item.description}</div>
+                                  <div className="text-xs text-slate-500 mt-0.5">{item.description}</div>
                                 </Link>
                               ))}
                             </div>
@@ -313,8 +323,8 @@ export function Header() {
               ))}
 
               {/* Mobile CTA */}
-              <Link href="/contact#quote" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl px-4 py-3 mt-6 font-medium">
+              <Link href="/contact#quote" onClick={handleMobileLinkClick}>
+                <Button className="w-full bg-emerald-600 text-white hover:bg-emerald-700 rounded-xl px-6 py-4 mt-6 font-medium text-lg touch-manipulation">
                   Get a Quote
                 </Button>
               </Link>

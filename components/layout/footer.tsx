@@ -90,11 +90,11 @@ export function Footer() {
         </div>
 
         {/* Social Media & Newsletter */}
-        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-800">
-          <div className="flex flex-col space-y-4 sm:space-y-6 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center">
+        {/* <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-800">
+          <div className="flex flex-col space-y-4 sm:space-y-6 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center"> */}
             
             {/* Social Media */}
-            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6">
+            {/* <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6">
               <span className="text-sm font-medium text-gray-400">Follow Us:</span>
               <div className="flex space-x-4">
                 <Link href="#" className="text-gray-400 hover:text-orange-400 transition-colors">
@@ -107,10 +107,10 @@ export function Footer() {
                   <Instagram className="h-5 w-5 sm:h-6 sm:w-6" />
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             {/* Newsletter Signup */}
-            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            {/* <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
               <span className="text-sm font-medium text-gray-400">Stay Updated:</span>
               <div className="flex w-full sm:w-auto">
                 <input 
@@ -122,9 +122,9 @@ export function Footer() {
                   Subscribe
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
+            </div> */}
+          {/* </div>
+        </div> */}
       </div>
 
       {/* Bottom Bar */}
@@ -135,7 +135,7 @@ export function Footer() {
               <p>&copy; 2024 Padmaaja. All rights reserved.</p>
             </div>
             <div>
-              <p>Crafted with ❤️ for authentic Indian taste</p>
+              <p>Crafted with ❤️ by <Link href='https://web.jabin.org' target='_blank'>Jabin Web</Link></p>
             </div>
           </div>
         </div>

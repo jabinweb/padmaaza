@@ -127,7 +127,7 @@ export default function KashminaSection() {
                 </div>
 
                 {/* Enhanced Product Showcase */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center mb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
                     {/* Enhanced Product Image */}
                     <div className="relative order-2 lg:order-1">
                         <div className="relative p-12">

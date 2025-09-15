@@ -57,41 +57,12 @@ const nextConfig = {
   
   // Bundle optimization
   webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.splitChunks.cacheGroups = {
-        ...config.optimization.splitChunks.cacheGroups,
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: 10,
-          chunks: 'all',
-        },
-        common: {
-          minChunks: 2,
-          priority: 5,
-          reuseExistingChunk: true,
-          chunks: 'all',
-        },
-      }
-    }
-    return config
-  },
-  serverExternalPackages: ['@prisma/client'],
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
-  webpack: (config, { dev, isServer }) => {
-    // Optimize bundle splitting
+    // Optimize bundle splitting for production only
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
         minSize: 20000,
-        maxSize: 244000,
+        maxSize: 200000, // Reduced from 244000 for better mobile performance
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
@@ -131,9 +102,13 @@ const nextConfig = {
         },
       }
       
-      // Tree shaking optimization
+      // Enhanced tree shaking optimization
       config.optimization.usedExports = true
       config.optimization.sideEffects = false
+      
+      // Reduce bundle parse time for mobile
+      config.optimization.providedExports = true
+      config.optimization.innerGraph = true
     }
     
     // Optimize module resolution
@@ -143,6 +118,17 @@ const nextConfig = {
     }
     
     return config
+  },
+  serverExternalPackages: ['@prisma/client'],
+  
+  // Turbopack configuration for SVG handling
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
   },
   compress: true,
   poweredByHeader: false,

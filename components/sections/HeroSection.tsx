@@ -29,6 +29,8 @@ interface FeatureCard {
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [imageLoading, setImageLoading] = useState(true)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   const banners: Banner[] = useMemo(() => [
     {
@@ -51,16 +53,16 @@ export default function HeroSection() {
       ctaLink: "/products?brand=kashmina",
       bgColor: "from-emerald-600 via-green-600 to-yellow-600"
     },
-    {
-      id: 4,
-      title: "Wholesale Rice Supplies",
-      subtitle: "Bulk Orders • Competitive Rates",
-      description: "Reliable wholesale rice supplier offering bulk quantities of premium Basmati and Sella rice for businesses and retailers",
-      image: "https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/women-carrying-rice",
-      cta: "Shop Wholesale",
-      ctaLink: "/wholesaler",
-      bgColor: "from-orange-600 via-red-600 to-amber-600"
-    },
+    // {
+    //   id: 4,
+    //   title: "Wholesale Rice Supplies",
+    //   subtitle: "Bulk Orders • Competitive Rates",
+    //   description: "Reliable wholesale rice supplier offering bulk quantities of premium Basmati and Sella rice for businesses and retailers",
+    //   image: "https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/women-carrying-rice",
+    //   cta: "Shop Wholesale",
+    //   ctaLink: "/wholesaler",
+    //   bgColor: "from-orange-600 via-red-600 to-amber-600"
+    // },
     {
       id: 5,
       title: "Indian Frmer Plowing",
@@ -128,15 +130,45 @@ export default function HeroSection() {
     setCurrentSlide(index)
   }
 
+  // Touch handlers for mobile swipe
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe) {
+      nextSlide()
+    } else if (isRightSwipe) {
+      prevSlide()
+    }
+  }
+
   return (
     <div className="relative bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/20">
 
       {/* Amazon-style Hero Layout */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-6 lg:py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
           
           {/* Main Banner Slider - Left Side (3/4 width) - Better mobile aspect ratio */}
-          <div className="lg:col-span-3 relative overflow-hidden rounded-lg shadow-lg aspect-[16/10] md:aspect-video isolate">
+          <div 
+            className="lg:col-span-3 relative overflow-hidden rounded-lg shadow-lg aspect-[16/10] md:aspect-video isolate"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             {/* Skeleton Loader for CLS prevention */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse z-0" />
             
@@ -234,12 +266,12 @@ export default function HeroSection() {
             </button>
 
             {/* Slide Indicators - Fixed positioning with background */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 flex space-x-2 bg-black/20 backdrop-blur-sm px-3 py-2 rounded-full">
+            <div className="hidden sm:flex absolute bottom-4 left-1/2 -translate-x-1/2 z-40 space-x-1.5 bg-black/20 backdrop-blur-sm px-2.5 py-1.5 rounded-full">
               {banners.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${
+                  className={`!w-1.5 !h-1.5 sm:w-2 !sm:h-2 !md:w-2.5 !md:h-2.5 rounded-full transition-all duration-200 ${
                     index === currentSlide 
                       ? 'bg-white shadow-lg' 
                       : 'bg-white/60 hover:bg-white/80'
