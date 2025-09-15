@@ -199,22 +199,28 @@ export function ProductForm({ product }: ProductFormProps) {
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select value={formData.categoryId} onValueChange={(value) => handleInputChange('categoryId', value)}>
+                  <Select 
+                    value={formData.categoryId} 
+                    onValueChange={(value) => handleInputChange('categoryId', value)}
+                    disabled={categoriesLoading}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select category"} />
+                      <SelectValue placeholder={
+                        categoriesLoading 
+                          ? "Loading categories..." 
+                          : categories.length === 0
+                          ? "No categories available"
+                          : "Select category"
+                      } />
                     </SelectTrigger>
                     <SelectContent>
-                      {categoriesLoading ? (
-                        <SelectItem value="" disabled>Loading...</SelectItem>
-                      ) : categories.length > 0 ? (
+                      {!categoriesLoading && categories.length > 0 ? (
                         categories.map((category) => (
                           <SelectItem key={category.id} value={category.id}>
                             {category.name}
                           </SelectItem>
                         ))
-                      ) : (
-                        <SelectItem value="" disabled>No categories available</SelectItem>
-                      )}
+                      ) : null}
                     </SelectContent>
                   </Select>
                 </div>

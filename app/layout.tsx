@@ -53,16 +53,16 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/logo.png',
-        width: 1200,
-        height: 630,
+        url: '/android-chrome-512x512.png',
+        width: 512,
+        height: 512,
         alt: 'Padmaaja Rasooi - Premium Rice Products',
         type: 'image/png'
       },
       {
-        url: '/logo.png',
-        width: 800,
-        height: 600,
+        url: '/android-chrome-192x192.png',
+        width: 192,
+        height: 192,
         alt: 'Padmaaja Rasooi Logo',
         type: 'image/png'
       }
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Padmaaja Rasooi - Premium Rice Products & Quality Grains',
     description: 'Experience the finest quality rice with Padmaaja Rasooi. Premium rice varieties sourced from the best farms for exceptional taste and nutrition.',
-    images: ['/logo.png'],
+    images: ['/android-chrome-512x512.png'],
     creator: '@padmaajarasooi',
     site: '@padmaajarasooi'
   },
@@ -90,24 +90,26 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/logo.png', sizes: '192x192', type: 'image/png' }
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
     ],
-    shortcut: '/favicon-32x32.png',
+    shortcut: '/favicon.ico',
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      { url: '/logo.png', sizes: '152x152', type: 'image/png' }
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
     ],
     other: [
       {
-        rel: 'mask-icon',
-        url: '/logo.svg',
-        color: '#10B981'
+        rel: 'icon',
+        url: '/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png'
       },
       {
         rel: 'icon',
-        url: '/logo.png',
+        url: '/android-chrome-512x512.png',
+        sizes: '512x512',
         type: 'image/png'
       }
     ]
@@ -155,19 +157,20 @@ export default async function PublicRootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="mask-icon" href="/logo.svg" color="#10B981" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-TileColor" content="#10B981" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="theme-color" content="#10B981" />
-        <meta property="og:image" content="/logo.png" />
+        <meta property="og:image" content="/android-chrome-512x512.png" />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta name="twitter:image" content="/logo.png" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta name="twitter:image" content="/android-chrome-512x512.png" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         {/* Skip to main content link for accessibility */}

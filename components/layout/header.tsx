@@ -111,25 +111,25 @@ export function Header() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center">
             <div className="flex items-center space-x-3">
               <Image
-                src="/logo.png"
+                src="/kashmina-logo.png"
                 alt="PADMAAJA RASOOI PVT. LTD."
-                width={50}
-                height={50}
+                width={150}
+                height={150}
                 className="object-contain"
               />
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <span className="text-lg font-bold text-slate-800 transition-colors duration-300 leading-tight">
-                  PADMAAJA RASOOI
+                  KASHMINA RICE
                 </span>
                 <span className="text-xs uppercase text-slate-600 transition-colors duration-300 leading-tight">
-                  &quot;The careful choice&quot;
+                  &quot;Premium Rice&quot;
                 </span>
-              </div>
+              </div> */}
             </div>
           </Link>
 
