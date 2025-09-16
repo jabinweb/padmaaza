@@ -100,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* Navigation Links */}
-      <section className="sticky top-[60px] z-50 py-4 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+      <section className="sticky top-[95px] z-50 py-4 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="#who-we-are">
