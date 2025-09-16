@@ -29,6 +29,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.indiagatefoods.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
       }
     ]
   },
