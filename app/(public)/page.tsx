@@ -111,7 +111,7 @@ export default async function Home() {
         <MobileOptimizedLazyManufacturingSection />
 
         {/* Statistics & Achievements Section */}
-        <MobileOptimizedLazyStatsSection />
+        {/* <MobileOptimizedLazyStatsSection /> */}
 
         {/* Certifications Section */}
         <MobileOptimizedLazyCertificationsSection />
