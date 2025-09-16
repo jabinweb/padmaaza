@@ -31,11 +31,11 @@ export default function AboutPage() {
       alt: 'Farmer',
       title: 'Dedicated Farming Excellence'
     },
-    {
-      src: '/lab.png',
-      alt: 'Quality Control Lab',
-      title: 'Advanced Quality Control Laboratory'
-    },
+    // {
+    //   src: '/lab.png',
+    //   alt: 'Quality Control Lab',
+    //   title: 'Advanced Quality Control Laboratory'
+    // },
     {
       src: '/factory.png',
       alt: 'Manufacturing Facility',
