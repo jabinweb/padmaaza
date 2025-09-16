@@ -681,6 +681,253 @@ class EmailServiceClass {
       html
     })
   }
+
+  // B2B Inquiry confirmation email to customer
+  async sendB2BInquiryConfirmation(data: {
+    customerEmail: string
+    customerName: string
+    companyName: string
+    inquiryId: string
+    productName?: string
+  }) {
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>B2B Inquiry Confirmation</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #059669 0%, #065f46 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">Inquiry Received Successfully</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Thank you for your business inquiry</p>
+          </div>
+          
+          <div style="background: #fff; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 10px 10px;">
+            <p style="margin: 0 0 20px 0; font-size: 16px;">Dear ${data.customerName},</p>
+            
+            <p style="margin: 0 0 20px 0; font-size: 16px;">
+              Thank you for your inquiry regarding bulk procurement ${data.productName ? `of <strong>${data.productName}</strong>` : 'from Padmaaja Rasooi'}. 
+              We have received your detailed requirements and our team is reviewing them.
+            </p>
+            
+            <div style="background: #f9fafb; padding: 20px; border-left: 4px solid #059669; margin: 20px 0;">
+              <h3 style="margin: 0 0 10px 0; color: #059669;">Inquiry Details</h3>
+              <ul style="margin: 0; padding-left: 20px;">
+                <li><strong>Inquiry ID:</strong> ${data.inquiryId}</li>
+                <li><strong>Company:</strong> ${data.companyName}</li>
+                <li><strong>Submitted:</strong> ${new Date().toLocaleDateString('en-IN')}</li>
+                ${data.productName ? `<li><strong>Product:</strong> ${data.productName}</li>` : ''}
+              </ul>
+            </div>
+            
+            <h3 style="color: #059669; margin: 30px 0 15px 0;">What happens next?</h3>
+            <ol style="margin: 0 0 20px 0; padding-left: 20px;">
+              <li style="margin-bottom: 10px;">Our procurement team will review your requirements within 2-4 business hours</li>
+              <li style="margin-bottom: 10px;">We will prepare a detailed quotation including pricing, terms, and delivery schedules</li>
+              <li style="margin-bottom: 10px;">A dedicated account manager will contact you within 24 hours to discuss your needs</li>
+              <li style="margin-bottom: 10px;">We will provide samples if required and finalize the order details</li>
+            </ol>
+            
+            <div style="background: #fef3c7; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <p style="margin: 0; font-size: 14px; color: #92400e;">
+                <strong>Priority Response:</strong> As a bulk inquiry, your request has been marked as high priority. 
+                Our business development team will reach out to you shortly.
+              </p>
+            </div>
+            
+            <h3 style="color: #059669; margin: 30px 0 15px 0;">Need immediate assistance?</h3>
+            <div style="background: #f0f9ff; padding: 20px; border-radius: 5px;">
+              <p style="margin: 0 0 10px 0; font-size: 16px;">Contact our B2B Sales Team:</p>
+              <ul style="margin: 0; padding-left: 20px; list-style: none;">
+                <li style="margin-bottom: 5px;">📧 Email: ${process.env.ADMIN_EMAIL || 'info@padmajarice.com'}</li>
+                <li style="margin-bottom: 5px;">📞 Phone: +91-9876543210 (B2B Hotline)</li>
+                <li style="margin-bottom: 5px;">🕒 Business Hours: Monday - Saturday, 9:00 AM - 6:00 PM</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div style="background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; font-size: 14px; color: #6b7280;">
+              This is an automated confirmation. Please do not reply to this email.
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">
+              © 2024 Padmaaja Rasooi Pvt. Ltd. | Premium Rice & Grains
+            </p>
+          </div>
+        </body>
+      </html>
+    `
+
+    await this.sendEmail({
+      to: data.customerEmail,
+      subject: `B2B Inquiry Confirmation - ${data.companyName} | Padmaaja Rasooi`,
+      html
+    })
+  }
+
+  // B2B Inquiry admin notification
+  async sendB2BInquiryAdminNotification(data: {
+    inquiryData: any
+    inquiryId: string
+  }) {
+    const inquiry = data.inquiryData
+    
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <title>New B2B Inquiry - Priority</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">🚨 New B2B Inquiry - HIGH PRIORITY</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Immediate attention required</p>
+          </div>
+          
+          <div style="background: #fff; padding: 30px; border: 1px solid #e5e7eb;">
+            <div style="background: #fef2f2; padding: 15px; border-left: 4px solid #dc2626; margin-bottom: 25px;">
+              <p style="margin: 0; font-weight: bold; color: #dc2626;">
+                ⏰ Response Required Within 24 Hours
+              </p>
+            </div>
+            
+            <h2 style="color: #059669; margin: 0 0 20px 0; border-bottom: 2px solid #059669; padding-bottom: 10px;">
+              Company Information
+            </h2>
+            <div style="background: #f9fafb; padding: 20px; border-radius: 5px; margin-bottom: 25px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <strong>Company:</strong><br>
+                  ${inquiry.companyName}
+                </div>
+                <div>
+                  <strong>Business Type:</strong><br>
+                  ${inquiry.businessType}
+                </div>
+                <div>
+                  <strong>Contact Person:</strong><br>
+                  ${inquiry.contactPerson}
+                </div>
+                <div>
+                  <strong>Designation:</strong><br>
+                  ${inquiry.designation}
+                </div>
+                <div>
+                  <strong>Email:</strong><br>
+                  <a href="mailto:${inquiry.email}" style="color: #059669;">${inquiry.email}</a>
+                </div>
+                <div>
+                  <strong>Phone:</strong><br>
+                  <a href="tel:${inquiry.phone}" style="color: #059669;">${inquiry.phone}</a>
+                </div>
+              </div>
+              ${inquiry.gstNumber ? `
+                <div style="margin-top: 15px;">
+                  <strong>GST Number:</strong> ${inquiry.gstNumber}
+                </div>
+              ` : ''}
+              <div style="margin-top: 15px;">
+                <strong>Address:</strong><br>
+                ${inquiry.address}
+              </div>
+            </div>
+
+            ${inquiry.productName ? `
+              <h2 style="color: #059669; margin: 25px 0 20px 0; border-bottom: 2px solid #059669; padding-bottom: 10px;">
+                Product Inquiry
+              </h2>
+              <div style="background: #f0f9ff; padding: 20px; border-radius: 5px; margin-bottom: 25px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                  <div>
+                    <strong>Product:</strong><br>
+                    ${inquiry.productName}
+                  </div>
+                  <div>
+                    <strong>Category:</strong><br>
+                    ${inquiry.productCategory || 'N/A'}
+                  </div>
+                  <div>
+                    <strong>Listed Price:</strong><br>
+                    ₹${inquiry.productPrice || 'N/A'}
+                  </div>
+                  <div>
+                    <strong>Product ID:</strong><br>
+                    ${inquiry.productId || 'N/A'}
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+
+            <h2 style="color: #059669; margin: 25px 0 20px 0; border-bottom: 2px solid #059669; padding-bottom: 10px;">
+              Requirements
+            </h2>
+            <div style="background: #fef7ff; padding: 20px; border-radius: 5px; margin-bottom: 25px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                  <strong>Quantity Required:</strong><br>
+                  ${inquiry.quantityRequired} ${inquiry.quantityUnit}
+                </div>
+                <div>
+                  <strong>Delivery Location:</strong><br>
+                  ${inquiry.deliveryLocation}
+                </div>
+              </div>
+              ${inquiry.expectedDeliveryDate ? `
+                <div style="margin-bottom: 15px;">
+                  <strong>Expected Delivery:</strong> ${inquiry.expectedDeliveryDate}
+                </div>
+              ` : ''}
+              <div>
+                <strong>Detailed Requirements:</strong><br>
+                <div style="background: white; padding: 15px; border-radius: 3px; margin-top: 5px; border: 1px solid #e5e7eb;">
+                  ${inquiry.message.replace(/\n/g, '<br>')}
+                </div>
+              </div>
+              ${inquiry.hearAboutUs ? `
+                <div style="margin-top: 15px;">
+                  <strong>How they heard about us:</strong> ${inquiry.hearAboutUs}
+                </div>
+              ` : ''}
+            </div>
+
+            <h2 style="color: #059669; margin: 25px 0 20px 0; border-bottom: 2px solid #059669; padding-bottom: 10px;">
+              Admin Actions
+            </h2>
+            <div style="background: #f0fdf4; padding: 20px; border-radius: 5px; text-align: center;">
+              <p style="margin: 0 0 15px 0; font-weight: bold;">Inquiry ID: ${data.inquiryId}</p>
+              <div style="margin: 15px 0;">
+                <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin/forms?filter=b2b_inquiry" 
+                   style="background: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 0 10px; display: inline-block;">
+                  View in Admin Panel
+                </a>
+                <a href="mailto:${inquiry.email}?subject=Re: B2B Inquiry - ${inquiry.companyName}&body=Dear ${inquiry.contactPerson},%0D%0A%0D%0AThank you for your inquiry regarding bulk procurement. We have reviewed your requirements for ${inquiry.quantityRequired} ${inquiry.quantityUnit}..." 
+                   style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 0 10px; display: inline-block;">
+                  Reply to Customer
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div style="background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; font-size: 14px; color: #6b7280;">
+              Submitted: ${new Date().toLocaleString('en-IN')} | Priority: HIGH
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">
+              © 2024 Padmaaja Admin Panel
+            </p>
+          </div>
+        </body>
+      </html>
+    `
+
+    await this.sendEmail({
+      to: process.env.ADMIN_EMAIL || 'info@padmajarice.com',
+      subject: `🚨 URGENT: New B2B Inquiry from ${inquiry.companyName} - ${inquiry.quantityRequired} ${inquiry.quantityUnit}`,
+      html
+    })
+  }
 }
 
 export const emailService = new EmailServiceClass()

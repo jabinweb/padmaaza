@@ -9,9 +9,11 @@ import { ShoppingCart, Star, Truck, Shield, RefreshCw, ArrowLeft, Leaf, Clock, A
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import { cartManager } from '@/lib/cart'
+import { isFeatureEnabled } from '@/lib/business-config'
 import Link from 'next/link'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import ReviewsList from '@/components/reviews/ReviewsList'
+import B2BInquiryForm from '@/components/shop/B2BInquiryForm'
 
 interface Product {
   id: string
@@ -66,6 +68,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1)
   const [addingToCart, setAddingToCart] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
+  const [isInquiryFormOpen, setIsInquiryFormOpen] = useState(false)
 
   useEffect(() => {
     if (params.slug && typeof params.slug === 'string') {
@@ -213,6 +216,7 @@ export default function ProductDetailPage() {
     }
   }
 
+ 
   const handleAddToCart = () => {
     if (!product) return
     
@@ -336,7 +340,7 @@ export default function ProductDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Premium Navigation Bar */}
-      <nav className="mt-16">
+      <nav className="">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             {/* Breadcrumb */}
@@ -482,9 +486,9 @@ export default function ProductDetailPage() {
 
             {/* Pricing Section */}
             <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-100">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <div className="flex items-baseline space-x-3">
+                  {/* <div className="flex items-baseline space-x-3">
                     {product.discount > 0 ? (
                       <>
                         <span className="text-3xl font-bold text-emerald-600">
@@ -499,11 +503,11 @@ export default function ProductDetailPage() {
                         ₹{product.price.toFixed(2)}
                       </span>
                     )}
-                  </div>
+                  </div> */}
                   
                   {/* Per kg price display */}
                   {getPerKgPrice(product.price, product.weight, product.discount) && (
-                    <div className="text-lg text-gray-600 font-medium">
+                    <div className="text-3xl font-bold text-emerald-600 leading-none !mb-0">
                       ₹{getPerKgPrice(product.price, product.weight, product.discount)}/kg
                     </div>
                   )}
@@ -521,79 +525,157 @@ export default function ProductDetailPage() {
                 </div>
                 
                 {/* Stock Indicator */}
-                <div className="text-right">
+                {/* <div className="text-right">
                   <div className="flex items-center space-x-2 text-sm text-gray-600">
                     <Package className="h-4 w-4" />
                     <span>{product.stock} available</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
-            {/* Purchase Section */}
+            {/* Purchase Section - B2B/B2C Mode */}
             {product.stock > 0 ? (
               <div className="space-y-6">
-                {/* Quantity Selector */}
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
-                    Quantity
-                  </label>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="p-3 hover:bg-gray-50 transition-colors border-r border-gray-300"
-                        disabled={quantity <= 1}
-                      >
-                        <Minus className="h-4 w-4 text-gray-600" />
-                      </button>
-                      <div className="px-6 py-3 bg-white min-w-[80px] text-center font-semibold text-gray-900">
-                        {quantity}
+                {/* B2C Feature - Quantity & Cart (Disabled for B2B mode) */}
+                {isFeatureEnabled('cart') ? (
+                  <>
+                    {/* Quantity Selector */}
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                        Quantity
+                      </label>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
+                          <button
+                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                            className="p-3 hover:bg-gray-50 transition-colors border-r border-gray-300"
+                            disabled={quantity <= 1}
+                          >
+                            <Minus className="h-4 w-4 text-gray-600" />
+                          </button>
+                          <div className="px-6 py-3 bg-white min-w-[80px] text-center font-semibold text-gray-900">
+                            {quantity}
+                          </div>
+                          <button
+                            onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                            className="p-3 hover:bg-gray-50 transition-colors border-l border-gray-300"
+                            disabled={quantity >= product.stock}
+                          >
+                            <Plus className="h-4 w-4 text-gray-600" />
+                          </button>
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          {product.stock} available
+                        </span>
                       </div>
-                      <button
-                        onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                        className="p-3 hover:bg-gray-50 transition-colors border-l border-gray-300"
-                        disabled={quantity >= product.stock}
-                      >
-                        <Plus className="h-4 w-4 text-gray-600" />
-                      </button>
                     </div>
-                    <span className="text-sm text-gray-500">
-                      {product.stock} available
-                    </span>
-                  </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="space-y-3">
-                  <Button
-                    onClick={handleAddToCart}
-                    disabled={addingToCart}
-                    className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
-                  >
-                    {addingToCart ? (
-                      <div className="flex items-center space-x-2">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        <span>Adding to Cart...</span>
+                    {/* Action Buttons */}
+                    <div className="space-y-3">
+                      <Button
+                        onClick={handleAddToCart}
+                        disabled={addingToCart}
+                        className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                      >
+                        {addingToCart ? (
+                          <div className="flex items-center space-x-2">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            <span>Adding to Cart...</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center space-x-2">
+                            <ShoppingCart className="h-5 w-5" />
+                            <span>Add to Cart - ₹{(getDiscountedPrice(product.price, product.discount) * quantity).toFixed(2)}</span>
+                          </div>
+                        )}
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  /* B2B Mode - Quote Request */
+                  <div className="space-y-6">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
+                      <h3 className="text-lg font-semibold text-emerald-900 mb-2">Bulk Orders & Wholesale</h3>
+                      <p className="text-emerald-700 mb-4">Get competitive pricing for bulk orders. Contact us for custom quotes and wholesale rates.</p>
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="font-medium text-emerald-900">Minimum Order:</span>
+                          <span className="text-emerald-700 ml-2">1+ ton</span>
+                        </div>
+                        <div>
+                          <span className="font-medium text-emerald-900">Delivery:</span>
+                          <span className="text-emerald-700 ml-2">PAN India</span>
+                        </div>
                       </div>
-                    ) : (
-                      <div className="flex items-center space-x-2">
-                        <ShoppingCart className="h-5 w-5" />
-                        <span>Add to Cart - ₹{(getDiscountedPrice(product.price, product.discount) * quantity).toFixed(2)}</span>
+                    </div>
+
+                    {/* B2B Quantity Selector - In Tons */}
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                        Quantity (Tons)
+                      </label>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
+                          <button
+                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                            className="p-3 hover:bg-gray-50 transition-colors border-r border-gray-300"
+                            disabled={quantity <= 1}
+                          >
+                            <Minus className="h-4 w-4 text-gray-600" />
+                          </button>
+                          <div className="px-6 py-3 bg-white min-w-[100px] text-center font-semibold text-gray-900">
+                            {quantity} {quantity === 1 ? 'Ton' : 'Tons'}
+                          </div>
+                          <button
+                            onClick={() => setQuantity(quantity + 1)}
+                            className="p-3 hover:bg-gray-50 transition-colors border-l border-gray-300"
+                          >
+                            <Plus className="h-4 w-4 text-gray-600" />
+                          </button>
+                        </div>
+                        <span className="text-sm text-emerald-600 font-medium">
+                          = {(quantity * 1000).toLocaleString()} kg
+                        </span>
                       </div>
-                    )}
-                  </Button>
-                  
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" className="h-12 border-gray-300 hover:bg-gray-50" onClick={handleShare}>
-                      <Share2 className="h-4 w-4 mr-2" />
-                      Share
-                    </Button>
-                    <Button variant="outline" className="h-12 border-gray-300 hover:bg-gray-50">
-                      <Bookmark className="h-4 w-4 mr-2" />
-                      Save
-                    </Button>
+                      <p className="text-xs text-gray-500">
+                        Bulk pricing available for orders above 5 tons. Contact us for volume discounts.
+                      </p>
+                    </div>
+
+                    {/* B2B Action Buttons */}
+                    <div className="space-y-3">
+                      <Button
+                        onClick={() => setIsInquiryFormOpen(true)}
+                        className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <Eye className="h-5 w-5" />
+                          <span>Request Quote for {quantity} {quantity === 1 ? 'Ton' : 'Tons'}</span>
+                        </div>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          window.location.href = '/contact';
+                        }}
+                        variant="outline"
+                        className="w-full h-12 border-emerald-300 text-emerald-700 hover:bg-emerald-50"
+                      >
+                        Contact for Bulk Orders
+                      </Button>
+                    </div>
                   </div>
+                )}
+                
+                <div className="grid grid-cols-2 gap-3">
+                  <Button variant="outline" className="h-12 border-gray-300 hover:bg-gray-50" onClick={handleShare}>
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                  <Button variant="outline" className="h-12 border-gray-300 hover:bg-gray-50">
+                    <Bookmark className="h-4 w-4 mr-2" />
+                    Save
+                  </Button>
                 </div>
               </div>
             ) : (
@@ -1032,6 +1114,21 @@ export default function ProductDetailPage() {
           </div>
         </motion.section>
       </div>
+      
+      {/* B2B Inquiry Form */}
+      {product && (
+        <B2BInquiryForm
+          isOpen={isInquiryFormOpen}
+          onOpenChange={setIsInquiryFormOpen}
+          product={{
+            id: product.id,
+            name: product.name,
+            category: product.category,
+            price: product.price,
+            weight: product.weight
+          }}
+        />
+      )}
     </div>
   )
 }

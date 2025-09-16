@@ -7,6 +7,9 @@ const DYNAMIC_CACHE_NAME = `padmaaja-rasooi-dynamic-v${CACHE_VERSION}`
 // Build timestamp for cache busting
 const BUILD_TIMESTAMP = new Date().toISOString()
 
+// App version from environment
+const APP_VERSION = self.APP_VERSION || '1.0.0'
+
 // Files to cache immediately
 const STATIC_FILES = [
   '/',
@@ -34,7 +37,8 @@ const API_ROUTES = [
 self.addEventListener('install', (event) => {
   console.log('🚀 Service Worker: Installing... v' + CACHE_VERSION)
   console.log('📅 Build timestamp:', BUILD_TIMESTAMP)
-  
+  console.log('🏷️  App version:', APP_VERSION)
+
   event.waitUntil(
     caches.open(STATIC_CACHE_NAME)
       .then((cache) => {
@@ -80,7 +84,8 @@ self.addEventListener('activate', (event) => {
             client.postMessage({
               type: 'SW_UPDATED',
               version: CACHE_VERSION,
-              timestamp: BUILD_TIMESTAMP
+              timestamp: BUILD_TIMESTAMP,
+              appVersion: APP_VERSION
             })
           })
         })

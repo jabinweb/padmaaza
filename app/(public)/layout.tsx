@@ -18,9 +18,7 @@ export default async function RootLayout({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="sticky top-0 z-50">
-        <Header />
-      </div>
+      <Header />
       <div className="flex-1 pb-16 md:pb-0">
         {children}
       </div>

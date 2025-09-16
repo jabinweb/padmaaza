@@ -69,6 +69,20 @@ export default function ReviewsList({
     totalReviews: 0,
     ratingBreakdown: {} as { [key: number]: number }
   })
+  
+  const scrollToReviews = () => {
+    const reviewsSection = document.getElementById('reviews-section')
+    if (reviewsSection) {
+      reviewsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+      // If there are no reviews, automatically show the form
+      if (calculatedStats.totalReviews === 0) {
+        setTimeout(() => setShowForm(true), 500)
+      }
+    }
+  }
 
   const calculateStats = useCallback((allReviewsData: Review[]) => {
     const total = allReviewsData.length
@@ -275,48 +289,80 @@ export default function ReviewsList({
   }
 
   return (
-    <div className="space-y-6">
-      {/* Reviews Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>Customer Reviews</span>
-            {session && !userReview && !showForm && (
-              <Button onClick={() => setShowForm(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Write Review
-              </Button>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Overall Rating */}
-            <div className="text-center">
-              <div className="text-4xl font-bold mb-2">{calculatedStats.averageRating.toFixed(1)}</div>
-              <div className="flex items-center justify-center mb-2">
+    <div id="reviews-section" className="space-y-6">
+      {/* Reviews Summary - Only show if there are reviews */}
+      {calculatedStats.totalReviews > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>Customer Reviews</span>
+              {session && !userReview && !showForm && (
+                <Button onClick={scrollToReviews}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Write Review
+                </Button>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Overall Rating */}
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">{calculatedStats.averageRating.toFixed(1)}</div>
+                <div className="flex items-center justify-center mb-2">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <Star
+                      key={index}
+                      className={`h-5 w-5 ${
+                        index < Math.round(calculatedStats.averageRating)
+                          ? 'text-yellow-400 fill-current'
+                          : 'text-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-gray-600">{calculatedStats.totalReviews} reviews</p>
+              </div>
+
+              {/* Rating Breakdown */}
+              <div>
+                <h4 className="font-semibold mb-3">Rating Breakdown</h4>
+                {renderRatingBreakdown()}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* No Reviews State - Show when there are no reviews */}
+      {calculatedStats.totalReviews === 0 && !loading && (
+        <Card>
+          <CardContent className="text-center py-12">
+            <div className="space-y-4">
+              <div className="flex items-center justify-center">
                 {Array.from({ length: 5 }, (_, index) => (
                   <Star
                     key={index}
-                    className={`h-5 w-5 ${
-                      index < Math.round(calculatedStats.averageRating)
-                        ? 'text-yellow-400 fill-current'
-                        : 'text-gray-300'
-                    }`}
+                    className="h-8 w-8 text-gray-300"
                   />
                 ))}
               </div>
-              <p className="text-gray-600">{calculatedStats.totalReviews} reviews</p>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No reviews yet</h3>
+                <p className="text-gray-600 mb-4">Be the first to review this product</p>
+                {session ? (
+                  <Button onClick={() => setShowForm(true)} className="bg-emerald-600 hover:bg-emerald-700">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Write First Review
+                  </Button>
+                ) : (
+                  <p className="text-sm text-gray-500">Sign in to write a review</p>
+                )}
+              </div>
             </div>
-
-            {/* Rating Breakdown */}
-            <div>
-              <h4 className="font-semibold mb-3">Rating Breakdown</h4>
-              {renderRatingBreakdown()}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Review Form */}
       {showForm && (

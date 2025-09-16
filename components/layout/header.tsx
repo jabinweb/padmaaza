@@ -11,6 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useSession, signOut } from 'next-auth/react'
 import CartSidebar from '@/components/shop/CartSidebar'
 import MegaMenu from '@/components/layout/MegaMenu'
+import { isFeatureEnabled } from '@/lib/business-config'
 
 interface MenuItem {
   name: string
@@ -33,6 +34,7 @@ interface MegaMenuConfig {
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const navItems = [
     // { name: 'Home', href: '/' },
@@ -87,7 +89,27 @@ export function Header() {
     { name: 'Profile', href: '/dashboard/profile', icon: Settings },
   ]
 
-  // Removed scroll effect for solid header
+  // Scroll detection for sticky header
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const scrolled = scrollTop > 0
+      setIsScrolled(scrolled)
+      
+      // Add/remove class to body for content padding
+      if (scrolled) {
+        document.body.classList.add('header-sticky')
+      } else {
+        document.body.classList.remove('header-sticky')
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      document.body.classList.remove('header-sticky')
+    }
+  }, [])
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -118,9 +140,15 @@ export function Header() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-lg">
+    <nav className={`transition-all duration-300 ${
+      isScrolled 
+        ? 'fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg' 
+        : 'relative bg-white border-b border-slate-200'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+        <div className={`flex justify-between items-center transition-all duration-300 ${
+          isScrolled ? 'h-20' : 'h-24'
+        }`}>
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center z-10">
             <div className="flex items-center space-x-3">
@@ -185,7 +213,8 @@ export function Header() {
             ))}
 
             <div className="flex items-center space-x-4">
-              <CartSidebar />
+              {/* B2C Feature - Cart Sidebar (Disabled for B2B mode) */}
+              {isFeatureEnabled('cart') && <CartSidebar />}
 
               {session ? (
                 <DropdownMenu>

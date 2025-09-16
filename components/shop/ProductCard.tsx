@@ -14,6 +14,8 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Product } from '@/types'
 import { useState, useEffect } from 'react'
+import { isFeatureEnabled } from '@/lib/business-config'
+import B2BInquiryForm from '@/components/shop/B2BInquiryForm'
 
 interface ProductReviewStats {
   averageRating: number
@@ -28,6 +30,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, index }: ProductCardProps) {
   const router = useRouter()
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false)
+  const [isInquiryFormOpen, setIsInquiryFormOpen] = useState(false)
   const [reviewStats, setReviewStats] = useState<ProductReviewStats>({
     averageRating: 0,
     totalReviews: 0
@@ -119,6 +122,12 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   const handleViewDetails = (e: React.MouseEvent) => {
     e.stopPropagation()
     setIsQuickViewOpen(true)
+  }
+
+  const handleRequestQuote = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsInquiryFormOpen(true)
   }
 
   return (
@@ -222,16 +231,29 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </div>
           
           <div className="flex gap-2">
-            <Button 
-              size="sm" 
-              onClick={handleAddToCart}
-              disabled={product.stock === 0}
-              className="flex-1 text-xs sm:text-sm h-8 sm:h-9"
-            >
-              <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
-              <span className="sm:hidden">{product.stock === 0 ? 'Out' : 'Add'}</span>
-            </Button>
+            {/* B2C Feature - Add to Cart Button (Disabled for B2B mode) */}
+            {isFeatureEnabled('cart') ? (
+              <Button 
+                size="sm" 
+                onClick={handleAddToCart}
+                disabled={product.stock === 0}
+                className="flex-1 text-xs sm:text-sm h-8 sm:h-9"
+              >
+                <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+                <span className="sm:hidden">{product.stock === 0 ? 'Out' : 'Add'}</span>
+              </Button>
+            ) : (
+              <Button 
+                size="sm" 
+                onClick={handleRequestQuote}
+                className="flex-1 text-xs sm:text-sm h-8 sm:h-9 bg-emerald-600 hover:bg-emerald-700"
+              >
+                <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Get Quote</span>
+                <span className="sm:hidden">Quote</span>
+              </Button>
+            )}
             <Button 
               size="sm" 
               variant="outline"
@@ -359,15 +381,30 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  <Button 
-                    onClick={handleAddToCart}
-                    disabled={product.stock === 0}
-                    className="w-full"
-                    size="lg"
-                  >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                  </Button>
+                  {/* B2C Feature - Add to Cart Button (Disabled for B2B mode) */}
+                  {isFeatureEnabled('cart') ? (
+                    <Button 
+                      onClick={handleAddToCart}
+                      disabled={product.stock === 0}
+                      className="w-full"
+                      size="lg"
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    </Button>
+                  ) : (
+                    <Button 
+                      onClick={() => {
+                        setIsQuickViewOpen(false)
+                        setIsInquiryFormOpen(true)
+                      }}
+                      className="w-full bg-emerald-600 hover:bg-emerald-700"
+                      size="lg"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      Request Quote
+                    </Button>
+                  )}
                   <Button 
                     variant="outline"
                     onClick={() => {
@@ -407,6 +444,19 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* B2B Inquiry Form */}
+      <B2BInquiryForm
+        isOpen={isInquiryFormOpen}
+        onOpenChange={setIsInquiryFormOpen}
+        product={{
+          id: product.id,
+          name: product.name,
+          category: product.category,
+          price: product.price,
+          weight: product.weight || undefined
+        }}
+      />
     </motion.div>
   )
 }

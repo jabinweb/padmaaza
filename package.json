@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
+    "prebuild": "node scripts/inject-version.js",
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx lib/seed.ts",
