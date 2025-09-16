@@ -6,7 +6,6 @@ const nextConfig = {
   },
   
   // Performance optimizations
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -48,11 +47,6 @@ const nextConfig = {
     ],
     optimizeCss: true,
     webpackBuildWorker: true,
-    turbo: {
-      rules: {
-        '*.svg': ['@svgr/webpack'],
-      }
-    }
   },
   
   // Bundle optimization

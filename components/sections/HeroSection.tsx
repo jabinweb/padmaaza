@@ -48,7 +48,7 @@ export default function HeroSection() {
       title: "Kashmina Brand Collection",
       subtitle: "Farm Fresh • Direct from Fields",
       description: "Premium rice varieties sourced directly from trusted farmers, processed with care for exceptional quality",
-      image: "/images/kashmina_banner.png",
+      image: "https://4m5m4tx28rtva30c.public.blob.vercel-storage.com/media/2025-09-07/banner-slider-1",
       cta: "Shop Kashmina",
       ctaLink: "/products?brand=kashmina",
       bgColor: "from-emerald-600 via-green-600 to-yellow-600"
