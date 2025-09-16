@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 
 export default function AboutSection() {
     const stats = [
-        { number: "20+", label: "Years in Rice Business", icon: Award, color: "from-amber-500 to-yellow-600" },
+        { number: "100%", label: "Customer Satisfaction", icon: Award, color: "from-amber-500 to-yellow-600" },
         { number: "10K+", label: "Rice Loving Families", icon: Users, color: "from-emerald-500 to-green-600" },
         { number: "8000+", label: "Tons Processed Monthly", icon: TrendingUp, color: "from-orange-500 to-red-600" },
         { number: "99%", label: "Pure & Natural Rice", icon: TrendingUp, color: "from-yellow-500 to-amber-600" }
