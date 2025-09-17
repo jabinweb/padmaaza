@@ -91,7 +91,7 @@ export default async function Home() {
 
   return (
     <ClientPageWrapper>
-      <main className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white">
         {/* Hero Section */}
         <header>
           <MobileOptimizedLazyHeroSection />
