@@ -6,6 +6,7 @@ import { Mail, Phone, MapPin, Calendar, Award, Target, Users, Quote, Briefcase, 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import PageHero from '@/components/sections/PageHero'
 
 export default function FounderPage() {
   const founders = [
@@ -39,157 +40,48 @@ export default function FounderPage() {
     }
   ]
 
-  const achievements = [
-    {
-      icon: Award,
-      title: 'Business Excellence',
-      description: 'Combined 12+ years of experience across real estate and food processing industries'
-    },
-    {
-      icon: Target,
-      title: 'Vision Driven',
-      description: 'Founded Padmaaja Rasooi with mission to preserve traditional Indian food culture'
-    },
-    {
-      icon: Users,
-      title: 'Community Impact',
-      description: 'Creating employment opportunities and supporting sustainable business practices'
-    }
-  ]
-
-  const timeline = [
-    {
-      year: '2015-2020',
-      title: 'Real Estate Foundation',
-      description: 'Built successful real estate business with Padmaja Group, achieving ₹200+ crores turnover'
-    },
-    {
-      year: '2018-2022',
-      title: 'Business Operations',
-      description: 'Padmaja Singh led large-scale operations, finance, and administration at Padmaja Group'
-    },
-    {
-      year: '2022',
-      title: 'Food Industry Entry',
-      description: 'Transitioned expertise to food processing industry with focus on quality and innovation'
-    },
-    {
-      year: '2023-Present',
-      title: 'Padmaaja Rasooi Leadership',
-      description: 'Leading company growth in authentic Indian food products with sustainable practices'
-    }
-  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50">
-      {/* Modern Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          {/* Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-orange-900"></div>
-          
-          {/* Modern Geometric Shapes */}
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-orange-500/20 to-orange-600/30 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-emerald-500/20 to-emerald-600/30 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-orange-500/10 to-emerald-500/10 rounded-full blur-3xl"></div>
-          
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="h-full w-full" style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
-              backgroundSize: '50px 50px'
-            }}></div>
-          </div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            {/* Modern Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-8"
-            >
-              <Badge className="px-6 py-3 text-sm font-medium bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                <Star className="w-4 h-4 mr-2" />
-                Leadership Excellence
-              </Badge>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8"
-            >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 !leading-tight">
-                Meet Our
-                <span className="block bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-                  Visionary Leaders
-                </span>
-              </h1>
-              <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-                Pioneering the future of authentic Indian cuisine through innovation, 
-                tradition, and unwavering commitment to excellence.
-              </p>
-            </motion.div>
-
-            {/* Stats Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto mb-12"
-            >
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400 mb-2">₹200+ Cr</div>
-                <div className="text-slate-300 text-sm">Group Turnover</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400 mb-2">12+ Years</div>
-                <div className="text-slate-300 text-sm">Combined Experience</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400 mb-2">2023</div>
-                <div className="text-slate-300 text-sm">Founded Padmaaja Rasooi</div>
-              </div>
-            </motion.div>
-
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <Button 
-                size="lg" 
-                className="px-8 py-4 text-lg font-medium bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-              >
-                Connect with Our Team
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
-          </div>
-        </motion.div>
-      </section>
+      {/* PageHero Section */}
+      <PageHero
+        title="Meet Our Visionary Leaders"
+        subtitle="Leadership Excellence"
+        description="Pioneering the future of authentic Indian cuisine through innovation, tradition, and unwavering commitment to excellence."
+        badge={{
+          text: "Leadership Excellence",
+          variant: "outline"
+        }}
+        icon={{
+          component: Star,
+          className: "w-8 h-8",
+          bgColor: "bg-gradient-to-br from-orange-500/20 to-orange-600/30"
+        }}
+        features={[
+          {
+            icon: Award,
+            label: "₹200+ Cr Group Turnover",
+            color: "orange"
+          },
+          {
+            icon: Calendar,
+            label: "12+ Years Combined Experience",
+            color: "emerald"
+          },
+          {
+            icon: Target,
+            label: "Founded Padmaaja Rasooi in 2023",
+            color: "blue"
+          }
+        ]}
+        backgroundGradient="from-slate-900 via-slate-800 to-orange-900"
+        titleGradient="from-orange-400 to-orange-600"
+        alignment="center"
+        maxWidth="5xl"
+      />
 
       {/* Modern Founders Section */}
-      <section className="py-32 bg-white relative">
+      <section id="founders-section" className="py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <motion.div
